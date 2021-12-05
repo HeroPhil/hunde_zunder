@@ -1,8 +1,6 @@
 name: hunde_zunder
-description: A new Flutter project.
+description: DogConnect
 
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
@@ -20,20 +18,19 @@ version: 1.0.0+1
 environment:
   sdk: ">=2.12.0 <3.0.0"
 
-# Dependencies specify other packages that your package needs in order to work.
-# To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
-# dependencies can be manually updated by changing the version numbers below to
-# the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
     sdk: flutter
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  firebase_auth: ^3.3.0
+  cloud_firestore: ^3.1.1
+  cloud_functions: ^3.2.0
+  google_sign_in: ^5.2.1
+  sign_in_with_apple: ^3.3.0
+  crypto: ^3.0.1
+  provider: ^6.0.1
+  firebase_core: ^1.10.2
+  flutter_signin_button: ^2.0.0
 
 dev_dependencies:
   flutter_test:
