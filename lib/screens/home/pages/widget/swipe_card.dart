@@ -1,9 +1,16 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:hunde_zunder/models/pet.dart';
 
 class SwipeCard extends StatelessWidget {
-  const SwipeCard({Key? key}) : super(key: key);
+  final Pet pet;
+
+  const SwipeCard({
+    Key? key,
+    required this.pet,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +21,17 @@ class SwipeCard extends StatelessWidget {
         color: Colors.accents.firstWhere(
           (_) => Random().nextDouble() < 0.2,
           orElse: () => Colors.redAccent,
+        ),
+        child: Stack(
+          children: [
+            Text(pet.name),
+            Positioned.fill(
+              child: CachedNetworkImage(
+                imageUrl: pet.imageUrl,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ],
         ),
       ),
     );

@@ -29,7 +29,12 @@ class HomeScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Text("HomeScreen"),
+            GestureDetector(
+              child: Text("HomeScreen"),
+              onTap: () => Navigator.of(context).pushReplacementNamed(
+                HomeScreen.routeName,
+              ),
+            ),
             TextButton(
               onPressed: () {
                 context.read<AuthenticationService>().signOut();
