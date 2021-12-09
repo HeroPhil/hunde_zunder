@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hunde_zunder/app.dart';
+import 'package:hunde_zunder/provider/auth_provider.dart';
 import 'package:hunde_zunder/services/auth/authentication_service.dart';
 import 'package:provider/provider.dart';
 
@@ -25,13 +26,19 @@ class Root extends StatelessWidget {
         final User? user = context.watch<User?>();
 
         // register Global Provider here
+        return ChangeNotifierProvider<AuthProvider>(
+          create: (context) => AuthProvider(
+            authenticationService: context.read<AuthenticationService>(),
+          ),
+          builder: (context, _) {
+            if (user != null) {
+              // register Global Provider which are dependend on the currentUser here
 
-        if (user != null) {
-          // register Global Provider which are dependend on the currentUser here
+            }
 
-        }
-
-        return App();
+            return App();
+          },
+        );
       },
     );
   }
