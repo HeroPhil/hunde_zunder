@@ -20,4 +20,4 @@ doc/api/
 *.js.deps
 *.js.map
 
-*flutter-plugins*
+.flutter-plugins*
