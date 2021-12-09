@@ -4,6 +4,7 @@ import 'package:hunde_zunder/screens/auth/auth_screen.dart';
 import 'package:hunde_zunder/screens/crash/crash_screen.dart';
 import 'package:hunde_zunder/screens/home/home_screen.dart';
 import 'package:hunde_zunder/screens/home/pages/pet_provider.dart';
+import 'package:hunde_zunder/screens/home/pages/swipe_page_provider.dart';
 import 'package:hunde_zunder/screens/sign_up/sign_up_screen.dart';
 import 'package:hunde_zunder/services/auth/authentication_service.dart';
 import 'package:provider/provider.dart';
@@ -23,6 +24,9 @@ abstract class AppRouter {
               providers: [
                 ChangeNotifierProvider<PetProvider>(
                   create: (context) => PetProvider(),
+                ),
+                ChangeNotifierProvider<SwipePageProvider>(
+                  create: (context) => SwipePageProvider(),
                 ),
               ],
               builder: (context, _) {
