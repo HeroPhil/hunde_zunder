@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hunde_zunder/services/auth/authentication_service.dart';
 
+@deprecated
 class AuthProvider with ChangeNotifier {
   final AuthenticationService authenticationService;
   final formKey = GlobalKey<FormState>();
