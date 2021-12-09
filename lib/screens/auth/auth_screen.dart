@@ -5,6 +5,7 @@ import 'package:flutterfire_ui/auth.dart';
 import 'package:hunde_zunder/provider/auth_provider.dart';
 import 'package:hunde_zunder/screens/sign_up/sign_up_screen.dart';
 import 'package:hunde_zunder/services/auth/authentication_service.dart';
+import 'package:hunde_zunder/services/auth/firebase_provider_configurations.dart';
 import 'package:provider/src/provider.dart';
 
 class AuthScreen extends StatelessWidget {
@@ -69,13 +70,7 @@ class AuthScreen extends StatelessWidget {
     //   ),
     // );
     return SignInScreen(
-      providerConfigs: [
-        EmailProviderConfiguration(),
-        GoogleProviderConfiguration(
-          clientId:
-              "929360975704-u1455gni3shrfkptvmrjaslhn8npmrfs.apps.googleusercontent.com",
-        ),
-      ],
+      providerConfigs: FirebaseProviderConfigurations.providerConfigurations,
     );
   }
 }
