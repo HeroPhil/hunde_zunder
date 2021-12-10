@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/screens/home/pages/swipe_page_provider.dart';
-import 'package:hunde_zunder/screens/home/pages/widget/swipe_card.dart';
+
 import 'package:provider/src/provider.dart';
+
+import 'swipe_page_provider.dart';
+import 'widgets/swipe_card.dart';
 
 class SwipePage extends StatelessWidget {
   const SwipePage({Key? key}) : super(key: key);

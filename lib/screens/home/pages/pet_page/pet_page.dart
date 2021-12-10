@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/screens/home/pages/pet_provider.dart';
 import 'package:provider/src/provider.dart';
+
+import 'pet_provider.dart';
 
 class PetPage extends StatelessWidget {
   const PetPage({Key? key}) : super(key: key);

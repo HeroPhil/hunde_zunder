@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hunde_zunder/models/pet.dart';
-import 'package:hunde_zunder/screens/home/pages/widget/swipe_card.dart';
 
 enum SwipeResult {
   hate,

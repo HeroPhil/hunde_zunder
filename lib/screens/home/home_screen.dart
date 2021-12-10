@@ -2,10 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
-import 'package:hunde_zunder/screens/home/pages/pet_page.dart';
-import 'package:hunde_zunder/screens/home/pages/swipe_page.dart';
 import 'package:hunde_zunder/services/auth/authentication_service.dart';
 import 'package:provider/src/provider.dart';
+
+import 'pages/pet_page/pet_page.dart';
+import 'pages/swipe_page/swipe_page.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home';

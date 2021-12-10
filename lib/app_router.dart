@@ -3,11 +3,13 @@ import 'package:hunde_zunder/provider/auth_provider.dart';
 import 'package:hunde_zunder/screens/auth/auth_screen.dart';
 import 'package:hunde_zunder/screens/crash/crash_screen.dart';
 import 'package:hunde_zunder/screens/home/home_screen.dart';
-import 'package:hunde_zunder/screens/home/pages/pet_provider.dart';
-import 'package:hunde_zunder/screens/home/pages/swipe_page_provider.dart';
+
 import 'package:hunde_zunder/screens/sign_up/sign_up_screen.dart';
 import 'package:hunde_zunder/services/auth/authentication_service.dart';
 import 'package:provider/provider.dart';
+
+import 'screens/home/pages/pet_page/pet_provider.dart';
+import 'screens/home/pages/swipe_page/swipe_page_provider.dart';
 
 abstract class AppRouter {
   static MaterialPageRoute generateRoute(RouteSettings routeSettings) {
