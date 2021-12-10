@@ -69,8 +69,27 @@ class AuthScreen extends StatelessWidget {
     //     ),
     //   ),
     // );
+
     return SignInScreen(
       providerConfigs: FirebaseProviderConfigurations.providerConfigurations,
+      headerBuilder: (context, constraints, shrinkOffset) => Center(
+        child: Text(
+          "Welcome to PetConnect",
+          style: Theme.of(context)
+              .textTheme
+              .headline3!
+              .copyWith(color: Colors.orange),
+        ),
+      ),
+      sideBuilder: (context, constraints) => Center(
+        child: Text(
+          "Welcome to PetConnect",
+          style: Theme.of(context)
+              .textTheme
+              .headline3!
+              .copyWith(color: Colors.orange),
+        ),
+      ),
     );
   }
 }
