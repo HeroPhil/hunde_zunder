@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hunde_zunder/models/pet.dart';
+import 'package:hunde_zunder/provider/pet_provider.dart';
 
 enum SwipeResult {
   hate,
@@ -9,16 +10,14 @@ enum SwipeResult {
 }
 
 class SwipePageProvider with ChangeNotifier {
+  // dependencies
+  final PetProvider petProvider;
+
   List<Pet> loadedPets = [];
 
-  SwipePageProvider() {
+  SwipePageProvider({required this.petProvider}) {
     while (loadedPets.length < 3) {
-      loadedPets.add(
-        Pet(
-          name: "Pet-${Random().nextInt(100)}",
-          imageUrl: "https://place.dog/300/200",
-        ),
-      );
+      loadedPets.add(petProvider.nextForeignPet);
       print(loadedPets.map((e) => e.name).toList());
     }
   }
@@ -36,12 +35,7 @@ class SwipePageProvider with ChangeNotifier {
     loadedPets.removeAt(0);
 
     // load new pet
-    loadedPets.add(
-      Pet(
-        name: "new-Pet-${Random().nextInt(100)}",
-        imageUrl: "https://place.dog/300/200",
-      ),
-    );
+    loadedPets.add(petProvider.nextForeignPet);
 
     print(loadedPets.map((e) => e.name).toList());
 

@@ -26,10 +26,12 @@ class SwipeCard extends StatelessWidget {
           children: [
             Text(pet.name),
             Positioned.fill(
-              child: CachedNetworkImage(
-                imageUrl: pet.imageUrl,
-                fit: BoxFit.cover,
-              ),
+              child:
+                  //   CachedNetworkImage(
+                  //     imageUrl: pet.image,
+                  //     fit: BoxFit.cover,
+                  //   ),
+                  Image.memory(pet.image),
             ),
           ],
         ),
