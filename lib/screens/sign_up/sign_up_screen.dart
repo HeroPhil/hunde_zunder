@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+@Deprecated("Use Fireflutter UI package instead")
 class SignUpScreen extends StatelessWidget {
   static const routeName = "/signup";
   const SignUpScreen({Key? key}) : super(key: key);
