@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterfire_ui/auth.dart';
+import 'package:hunde_zunder/screens/profile/profile_screen.dart';
 import 'package:hunde_zunder/services/auth/authentication_service.dart';
+import 'package:hunde_zunder/services/auth/firebase_provider_configurations.dart';
 import 'package:provider/src/provider.dart';
 
 import 'pages/pet_page/pet_page.dart';
@@ -17,6 +18,13 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
+        actions: [
+          IconButton(
+            onPressed: () =>
+                Navigator.pushNamed(context, ProfileScreen.routeName),
+            icon: Icon(Icons.person),
+          )
+        ],
       ),
       drawer: ClipRRect(
         borderRadius: BorderRadius.only(
