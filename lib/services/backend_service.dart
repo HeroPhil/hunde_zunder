@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:hunde_zunder/services/firebase_auth_service.dart';
 import 'package:http/http.dart' as http;
 
+import 'dart:html';
+
 class BackendService with ChangeNotifier {
   // static final url = "api.pet-connect.karottenkameraden.de";
-  static final url = Uri.parse(
-      "http://ec2-3-71-47-168.eu-central-1.compute.amazonaws.com:8080/public/debug");
+  // static final url = Uri.parse(
+  //     "http://ec2-3-71-47-168.eu-central-1.compute.amazonaws.com:8080/public/debug");
+  static final url = Uri(
+    scheme: window.location.protocol,
+    host: "ec2-3-71-47-168.eu-central-1.compute.amazonaws.com",
+    port: 8080,
+    path: "/public/debug",
+  );
 
   final FirebaseAuthService firebaseAuthService;
 
