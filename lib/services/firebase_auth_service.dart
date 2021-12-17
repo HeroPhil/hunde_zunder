@@ -9,6 +9,8 @@ import 'package:crypto/crypto.dart';
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:subscribed_stream/subscribed_stream.dart';
+
 /// Service for managing all Firebase Authentication
 ///
 /// Provides a [User] Stream to the MaterialApp, which holds the currently logged in User.
@@ -21,15 +23,30 @@ class FirebaseAuthService with ChangeNotifier {
     ),
   ];
 
-  final FirebaseAuth _firebaseAuth;
+  late final SubscribedStream<User?> _subscribedUserStream;
 
-  FirebaseAuthService(this._firebaseAuth);
+  late final FirebaseAuth _firebaseAuth;
+
+  FirebaseAuthService() {
+    _firebaseAuth = FirebaseAuth.instance;
+    _subscribedUserStream = SubscribedStream<User?>(
+      stream: _firebaseAuth.authStateChanges(),
+      onStreamEvent: (data, previous, _) {
+        notifyListeners();
+        return data;
+      },
+    );
+  }
 
   ///Emits the current Firebase User as a [User] or [Null] if no User is signed in
-  Stream<User?> get authStateChanges => _firebaseAuth.authStateChanges();
+  Stream<User?> get authStateChanges => _subscribedUserStream.stream;
 
   ///Signs out the current User
   Future<void> signOut() async {
     await _firebaseAuth.signOut();
+  }
+
+  Future<String?> getBearerToken() async {
+    return await _subscribedUserStream.latestValue?.getIdToken();
   }
 }

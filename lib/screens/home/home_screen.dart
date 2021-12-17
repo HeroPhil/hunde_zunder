@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hunde_zunder/screens/profile/profile_screen.dart';
 import 'package:hunde_zunder/services/authentication_service.dart';
+import 'package:hunde_zunder/services/backend_service.dart';
 import 'package:hunde_zunder/services/firebase_auth_service.dart';
 import 'package:provider/src/provider.dart';
 
@@ -52,6 +53,12 @@ class HomeScreen extends StatelessWidget {
             ),
             Expanded(
               child: SwipePage(),
+            ),
+            OutlinedButton(
+              onPressed: () {
+                context.read<BackendService>().callBackend();
+              },
+              child: Text("Call backend"),
             ),
           ],
         ),

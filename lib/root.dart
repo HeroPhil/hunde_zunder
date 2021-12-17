@@ -4,6 +4,7 @@ import 'package:hunde_zunder/app.dart';
 import 'package:hunde_zunder/provider/auth_provider.dart';
 import 'package:hunde_zunder/provider/pet_provider.dart';
 import 'package:hunde_zunder/services/authentication_service.dart';
+import 'package:hunde_zunder/services/backend_service.dart';
 import 'package:hunde_zunder/services/firebase_auth_service.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +18,11 @@ class Root extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<FirebaseAuthService>(
-          create: (context) => FirebaseAuthService(FirebaseAuth.instance),
+          create: (context) => FirebaseAuthService(),
+        ),
+        ChangeNotifierProvider<BackendService>(
+          create: (context) => BackendService(
+              firebaseAuthService: context.read<FirebaseAuthService>()),
         ),
         // TODO use Model to broadcast currentUser
         StreamProvider<User?>(
