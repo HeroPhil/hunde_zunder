@@ -1,0 +1,86 @@
+server:
+  ssl:
+    key-store: /etc/letsencrypt/live/api.pet-connect.karottenkameraden.de/keystore.p12
+    key-store-password: nplatz
+    key-store-type: PKCS12
+    key-alias: tomcat
+    # key-password: password
+  port: 443
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+      # show-sql:
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/PetConnect
+    username: springuser
+    password: wurzel2
+    driver-class-name: com.mysql.jdbc.Driver
+  # security:
+  #   user:
+  #     name: doggyDogs
+  #     password: GhBeoSLDokqiyAxmC7tzP69xrySJmHTa
+  #     roles:
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 215MB
+  application:
+    name: PetConnect
+
+security:
+  require-ssl: true
+  firebase-props:
+    database-url: ${FIREBASE_DATABASE}
+    enable-strict-server-session: false
+    enable-check-session-revoked: false
+    enable-logout-everywhere: false
+    session-expiry-in-days: 5
+  cookie-props:
+    max-age-in-minutes: 7200
+    http-only: true
+    secure: true
+    domain: ${DOMAIN}
+    path: /
+  allow-credentials: true
+  allowed-origins:
+    - https://${DOMAIN}
+    - http://localhost:3000
+    - http://localhost:3711
+    - https://localhost:3711
+    - http://pet-connect.karottenkameraden.de
+    - https://pet-connect.karottenkameraden.de
+    - http://develop.pet-connect.karottenkameraden.de
+    - https://develop.pet-connect.karottenkameraden.de
+    - http://hunde-zunder--pr7-develop-gkj7jmqn.web.app
+    - https://hunde-zunder--pr7-develop-gkj7jmqn.web.app
+  allowed-methods:
+    - GET
+    - POST
+    - PUT
+    - PATCH
+    - DELETE
+    - OPTIONS
+  allowed-headers:
+    - Authorization
+    - Origin
+    - Content-Type
+    - Accept
+    - Accept-Encoding
+    - Accept-Language
+    - Access-Control-Allow-Origin
+    - Access-Control-Allow-Headers
+    - Access-Control-Request-Method
+    - X-Requested-With
+    - X-Auth-Token
+    - X-Xsrf-Token
+    - Cache-Control
+    - Id-Token
+  allowed-public-apis:
+    - /favicon.ico
+    - /session/login
+    - /public/**
+  exposed-headers:
+    - X-Xsrf-Token

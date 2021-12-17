@@ -12,4 +12,9 @@ public class debugController {
         return ResponseEntity.ok("Success");
     }
 
+    @GetMapping("/public/debug")
+    public ResponseEntity<String> publicDebug() {
+        return ResponseEntity.ok("Success");
+    }
+
 }
