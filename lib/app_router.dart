@@ -6,6 +6,7 @@ import 'package:hunde_zunder/provider/pet_provider.dart';
 import 'package:hunde_zunder/screens/auth/auth_screen.dart';
 import 'package:hunde_zunder/screens/crash/crash_screen.dart';
 import 'package:hunde_zunder/screens/home/home_screen.dart';
+import 'package:hunde_zunder/screens/home/home_screen_provider.dart';
 import 'package:hunde_zunder/screens/loading/loading_screen.dart';
 import 'package:hunde_zunder/screens/profile/profile_screen.dart';
 
@@ -36,6 +37,9 @@ abstract class AppRouter {
           case HomeScreen.routeName:
             return MultiProvider(
               providers: [
+                ChangeNotifierProvider<HomeScreenProvider>(
+                  create: (context) => HomeScreenProvider(),
+                ),
                 ChangeNotifierProvider<PetPageProvider>(
                   create: (context) => PetPageProvider(
                     petProvider: _petProvider,

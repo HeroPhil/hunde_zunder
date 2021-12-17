@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class UiTheme {
   static final _primaryColor = Colors.orange;
-  static final _secondaryColor = Colors.pink;
+  static final _secondaryColor = Colors.orangeAccent;
   static final _primaryColorScheme =
       ColorScheme.fromSwatch(primarySwatch: _primaryColor);
 
