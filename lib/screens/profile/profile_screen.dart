@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/services/auth/firebase_provider_configurations.dart';
 import 'package:flutterfire_ui/auth.dart' as FireFlutter;
+import 'package:hunde_zunder/services/firebase_auth_service.dart';
 
 class ProfileScreen extends StatelessWidget {
   static const routeName = '/profile';
@@ -9,7 +9,7 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FireFlutter.ProfileScreen(
-      providerConfigs: FirebaseProviderConfigurations.providerConfigurations,
+      providerConfigs: FirebaseAuthService.providerConfigurations,
     );
   }
 }

@@ -11,12 +11,24 @@ class UiTheme {
       primary: _primaryColor,
       secondary: _secondaryColor,
     ),
+  ).copyWith(
+    cardTheme: CardTheme(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+    ),
   );
 
   static final darkTheme = ThemeData.from(
     colorScheme: ColorScheme.dark(
       primary: _primaryColor,
       secondary: _secondaryColor,
+    ),
+  ).copyWith(
+    cardTheme: CardTheme(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
     ),
   );
 }

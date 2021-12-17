@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_signin_button/button_view.dart';
-import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:flutterfire_ui/auth.dart';
-import 'package:hunde_zunder/provider/auth_provider.dart';
-import 'package:hunde_zunder/screens/sign_up/sign_up_screen.dart';
-import 'package:hunde_zunder/services/auth/authentication_service.dart';
-import 'package:hunde_zunder/services/auth/firebase_provider_configurations.dart';
-import 'package:provider/src/provider.dart';
+import 'package:hunde_zunder/services/firebase_auth_service.dart';
 
 class AuthScreen extends StatelessWidget {
   static const routeName = '/auth';
@@ -71,7 +65,7 @@ class AuthScreen extends StatelessWidget {
     // );
 
     return SignInScreen(
-      providerConfigs: FirebaseProviderConfigurations.providerConfigurations,
+      providerConfigs: FirebaseAuthService.providerConfigurations,
       headerBuilder: (context, constraints, shrinkOffset) => Center(
         child: Text(
           "Welcome to PetConnect",
