@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hunde_zunder/app.dart';
 import 'package:hunde_zunder/provider/auth_provider.dart';
 import 'package:hunde_zunder/provider/pet_provider.dart';
-import 'package:hunde_zunder/services/auth/authentication_service.dart';
+import 'package:hunde_zunder/services/authentication_service.dart';
+import 'package:hunde_zunder/services/firebase_auth_service.dart';
 import 'package:provider/provider.dart';
 
 import 'provider/mock_provider.dart';
@@ -15,13 +16,13 @@ class Root extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<AuthenticationService>(
-          create: (context) => AuthenticationService(FirebaseAuth.instance),
+        ChangeNotifierProvider<FirebaseAuthService>(
+          create: (context) => FirebaseAuthService(FirebaseAuth.instance),
         ),
         // TODO use Model to broadcast currentUser
         StreamProvider<User?>(
           create: (context) =>
-              context.read<AuthenticationService>().authStateChanges,
+              context.read<FirebaseAuthService>().authStateChanges,
           initialData: null,
         ),
         ChangeNotifierProvider<MockProvider>(
@@ -34,7 +35,7 @@ class Root extends StatelessWidget {
         // register Global Provider here
         return ChangeNotifierProvider<AuthProvider>(
           create: (context) => AuthProvider(
-            authenticationService: context.read<AuthenticationService>(),
+            firebaseAuthService: context.read<FirebaseAuthService>(),
           ),
           builder: (context, app) {
             final _mockProvider = context.read<MockProvider>();

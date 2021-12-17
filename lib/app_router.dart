@@ -10,7 +10,7 @@ import 'package:hunde_zunder/screens/loading/loading_screen.dart';
 import 'package:hunde_zunder/screens/profile/profile_screen.dart';
 
 import 'package:hunde_zunder/screens/sign_up/sign_up_screen.dart';
-import 'package:hunde_zunder/services/auth/authentication_service.dart';
+import 'package:hunde_zunder/services/authentication_service.dart';
 import 'package:provider/provider.dart';
 
 import 'screens/home/pages/pet_page/pet_page_provider.dart';

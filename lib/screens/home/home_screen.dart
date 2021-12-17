@@ -2,8 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hunde_zunder/screens/profile/profile_screen.dart';
-import 'package:hunde_zunder/services/auth/authentication_service.dart';
-import 'package:hunde_zunder/services/auth/firebase_provider_configurations.dart';
+import 'package:hunde_zunder/services/authentication_service.dart';
+import 'package:hunde_zunder/services/firebase_auth_service.dart';
 import 'package:provider/src/provider.dart';
 
 import 'pages/pet_page/pet_page.dart';
@@ -46,7 +46,7 @@ class HomeScreen extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                context.read<AuthenticationService>().signOut();
+                context.read<FirebaseAuthService>().signOut();
               },
               child: Text("Logout"),
             ),
