@@ -8,10 +8,16 @@ class BackendService with ChangeNotifier {
   // static final url = "api.pet-connect.karottenkameraden.de";
   // static final url = Uri.parse(
   //     "http://ec2-3-71-47-168.eu-central-1.compute.amazonaws.com:8080/public/debug");
+  // static final url = Uri(
+  //   scheme: window.location.protocol,
+  //   host: "ec2-3-71-47-168.eu-central-1.compute.amazonaws.com",
+  //   port: 8080,
+  //   path: "/public/debug",
+  // );
   static final url = Uri(
-    scheme: window.location.protocol,
-    host: "ec2-3-71-47-168.eu-central-1.compute.amazonaws.com",
-    port: 8080,
+    scheme: "https",
+    host: "api.pet-connect.karottenkameraden.de",
+    port: 443,
     path: "/public/debug",
   );
 
