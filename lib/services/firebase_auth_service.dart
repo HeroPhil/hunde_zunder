@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_functions/cloud_functions.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -15,7 +16,16 @@ import 'package:subscribed_stream/subscribed_stream.dart';
 ///
 /// Provides a [User] Stream to the MaterialApp, which holds the currently logged in User.
 class FirebaseAuthService with ChangeNotifier {
-  static final providerConfigurations = [
+  static const firebaseOptions = FirebaseOptions(
+    apiKey: "AIzaSyDMAsGwGnGGnB6CCvFJyMPEY7H8hHXiZuc",
+    authDomain: "hunde-zunder.firebaseapp.com",
+    projectId: "hunde-zunder",
+    storageBucket: "hunde-zunder.appspot.com",
+    messagingSenderId: "929360975704",
+    appId: "1:929360975704:web:675973e2085a8342b9372d",
+  );
+
+  static const providerConfigurations = [
     EmailProviderConfiguration(),
     GoogleProviderConfiguration(
       clientId:
