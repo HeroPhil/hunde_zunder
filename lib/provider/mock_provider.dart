@@ -4,20 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class MockProvider with ChangeNotifier {
-  final List<Uint8List> dogImages = [];
+  List<Uint8List> dogImages = [];
+
+  bool initialized = false;
 
   MockProvider() {
-    _loadMockData();
+    loadMockData();
   }
 
-  Future _loadMockData() async {
-    for (var i = 0; i <= 5; i++) {
-      print('Loading image $i');
-      dogImages.add(
+  Future loadMockData() async {
+    dogImages = [
+      for (var i = 0; i <= 5; i++)
         (await rootBundle.load('img/mocks/cute_dog$i.jpg'))
             .buffer
             .asUint8List(),
-      );
-    }
+    ];
+    initialized = true;
+    notifyListeners();
   }
 }

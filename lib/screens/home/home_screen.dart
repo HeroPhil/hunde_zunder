@@ -36,33 +36,7 @@ class HomeScreen extends StatelessWidget {
           child: PetPage(),
         ),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            GestureDetector(
-              child: Text("HomeScreen"),
-              onTap: () => Navigator.of(context).pushReplacementNamed(
-                HomeScreen.routeName,
-              ),
-            ),
-            TextButton(
-              onPressed: () {
-                context.read<FirebaseAuthService>().signOut();
-              },
-              child: Text("Logout"),
-            ),
-            Expanded(
-              child: SwipePage(),
-            ),
-            OutlinedButton(
-              onPressed: () {
-                context.read<BackendService>().callBackend();
-              },
-              child: Text("Call backend"),
-            ),
-          ],
-        ),
-      ),
+      body: SwipePage(),
     );
   }
 }

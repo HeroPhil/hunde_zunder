@@ -16,7 +16,7 @@ class PetProvider with ChangeNotifier {
   });
 
   List<Pet>? get myPets {
-    if (myPets == null) {
+    if (_myPets == null) {
       // get Pets from backend
       _myPets = [
         Pet(

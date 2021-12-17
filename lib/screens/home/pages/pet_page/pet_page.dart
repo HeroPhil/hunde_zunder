@@ -16,7 +16,7 @@ class PetPage extends StatelessWidget {
         builder: (context, petPageProvider, _) {
           final pets = petPageProvider.pets;
           if (pets == null) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -24,7 +24,7 @@ class PetPage extends StatelessWidget {
           return Column(
             children: [
               Text(
-                'PetPage',
+                'My Pets',
                 style: Theme.of(context).textTheme.headline3,
               ),
               Expanded(
@@ -33,16 +33,17 @@ class PetPage extends StatelessWidget {
                   child: ListView(
                     children: [
                       if (pets.isEmpty)
-                        Center(
+                        const Center(
                           child: Text('No pets found'),
                         ),
                       ...petPageProvider.pets!.map(
-                        (pet) => ListTile(
-                          leading: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.memory(pet.image),
+                        (pet) => Card(
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              foregroundImage: Image.memory(pet.image).image,
+                            ),
+                            title: Text(pet.name),
                           ),
-                          title: Text(pet.name),
                         ),
                       ),
                     ],
@@ -50,8 +51,8 @@ class PetPage extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Text('Add Pet'),
                 ),
                 onPressed: () {

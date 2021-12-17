@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hunde_zunder/app.dart';
 import 'package:hunde_zunder/provider/auth_provider.dart';
 import 'package:hunde_zunder/provider/pet_provider.dart';
+import 'package:hunde_zunder/screens/loading/loading_screen.dart';
 import 'package:hunde_zunder/services/authentication_service.dart';
 import 'package:hunde_zunder/services/backend_service.dart';
 import 'package:hunde_zunder/services/firebase_auth_service.dart';
@@ -35,6 +36,10 @@ class Root extends StatelessWidget {
         ),
       ],
       builder: (context, _) {
+        if (!context.watch<MockProvider>().initialized) {
+          return MaterialApp(home: LoadingScreen());
+        }
+
         final User? user = context.watch<User?>();
 
         // register Global Provider here

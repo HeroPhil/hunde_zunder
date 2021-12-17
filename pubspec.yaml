@@ -37,6 +37,7 @@ dependencies:
   uuid: ^3.0.5
   subscribed_stream: ^0.0.2
   http: ^0.13.4
+  res_builder: ^1.0.0
 
 dev_dependencies:
   flutter_test:
