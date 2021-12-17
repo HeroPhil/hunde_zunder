@@ -16,23 +16,20 @@ class PetProvider with ChangeNotifier {
   });
 
   List<Pet>? get myPets {
-    if (_myPets == null) {
-      // get Pets from backend
-      _myPets = [
-        Pet(
-          name: 'Puppy',
-          image: mockProvider.dogImages[0],
-        ),
-        Pet(
-          name: 'Ralf',
-          image: mockProvider.dogImages[1],
-        ),
-        Pet(
-          name: 'Rudloff',
-          image: mockProvider.dogImages[2],
-        ),
-      ];
-    }
+    _myPets ??= [
+      Pet(
+        name: 'Puppy',
+        image: mockProvider.dogImages[0],
+      ),
+      Pet(
+        name: 'Ralf',
+        image: mockProvider.dogImages[1],
+      ),
+      Pet(
+        name: 'Rudloff',
+        image: mockProvider.dogImages[2],
+      ),
+    ];
     return _myPets;
   }
 
