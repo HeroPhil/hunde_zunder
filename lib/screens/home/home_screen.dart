@@ -2,6 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hunde_zunder/screens/home/home_screen_provider.dart';
+import 'package:hunde_zunder/screens/home/pages/match/match_page.dart';
+import 'package:hunde_zunder/screens/home/pages/pet/pet_page.dart';
+import 'package:hunde_zunder/screens/home/pages/swipe/swipe_page.dart';
 import 'package:hunde_zunder/screens/profile/profile_screen.dart';
 import 'package:hunde_zunder/services/authentication_service.dart';
 import 'package:hunde_zunder/services/backend_service.dart';
@@ -9,9 +12,6 @@ import 'package:hunde_zunder/services/firebase_auth_service.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/src/provider.dart';
 import 'package:res_builder/responsive.dart';
-
-import 'pages/pet_page/pet_page.dart';
-import 'pages/swipe_page/swipe_page.dart';
 
 class HomeScreen extends StatelessWidget {
   static const routeName = '/home';
@@ -35,10 +35,14 @@ class HomeScreen extends StatelessWidget {
           share: [
             const PetPage(),
             const SwipePage(),
-            const PetPage(),
+            const MatchPage(),
           ],
           onDesktop: (context, children) => Row(
-            children: children.map((child) => Expanded(child: child)).toList(),
+            children: children
+                .map((child) => Expanded(
+                      child: child,
+                    ))
+                .toList(),
           ),
           onMobile: (context, children) => PageView(
             controller: homeScreenProvider.pageController,
