@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hunde_zunder/provider/pet_provider.dart';
 import 'package:hunde_zunder/screens/home/pages/match/match_page_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +43,12 @@ class MatchPage extends StatelessWidget {
                                   Image.memory(match.foreignPet.image).image,
                             ),
                             title: Text(match.foreignPet.name),
-                            subtitle: Text("with ${match.myPet.name}"),
+                            subtitle:
+                                (context.read<PetProvider>().myPets?.length ??
+                                            0) >
+                                        1
+                                    ? Text("with ${match.myPet.name}")
+                                    : null,
                             trailing: Text(
                               DateFormat.MMMd().format(match.matchDate),
                             ),
