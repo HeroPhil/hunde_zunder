@@ -3,8 +3,12 @@ package com.karottenkameraden.petConnect.models.account;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+
+import com.karottenkameraden.petConnect.models.profile.Profile;
 
 @Entity
 @Getter
@@ -22,6 +26,8 @@ public class Account {
     private String email;
 
     private String password;
+
+    // private List<Profile> profiles;
 
     public Account() {
         super();

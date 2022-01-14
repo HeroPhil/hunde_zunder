@@ -20,4 +20,10 @@ public class AccountServiceImpl implements AccountService{
         return accountResponses;
     }
 
+    @Override
+    public Account findMyAccount(String email) {
+        Account account = accountRepository.findByEmail(email);
+        return account;
+    }
+
 }
