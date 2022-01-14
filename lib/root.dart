@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hunde_zunder/app.dart';
 import 'package:hunde_zunder/provider/auth_provider.dart';
+import 'package:hunde_zunder/provider/match_provider.dart';
 import 'package:hunde_zunder/provider/pet_provider.dart';
 import 'package:hunde_zunder/screens/loading/loading_screen.dart';
 import 'package:hunde_zunder/services/authentication_service.dart';
@@ -60,7 +61,16 @@ class Root extends StatelessWidget {
                     ),
                   ),
                 ],
-                child: app,
+                builder: (context, _) => MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider<MatchProvider>(
+                      create: (_) => MatchProvider(
+                        petProvider: context.read<PetProvider>(),
+                      ),
+                    ),
+                  ],
+                  child: app,
+                ),
               );
             }
             return app!;
