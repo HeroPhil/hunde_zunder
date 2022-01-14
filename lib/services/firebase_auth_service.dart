@@ -43,6 +43,9 @@ class FirebaseAuthService with ChangeNotifier {
       stream: _firebaseAuth.authStateChanges(),
       onStreamEvent: (data, previous, _) {
         print("New User: $data");
+        data?.getIdToken().then((token) {
+          print("with bearer Token:: $token");
+        });
         notifyListeners();
         return data;
       },
