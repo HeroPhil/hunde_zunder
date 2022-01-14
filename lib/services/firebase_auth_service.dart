@@ -42,6 +42,7 @@ class FirebaseAuthService with ChangeNotifier {
     _subscribedUserStream = SubscribedStream<User?>(
       stream: _firebaseAuth.authStateChanges(),
       onStreamEvent: (data, previous, _) {
+        print("New User: $data");
         notifyListeners();
         return data;
       },
