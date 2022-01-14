@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:hunde_zunder/pages/pet_detail/pet_detail_page.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/src/provider.dart';
 
@@ -37,12 +38,20 @@ class PetPage extends StatelessWidget {
                           child: Text('No pets found'),
                         ),
                       ...petPageProvider.pets!.map(
-                        (pet) => Card(
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              foregroundImage: Image.memory(pet.image).image,
+                        (pet) => Hero(
+                          tag: "${PetDetailPage.routeName}-${pet.id}",
+                          child: Card(
+                            child: ListTile(
+                              onTap: () => Navigator.pushNamed(
+                                context,
+                                PetDetailPage.routeName,
+                                arguments: {"pet": pet},
+                              ),
+                              leading: CircleAvatar(
+                                foregroundImage: Image.memory(pet.image).image,
+                              ),
+                              title: Text(pet.name),
                             ),
-                            title: Text(pet.name),
                           ),
                         ),
                       ),

@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hunde_zunder/external/hero_dialog_route.dart';
+import 'package:hunde_zunder/pages/pet_detail/pet_detail_page.dart';
 import 'package:hunde_zunder/provider/auth_provider.dart';
 import 'package:hunde_zunder/provider/match_provider.dart';
 import 'package:hunde_zunder/provider/mock_provider.dart';
@@ -19,7 +21,26 @@ import 'package:hunde_zunder/services/authentication_service.dart';
 import 'package:provider/provider.dart';
 
 abstract class AppRouter {
-  static MaterialPageRoute generateRoute(RouteSettings routeSettings) {
+  static PageRoute generateRoute(RouteSettings routeSettings) {
+    late final Map<String, dynamic> arguments;
+    try {
+      arguments = routeSettings.arguments as Map<String, dynamic>;
+    } catch (e) {
+      arguments = {};
+    }
+
+    switch (routeSettings.name) {
+      case PetDetailPage.routeName:
+        return HeroDialogRoute(
+          builder: (context) {
+            return PetDetailPage(
+              pet: arguments["pet"],
+            );
+          },
+          settings: routeSettings,
+        );
+    }
+
     return MaterialPageRoute(
       settings: routeSettings,
       builder: (context) {

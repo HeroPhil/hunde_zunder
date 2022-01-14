@@ -22,16 +22,15 @@ class SwipeCard extends StatelessWidget {
         child: Container(
           width: constraints.maxWidth * 0.8,
           height: frameSize.height * 0.6,
-          color: Colors.accents.firstWhere(
-            (_) => Random().nextDouble() < 0.2,
-            orElse: () => Colors.redAccent,
-          ),
           child: Stack(
             children: [
               Positioned.fill(
-                child: Image.memory(
-                  pet.image,
-                  fit: BoxFit.cover,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.memory(
+                    pet.image,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Column(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hunde_zunder/pages/pet_detail/pet_detail_page.dart';
 
 import 'package:provider/src/provider.dart';
 
@@ -16,18 +17,28 @@ class SwipePage extends StatelessWidget {
         ...context.watch<SwipePageProvider>().loadedPets.reversed.map(
               (pet) => Positioned.fill(
                 child: Center(
-                  child: Dismissible(
-                    key: Key('swipe-card-${pet.id}'),
-                    child: SwipeCard(
-                      pet: pet,
+                  child: GestureDetector(
+                    onDoubleTap: () => Navigator.pushNamed(
+                      context,
+                      PetDetailPage.routeName,
+                      arguments: {"pet": pet},
                     ),
-                    onDismissed: (DismissDirection direction) {
-                      context
-                          .read<SwipePageProvider>()
-                          .swipeCard(SwipeResult.values[direction.index - 2]);
-                    },
-                    secondaryBackground: Icon(Icons.delete),
-                    background: Icon(Icons.favorite),
+                    child: Dismissible(
+                      key: Key('swipe-card-${pet.id}'),
+                      child: Hero(
+                        tag: "${PetDetailPage.routeName}-${pet.id}",
+                        child: SwipeCard(
+                          pet: pet,
+                        ),
+                      ),
+                      onDismissed: (DismissDirection direction) {
+                        context
+                            .read<SwipePageProvider>()
+                            .swipeCard(SwipeResult.values[direction.index - 2]);
+                      },
+                      secondaryBackground: Icon(Icons.delete),
+                      background: Icon(Icons.favorite),
+                    ),
                   ),
                 ),
               ),
