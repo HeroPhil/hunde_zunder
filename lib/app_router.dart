@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hunde_zunder/external/hero_dialog_route.dart';
 import 'package:hunde_zunder/pages/pet_detail/pet_detail_page.dart';
+import 'package:hunde_zunder/pages/pet_detail/pet_detail_page_provider.dart';
 import 'package:hunde_zunder/provider/auth_provider.dart';
 import 'package:hunde_zunder/provider/match_provider.dart';
 import 'package:hunde_zunder/provider/mock_provider.dart';
@@ -33,8 +34,11 @@ abstract class AppRouter {
       case PetDetailPage.routeName:
         return HeroDialogRoute(
           builder: (context) {
-            return PetDetailPage(
-              pet: arguments["pet"],
+            return ChangeNotifierProvider<PetDetailPageProvider>(
+              create: (context) => PetDetailPageProvider(
+                pet: arguments['pet'],
+              ),
+              child: PetDetailPage(),
             );
           },
           settings: routeSettings,
