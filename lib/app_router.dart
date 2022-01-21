@@ -36,6 +36,7 @@ abstract class AppRouter {
           builder: (context) {
             return ChangeNotifierProvider<PetDetailPageProvider>(
               create: (context) => PetDetailPageProvider(
+                petProvider: context.read<PetProvider>(),
                 pet: arguments['pet'],
               ),
               child: PetDetailPage(),
