@@ -20,6 +20,7 @@ class PetDetailPage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
@@ -34,7 +35,10 @@ class PetDetailPage extends StatelessWidget {
                             ),
                       ),
                     ),
-                    Text(pet.name),
+                    TextFormField(
+                      initialValue: pet.name,
+                      decoration: InputDecoration.collapsed(hintText: ""),
+                    ),
                     //...
                   ],
                 ),
