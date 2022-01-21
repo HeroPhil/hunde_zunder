@@ -3,11 +3,17 @@ import 'dart:typed_data';
 import 'package:uuid/uuid.dart';
 
 enum PetType {
+  other,
   dog,
   cat,
   bird,
   fish,
+}
+
+enum PetGender {
   other,
+  male,
+  female,
 }
 
 class Pet {
@@ -15,6 +21,7 @@ class Pet {
   String name;
   Uint8List image;
   PetType type;
+  PetGender gender;
   String? race;
   String? description;
   DateTime? birthday;
@@ -23,6 +30,7 @@ class Pet {
     required this.name,
     required this.image,
     this.type = PetType.other,
+    this.gender = PetGender.other,
     this.race,
     this.description,
     this.birthday,
@@ -33,7 +41,8 @@ class Pet {
     required Map<String, dynamic> json,
   })  : name = json["name"],
         image = Uint8List.fromList(json["image"]),
-        type = PetType.values[json["type"] ?? 4],
+        type = PetType.values[json["type"] ?? 0],
+        gender = PetGender.values[json["gender"] ?? 0],
         race = json["race"],
         description = json["description"],
         birthday = json["birthday"] != null
@@ -44,6 +53,7 @@ class Pet {
         "name": name,
         "image": image,
         "type": PetType.values.indexOf(type),
+        "gender": PetGender.values.indexOf(gender),
         if (race != null) "race": race,
         if (description != null) "description": description,
         if (birthday != null) "birthday": birthday!.millisecondsSinceEpoch,
