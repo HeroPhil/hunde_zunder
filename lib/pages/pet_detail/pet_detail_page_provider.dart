@@ -9,9 +9,10 @@ class PetDetailPageProvider with ChangeNotifier {
   PetProvider petProvider;
 
 // state
+  bool initalized = false;
   Pet pet;
   bool _editMode;
-  late final GlobalKey<FormState> formKey;
+  GlobalKey<FormState>? formKey;
 
   PetDetailPageProvider({
     Pet? pet,
@@ -21,7 +22,19 @@ class PetDetailPageProvider with ChangeNotifier {
               name: 'New Pet',
               image: Uint8List.fromList([]),
             ),
-        _editMode = (pet == null);
+        _editMode = (pet == null) {}
+
+  void init() {
+    if (initalized) return;
+    formKey = GlobalKey<FormState>(debugLabel: "petDetailForm");
+    initalized = true;
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    formKey?.currentState?.dispose();
+  }
 
   bool get editMode => _editMode;
 
@@ -35,11 +48,19 @@ class PetDetailPageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // void submit() {
-  //   if (formKey.currentState!.validate()) {
-  //     formKey.currentState!.save();
-  //     toggleEditMode();
-  //     // TODO submit to Server
-  //   }
+  void submit() {
+    if (formKey?.currentState!.validate() ?? false) {
+      formKey?.currentState!.save();
+      toggleEditMode();
+      // TODO submit to Server
+    }
+  }
+
+  // /// returns a none null form key (must me set prior to use)
+  // GlobalKey<FormState> get formKey => _formKey!;
+
+  // /// if formKey is null, set to the given key
+  // set formKey(GlobalKey<FormState> formKey) {
+  //   _formKey ??= formKey;
   // }
 }

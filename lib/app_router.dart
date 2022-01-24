@@ -33,6 +33,7 @@ abstract class AppRouter {
     switch (routeSettings.name) {
       case PetDetailPage.routeName:
         return HeroDialogRoute(
+          settings: routeSettings,
           builder: (context) {
             return ChangeNotifierProvider<PetDetailPageProvider>(
               create: (context) => PetDetailPageProvider(
@@ -42,7 +43,6 @@ abstract class AppRouter {
               child: PetDetailPage(),
             );
           },
-          settings: routeSettings,
         );
     }
 

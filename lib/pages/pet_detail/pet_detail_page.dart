@@ -15,6 +15,9 @@ class PetDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<PetDetailPageProvider>(
         builder: (context, petPageProvider, _) {
+      WidgetsBinding.instance?.addPostFrameCallback((_) {
+        petPageProvider.init();
+      });
       final pet = petPageProvider.pet;
       final defaultInputDecoration = InputDecoration();
       final inputDecoration = petPageProvider.editMode
@@ -43,6 +46,8 @@ class PetDetailPage extends StatelessWidget {
                         onDesktop: 3,
                       ),
                   child: Form(
+                    onWillPop: () async => !petPageProvider.editMode,
+                    key: petPageProvider.formKey,
                     child: Column(
                       children: [
                         ClipRRect(
@@ -59,6 +64,8 @@ class PetDetailPage extends StatelessWidget {
                           ),
                         TextFormField(
                           initialValue: pet.name,
+                          // TODO add validation
+                          validator: (value) => null,
                           decoration: inputDecoration.copyWith(
                             icon: Icon(Icons.confirmation_num),
                             label: Text("Pet Name"),
@@ -82,6 +89,8 @@ class PetDetailPage extends StatelessWidget {
                               )
                             : TextFormField(
                                 initialValue: pet.type.name,
+                                // TODO add validation
+                                validator: (value) => null,
                                 decoration: inputDecoration.copyWith(
                                   icon: Icon(Icons.pets),
                                   label: Text("Pet Type"),
@@ -114,6 +123,8 @@ class PetDetailPage extends StatelessWidget {
                               ),
                         TextFormField(
                           initialValue: pet.race,
+                          // TODO add validation
+                          validator: (value) => null,
                           decoration: inputDecoration.copyWith(
                             icon: Icon(Icons.category),
                             label: Text("Pet Race"),
@@ -122,6 +133,8 @@ class PetDetailPage extends StatelessWidget {
                         ),
                         TextFormField(
                           initialValue: pet.description,
+                          // TODO add validation
+                          validator: (value) => null,
                           decoration: inputDecoration.copyWith(
                             icon: Icon(Icons.description),
                             label: Text("Description"),
@@ -133,6 +146,8 @@ class PetDetailPage extends StatelessWidget {
                             initialValue:
                                 "${pet.birthday!.difference(DateTime.now()).inDays / 30}",
                             enabled: petPageProvider.editMode,
+                            // TODO add validation
+                            validator: (value) => null,
                             decoration: inputDecoration.copyWith(
                               icon: Icon(Icons.cake),
                               label: Text("Pet Birthday"),
@@ -140,7 +155,7 @@ class PetDetailPage extends StatelessWidget {
                           ),
                         if (petPageProvider.editMode)
                           OutlinedButton.icon(
-                            onPressed: () {},
+                            onPressed: petPageProvider.submit,
                             icon: Icon(Icons.save_outlined),
                             label: Text("Save"),
                           ),
