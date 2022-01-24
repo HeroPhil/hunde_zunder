@@ -7,9 +7,8 @@ import javax.validation.constraints.NotNull;
 public class Like {
 
     @Id
-    @GeneratedValue
     @NotNull
-    private Long id;
+    private String id;
 
     private Long senderId;
 
