@@ -1,3 +1,4 @@
+import 'dart:html';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -17,7 +18,10 @@ class MockProvider with ChangeNotifier {
   Future loadMockData() async {
     dogImages = [
       for (var i = 0; i <= 5; i++)
-        (await bundle.load('img/mocks/cute_dog$i.jpg')).buffer.asUint8List(),
+        (await bundle.load(
+                '${window.location.hostname == 'localhost' ? "" : "assets/"}img/mocks/cute_dog$i.jpg'))
+            .buffer
+            .asUint8List(),
     ];
     initialized = true;
     notifyListeners();
