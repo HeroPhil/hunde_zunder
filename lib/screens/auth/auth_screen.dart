@@ -6,6 +6,7 @@ import 'package:hunde_zunder/constants/frontend/ui_theme.dart';
 import 'package:hunde_zunder/screens/auth/auth_screen_provider.dart';
 import 'package:hunde_zunder/services/firebase_auth_service.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class AuthScreen extends StatelessWidget {
@@ -75,7 +76,17 @@ class AuthScreen extends StatelessWidget {
       sideBuilder: (context, constraints) => Padding(
         padding: const EdgeInsets.all(8.0),
         child: Center(
-          child: animatedText,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              animatedText,
+              LottieBuilder.asset(
+                "lotties/fancy_dog.json",
+                height: constraints.maxHeight / 3,
+              ),
+            ],
+          ),
         ),
       ),
     );
