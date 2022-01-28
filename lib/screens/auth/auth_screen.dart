@@ -82,7 +82,7 @@ class AuthScreen extends StatelessWidget {
             children: [
               animatedText,
               LottieBuilder.asset(
-                "lotties/fancy_dog.json",
+                "assets/lotties/fancy_dog.json",
                 height: constraints.maxHeight / 3,
               ),
             ],
