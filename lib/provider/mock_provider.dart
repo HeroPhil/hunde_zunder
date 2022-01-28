@@ -15,7 +15,7 @@ class MockProvider with ChangeNotifier {
   Future loadMockData() async {
     dogImages = [
       for (var i = 0; i <= 5; i++)
-        (await rootBundle.load('assets/img/mocks/cute_dog$i.jpg'))
+        (await rootBundle.load('img/mocks/cute_dog$i.jpg'))
             .buffer
             .asUint8List(),
     ];

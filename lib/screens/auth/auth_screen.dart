@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutterfire_ui/auth.dart';
 import 'package:hunde_zunder/constants/frontend/ui_theme.dart';
 import 'package:hunde_zunder/screens/auth/auth_screen_provider.dart';
@@ -82,7 +83,7 @@ class AuthScreen extends StatelessWidget {
             children: [
               animatedText,
               LottieBuilder.asset(
-                "assets/lotties/fancy_dog.json",
+                "img/lotties/fancy_dog.json",
                 height: constraints.maxHeight / 3,
               ),
             ],
