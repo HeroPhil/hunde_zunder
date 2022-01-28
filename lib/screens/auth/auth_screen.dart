@@ -1,6 +1,12 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart';
+import 'package:hunde_zunder/constants/frontend/ui_theme.dart';
+import 'package:hunde_zunder/screens/auth/auth_screen_provider.dart';
 import 'package:hunde_zunder/services/firebase_auth_service.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:provider/provider.dart';
 
 class AuthScreen extends StatelessWidget {
   static const routeName = '/auth';
@@ -8,80 +14,68 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Scaffold(
-    //   body: Center(
-    //     child: Form(
-    //       key: context.read<AuthProvider>().formKey,
-    //       child: Column(
-    //         children: [
-    //           TextFormField(
-    //             onSaved: (newValue) =>
-    //                 context.read<AuthProvider>().email = newValue,
-    //             validator: (value) {
-    //               if (value?.isEmpty ?? true) {
-    //                 return "Please enter email!";
-    //               }
-    //             },
-    //             decoration: InputDecoration(
-    //               labelText: "Email",
-    //               hintText: "...@gmail.com",
-    //               icon: Icon(Icons.person),
-    //             ),
-    //           ),
-    //           TextFormField(
-    //             obscureText: true,
-    //             validator: (value) {
-    //               if (value?.isEmpty ?? true) {
-    //                 return "Please enter password!";
-    //               }
-    //             },
-    //             onSaved: (newValue) =>
-    //                 context.read<AuthProvider>().password = newValue,
-    //             decoration: InputDecoration(
-    //               labelText: "Password",
-    //               icon: Icon(Icons.lock),
-    //             ),
-    //           ),
-    //           OutlinedButton(
-    //             onPressed: context.read<AuthProvider>().submit,
-    //             child: Text("Sign In"),
-    //           ),
-    //           TextButton(
-    //             onPressed: () {
-    //               Navigator.of(context).pushNamed(SignUpScreen.routeName);
-    //             },
-    //             child: Text("Sign Up"),
-    //           ),
-    //           SignInButton(
-    //             Buttons.Google,
-    //             onPressed: () {
-    //               context.read<AuthenticationService>().googleSignIn();
-    //             },
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
+    final theme = Theme.of(context);
+
+    final animatedText = AnimatedTextKit(
+      key: context.read<AuthScreenProvider>().animatedTextKey,
+      repeatForever: true,
+      displayFullTextOnTap: true,
+      animatedTexts: [
+        "Welcome to PetConnect!",
+        ...([
+          "Find new friends for your best friend!",
+          "PetConnect is a social network for pets.",
+          "KarottenKameraden for the win!",
+          "We love pets!",
+          "Welcome to the best social network for pets!",
+          "Does your pet like carrots? Contact us for a special gift!",
+          "Sign up today and start connecting with your fluffy friends!",
+          "Bello lonely? Sign up and start swiping on bitches on heat!",
+          "Bored by tinder? Its your dogs turn!",
+        ]..shuffle())
+      ]
+          .map(
+            (text) => TypewriterAnimatedText(
+              text,
+              textAlign: TextAlign.center,
+              textStyle: theme.textTheme.headline3!.copyWith(
+                color: UiTheme.primaryColor,
+              ),
+              speed: Duration(milliseconds: 120),
+            ),
+          )
+          .toList(),
+    );
 
     return SignInScreen(
       providerConfigs: FirebaseAuthService.providerConfigurations,
-      headerBuilder: (context, constraints, shrinkOffset) => Center(
-        child: Text(
-          "Welcome to PetConnect",
-          style: Theme.of(context)
-              .textTheme
-              .headline3!
-              .copyWith(color: Colors.orange),
+      footerBuilder: (context, action) => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          "By signing up you agree to our Terms of Service and Privacy Policy.",
+          "By Karotten Kameraden © 2022 | All rights reserved.",
+          "Christian Bettermann | Philip Herold | Michael Kaiser | Nicklas Platz",
+        ]
+            .map(
+              (text) => Text(
+                text,
+                style: theme.textTheme.bodyText2!.copyWith(
+                  color: UiTheme.primaryColor,
+                ),
+              ),
+            )
+            .toList(),
+      ),
+      headerBuilder: (context, constraints, shrinkOffset) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: animatedText,
         ),
       ),
-      sideBuilder: (context, constraints) => Center(
-        child: Text(
-          "Welcome to PetConnect",
-          style: Theme.of(context)
-              .textTheme
-              .headline3!
-              .copyWith(color: Colors.orange),
+      sideBuilder: (context, constraints) => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: animatedText,
         ),
       ),
     );

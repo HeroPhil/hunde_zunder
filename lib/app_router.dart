@@ -8,6 +8,7 @@ import 'package:hunde_zunder/provider/match_provider.dart';
 import 'package:hunde_zunder/provider/mock_provider.dart';
 import 'package:hunde_zunder/provider/pet_provider.dart';
 import 'package:hunde_zunder/screens/auth/auth_screen.dart';
+import 'package:hunde_zunder/screens/auth/auth_screen_provider.dart';
 import 'package:hunde_zunder/screens/crash/crash_screen.dart';
 import 'package:hunde_zunder/screens/home/home_screen.dart';
 import 'package:hunde_zunder/screens/home/home_screen_provider.dart';
@@ -53,7 +54,10 @@ abstract class AppRouter {
           case SignUpScreen.routeName:
             return SignUpScreen();
           case AuthScreen.routeName:
-            return AuthScreen();
+            return ChangeNotifierProvider<AuthScreenProvider>(
+              create: (_) => AuthScreenProvider(),
+              child: AuthScreen(),
+            );
           case LoadingScreen.routeName:
             return LoadingScreen();
         }

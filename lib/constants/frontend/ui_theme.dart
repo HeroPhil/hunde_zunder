@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class UiTheme {
-  static final _primaryColor = Colors.orange;
-  static final _secondaryColor = Colors.orangeAccent;
-  static final _primaryColorScheme =
-      ColorScheme.fromSwatch(primarySwatch: _primaryColor);
+  static final primaryColor = Colors.orange;
+  static final secondaryColor = Colors.orangeAccent;
+  static final primaryColorScheme =
+      ColorScheme.fromSwatch(primarySwatch: primaryColor);
 
   static final lightTheme = ThemeData.from(
     colorScheme: ColorScheme.light(
-      primary: _primaryColor,
-      secondary: _secondaryColor,
+      primary: primaryColor,
+      secondary: secondaryColor,
     ),
   ).copyWith(
     cardTheme: CardTheme(
@@ -21,8 +21,8 @@ class UiTheme {
 
   static final darkTheme = ThemeData.from(
     colorScheme: ColorScheme.dark(
-      primary: _primaryColor,
-      secondary: _secondaryColor,
+      primary: primaryColor,
+      secondary: secondaryColor,
     ),
   ).copyWith(
     cardTheme: CardTheme(
