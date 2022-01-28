@@ -33,7 +33,7 @@ class Root extends StatelessWidget {
           initialData: null,
         ),
         ChangeNotifierProvider<MockProvider>(
-          create: (_) => MockProvider(),
+          create: (_) => MockProvider(bundle: DefaultAssetBundle.of(context)),
         ),
       ],
       builder: (context, _) {

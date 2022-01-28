@@ -84,6 +84,7 @@ class AuthScreen extends StatelessWidget {
               animatedText,
               LottieBuilder.asset(
                 "img/lotties/fancy_dog.json",
+                bundle: DefaultAssetBundle.of(context),
                 height: constraints.maxHeight / 3,
               ),
             ],
