@@ -1,4 +1,4 @@
-# HundeZunder
+# Pet Connect (HundeZunder)
 Hunde (Treff | Sitter | Vermittlung | Trading)* Plattform nach Tinder
 
 ## Vorbilder
