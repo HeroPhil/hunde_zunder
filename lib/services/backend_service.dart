@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:hunde_zunder/services/firebase_auth_service.dart';
 import 'package:http/http.dart' as http;
@@ -14,11 +16,11 @@ class BackendService with ChangeNotifier {
   //   port: 8080,
   //   path: "/public/debug",
   // );
-  static final url = Uri(
+  static final baseUrl = Uri(
     scheme: "https",
     host: "api.pet-connect.karottenkameraden.de",
     port: 443,
-    path: "/public/debug",
+    path: "",
   );
 
   final FirebaseAuthService firebaseAuthService;
@@ -27,7 +29,16 @@ class BackendService with ChangeNotifier {
     required this.firebaseAuthService,
   });
 
-  void callBackend() async {
+  dynamic callBackend({
+    String? endpoint,
+    Map<String, dynamic>? queryParameters,
+    Map<String, String>? headerParameters,
+  }) async {
+    final url = baseUrl.replace(
+      path: endpoint != null ? "${baseUrl.path}/$endpoint" : baseUrl.path,
+      queryParameters: queryParameters,
+    );
+
     final token = await firebaseAuthService.getBearerToken();
 
     if (token == null) {
@@ -40,8 +51,13 @@ class BackendService with ChangeNotifier {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       if (token != null) 'Authorization': 'Bearer $token',
+      if (headerParameters != null) ...headerParameters,
     });
 
     print("response(${response.statusCode}): ${response.body}");
+
+    if (response.statusCode == 200) {
+      return const JsonDecoder().convert(response.body);
+    }
   }
 }
