@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hunde_zunder/constants/frontend/ui_assets.dart';
@@ -52,24 +54,38 @@ class PetDetailPage extends StatelessWidget {
                     key: petPageProvider.formKey,
                     child: Column(
                       children: [
-                        GestureDetector(
-                          onTap: petPageProvider.editMode
-                              ? () async {
-                                  (await ImagePicker().pickImage(
-                                          source: ImageSource.gallery))
-                                      ?.readAsBytes()
-                                      .then((img) =>
-                                          petPageProvider.updatePetData(
-                                            (p0) => p0..image = img,
-                                          ));
-                                }
-                              : null,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Image.memory(
-                              pet.image,
-                              fit: BoxFit.cover,
+                        FormField<Uint8List>(
+                          initialValue: petPageProvider.pet.image,
+                          builder: (formFieldState) => GestureDetector(
+                            onTap: petPageProvider.editMode
+                                ? () async => (await ImagePicker()
+                                        .pickImage(source: ImageSource.gallery))
+                                    ?.readAsBytes()
+                                    .then(
+                                      (value) =>
+                                          formFieldState.didChange(value),
+                                    )
+                                : null,
+                            child: Column(
+                              children: [
+                                Image.memory(formFieldState.value ??
+                                    UiAssets.defaultDogImage),
+                                if (formFieldState.hasError)
+                                  Text(
+                                    formFieldState.errorText ?? "no error",
+                                    style: TextStyle(color: Colors.red),
+                                  )
+                              ],
                             ),
+                          ),
+                          validator: (value) {
+                            if (value == null ||
+                                value == UiAssets.defaultDogImage) {
+                              return "Please upload an image";
+                            }
+                          },
+                          onSaved: (value) => petPageProvider.updatePetData(
+                            (p0) => p0..image = value!,
                           ),
                         ),
                         if (!petPageProvider.editMode)
@@ -80,7 +96,11 @@ class PetDetailPage extends StatelessWidget {
                         TextFormField(
                           initialValue: pet.name,
                           // TODO add validation
-                          validator: (value) => null,
+                          validator: (value) => (null == value ||
+                                  value.isEmpty ||
+                                  value == "New Pet")
+                              ? "Please enter a name"
+                              : null,
                           decoration: inputDecoration.copyWith(
                             icon: Icon(Icons.confirmation_num),
                             label: Text("Pet Name"),
@@ -169,10 +189,43 @@ class PetDetailPage extends StatelessWidget {
                             ),
                           ),
                         if (petPageProvider.editMode)
-                          OutlinedButton.icon(
-                            onPressed: petPageProvider.submit,
-                            icon: Icon(Icons.save_outlined),
-                            label: Text("Save"),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              ElevatedButton.icon(
+                                onPressed: petPageProvider.submit,
+                                icon: Icon(Icons.save_outlined),
+                                label: Text("Save"),
+                              ),
+                              OutlinedButton.icon(
+                                onPressed: () => showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: Text(
+                                      "Are you sure you want to discard your changes?",
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        child: Text("Continue"),
+                                        onPressed: () =>
+                                            Navigator.pop(context, false),
+                                      ),
+                                      TextButton(
+                                        child: Text("Exit"),
+                                        onPressed: () =>
+                                            Navigator.pop(context, true),
+                                      ),
+                                    ],
+                                  ),
+                                ).then(
+                                  (discard) {
+                                    if (discard) Navigator.pop(context);
+                                  },
+                                ),
+                                icon: Icon(Icons.cancel_outlined),
+                                label: Text("Discard"),
+                              ),
+                            ],
                           ),
                       ],
                     ),
