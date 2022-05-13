@@ -9,6 +9,7 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.karottenkameraden.petConnect.models.profile.Profile;
 
 @Getter
@@ -30,6 +31,7 @@ public class Account {
     // @Column()
     // private String password;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     private List<Profile> profiles = new ArrayList<>();
 

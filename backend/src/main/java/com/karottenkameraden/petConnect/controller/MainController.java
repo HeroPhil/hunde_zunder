@@ -48,11 +48,14 @@ public class MainController {
     }
 
     @GetMapping("/profiles/{profileId}/matches")
-    public ResponseEntity<List<Match>> getMatches(@PathVariable String profileId){
+    public ResponseEntity<String> getMatches(@PathVariable String profileId){
         Account account = getAccount(SecurityContextHolder.getContext());
         Profile profile = getProfile(account, profileId);
-        List<Match> matches = profile.getMatches();
-        return ResponseEntity.ok(matches);
+        // List<Match> matches = profile.getMatches();
+        return ResponseEntity.ok(
+            // matches
+            "Matches from " + profile.getId()
+            );
     }
 
 
@@ -87,8 +90,10 @@ public class MainController {
     } 
 
     public Profile getProfile(Account account, String profileId){
+        System.out.println("searched " + profileId);
         List<Profile> profiles = account.getProfiles();
         for (Profile profile : profiles) {
+            System.out.println(profile.getId());
             if (profile.getId() == profileId) {
                 return profile;
             }
@@ -97,18 +102,20 @@ public class MainController {
     }
 
     public Match getMatch(Profile profile, String matchId){
-        List<Match> matches = profile.getMatches();
-        for (Match match : matches) {
-            if (match.getId() == matchId) {
-                return match;
-            }
-        }
+        // List<Match> matches = profile.getMatches();
+        // for (Match match : matches) {
+        //     if (match.getId() == matchId) {
+        //         return match;
+        //     }
+        // }
         return null;
     }
 
     public Account register(User user) {
         System.out.println("registering new user");
-        Account account = new Account(user.getUid(), user.getName(), user.getEmail());
+        String name = user.getName() == null ? "MissingUsername" : user.getName();
+        Account account = new Account(user.getUid(), name, user.getEmail());
+        
         accountRepository.save(account);
         return account;
     }

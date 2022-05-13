@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.karottenkameraden</groupId>
 	<artifactId>petConnect</artifactId>
-	<version>0.10</version>
+	<version>0.15</version>
 	<name>petConnect</name>
 	<description>petConnect project for Spring Boot</description>
 	<properties>
