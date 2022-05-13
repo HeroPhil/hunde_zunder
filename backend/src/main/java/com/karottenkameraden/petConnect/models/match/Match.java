@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.karottenkameraden.petConnect.models.profile.Profile;
 
 @Getter
@@ -17,7 +18,8 @@ public class Match {
     @NotNull
     private String id;    
 
-    @ManyToOne
-    @JoinColumn(name = "profile_id", nullable = false)
-    private Profile profile;
+//     @JsonBackReference
+//     @ManyToOne
+//     @JoinColumn(name = "profile_id", nullable = false)
+//     private Profile profile;
 }

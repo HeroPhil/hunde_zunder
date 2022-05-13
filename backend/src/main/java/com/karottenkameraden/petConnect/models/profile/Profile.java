@@ -7,6 +7,9 @@ import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.karottenkameraden.petConnect.models.account.Account;
 import com.karottenkameraden.petConnect.models.match.Match;
 
@@ -47,12 +50,14 @@ public class Profile {
     @Column
     private String interests;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 
-    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
-    private List<Match> matches = new ArrayList<>();
+    // @JsonManagedReference
+    // @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
+    // private List<Match> matches = new ArrayList<>();
 
     // private List<String> imagePaths;
 }
