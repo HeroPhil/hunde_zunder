@@ -10,6 +10,7 @@ import 'package:hunde_zunder/services/backend_service.dart';
 import 'package:hunde_zunder/services/firebase_auth_service.dart';
 import 'package:provider/provider.dart';
 
+import 'constants/frontend/ui_assets.dart';
 import 'provider/mock_provider.dart';
 
 class Root extends StatelessWidget {
@@ -19,6 +20,12 @@ class Root extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        // register prerequisites Initializers
+        FutureProvider<bool>(
+          create: (_) => Future.wait(<Future>[UiAssets.init(context)])
+              .then<bool>((_) => true),
+          initialData: false,
+        ),
         ChangeNotifierProvider<FirebaseAuthService>(
           create: (context) => FirebaseAuthService(),
         ),
@@ -37,7 +44,11 @@ class Root extends StatelessWidget {
         ),
       ],
       builder: (context, _) {
-        if (!context.watch<MockProvider>().initialized) {
+        if (!context.watch<MockProvider>().initialized ||
+                !context
+                    .watch<bool>() // watch if all prerequisites are initialized
+
+            ) {
           return MaterialApp(home: LoadingScreen());
         }
 

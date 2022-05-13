@@ -1,7 +1,7 @@
 name: hunde_zunder
 description: DogConnect
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -41,6 +41,7 @@ dependencies:
   intl: ^0.17.0
   animated_text_kit: ^4.2.1
   lottie: ^1.2.1
+  image_picker: ^0.8.5+3
 
 dev_dependencies:
   flutter_test:
@@ -58,7 +59,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -68,6 +68,7 @@ flutter:
   assets:
     - img/mocks/
     - img/lotties/
+    - img/defaults/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

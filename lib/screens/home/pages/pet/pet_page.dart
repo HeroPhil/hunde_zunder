@@ -64,9 +64,10 @@ class PetPage extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   child: Text('Add Pet'),
                 ),
-                onPressed: () {
-                  // context.read<PetProvider>().addPet();
-                },
+                onPressed: () => Navigator.pushNamed(
+                  context,
+                  PetDetailPage.routeName,
+                ),
               ),
             ],
           );

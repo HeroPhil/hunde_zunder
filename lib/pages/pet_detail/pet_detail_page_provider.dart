@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:hunde_zunder/constants/frontend/ui_assets.dart';
 import 'package:hunde_zunder/models/pet.dart';
 import 'package:hunde_zunder/provider/pet_provider.dart';
 
@@ -20,7 +21,7 @@ class PetDetailPageProvider with ChangeNotifier {
   })  : this.pet = pet ??
             Pet(
               name: 'New Pet',
-              image: Uint8List.fromList([]),
+              image: UiAssets.defaultDogImage,
             ),
         _editMode = (pet == null) {}
 

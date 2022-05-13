@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hunde_zunder/constants/frontend/ui_assets.dart';
 import 'package:hunde_zunder/pages/pet_detail/pet_detail_page_provider.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:res_builder/responsive.dart';
@@ -50,11 +52,24 @@ class PetDetailPage extends StatelessWidget {
                     key: petPageProvider.formKey,
                     child: Column(
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Image.memory(
-                            pet.image,
-                            fit: BoxFit.cover,
+                        GestureDetector(
+                          onTap: petPageProvider.editMode
+                              ? () async {
+                                  (await ImagePicker().pickImage(
+                                          source: ImageSource.gallery))
+                                      ?.readAsBytes()
+                                      .then((img) =>
+                                          petPageProvider.updatePetData(
+                                            (p0) => p0..image = img,
+                                          ));
+                                }
+                              : null,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Image.memory(
+                              pet.image,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                         if (!petPageProvider.editMode)
