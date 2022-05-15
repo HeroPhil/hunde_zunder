@@ -85,7 +85,7 @@ class PetDetailPage extends StatelessWidget {
                             }
                           },
                           onSaved: (value) => petPageProvider.updatePetData(
-                            (p0) => p0..image = value!,
+                            (p0) => p0.copyWith.image(value!),
                           ),
                         ),
                         if (!petPageProvider.editMode)
@@ -105,6 +105,9 @@ class PetDetailPage extends StatelessWidget {
                             icon: Icon(Icons.confirmation_num),
                             label: Text("Pet Name"),
                           ),
+                          onSaved: (value) => petPageProvider.updatePetData(
+                            (p0) => p0.copyWith.name(value!),
+                          ),
                           enabled: petPageProvider.editMode,
                         ),
                         petPageProvider.editMode
@@ -120,6 +123,10 @@ class PetDetailPage extends StatelessWidget {
                                 decoration: inputDecoration.copyWith(
                                   icon: Icon(Icons.pets),
                                   label: Text("Pet Type"),
+                                ),
+                                onSaved: (value) =>
+                                    petPageProvider.updatePetData(
+                                  (p0) => p0.copyWith.type(value!),
                                 ),
                               )
                             : TextFormField(
@@ -147,6 +154,10 @@ class PetDetailPage extends StatelessWidget {
                                   icon: Icon(Icons.transgender),
                                   label: Text("Pet Gender"),
                                 ),
+                                onSaved: (value) =>
+                                    petPageProvider.updatePetData(
+                                  (p0) => p0.copyWith.gender(value!),
+                                ),
                               )
                             : TextFormField(
                                 initialValue: pet.gender.name,
@@ -165,6 +176,9 @@ class PetDetailPage extends StatelessWidget {
                             label: Text("Pet Race"),
                           ),
                           enabled: petPageProvider.editMode,
+                          onSaved: (value) => petPageProvider.updatePetData(
+                            (p0) => p0.copyWith.race(value),
+                          ),
                         ),
                         TextFormField(
                           initialValue: pet.description,
@@ -175,6 +189,9 @@ class PetDetailPage extends StatelessWidget {
                             label: Text("Description"),
                           ),
                           enabled: petPageProvider.editMode,
+                          onSaved: (value) => petPageProvider.updatePetData(
+                            (p0) => p0.copyWith.description(value!),
+                          ),
                         ),
                         if (pet.birthday != null)
                           TextFormField(
@@ -182,10 +199,28 @@ class PetDetailPage extends StatelessWidget {
                                 "${pet.birthday!.difference(DateTime.now()).inDays / 30}",
                             enabled: petPageProvider.editMode,
                             // TODO add validation
-                            validator: (value) => null,
+                            validator: (value) {
+                              // month value should be a non null positiv integer which is not bigger than 200
+                              if (value == null ||
+                                  value.isEmpty ||
+                                  int.tryParse(value) == null ||
+                                  int.parse(value) <= 0 ||
+                                  int.parse(value) > 200) {
+                                return "Please enter a valid month value";
+                              }
+                            },
                             decoration: inputDecoration.copyWith(
                               icon: Icon(Icons.cake),
                               label: Text("Pet Birthday"),
+                            ),
+                            onSaved: (value) => petPageProvider.updatePetData(
+                              (p0) => p0.copyWith.birthday(
+                                DateTime.now().subtract(
+                                  Duration(
+                                    days: int.parse(value!),
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         if (petPageProvider.editMode)

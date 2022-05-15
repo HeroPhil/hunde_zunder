@@ -53,7 +53,7 @@ class PetDetailPageProvider with ChangeNotifier {
     if (formKey?.currentState!.validate() ?? false) {
       formKey?.currentState!.save();
       toggleEditMode();
-      // TODO submit to Server
+      petProvider.updatePet(pet: pet);
     }
   }
 

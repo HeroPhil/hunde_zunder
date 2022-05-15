@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hunde_zunder/pages/pet_detail/pet_detail_page.dart';
+import 'package:hunde_zunder/provider/pet_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/src/provider.dart';
 
@@ -13,9 +14,9 @@ class PetPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Consumer<PetPageProvider>(
-        builder: (context, petPageProvider, _) {
-          final pets = petPageProvider.pets;
+      child: Consumer<PetProvider>(
+        builder: (context, petProvider, _) {
+          final pets = petProvider.myPets;
           if (pets == null) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -37,7 +38,7 @@ class PetPage extends StatelessWidget {
                         const Center(
                           child: Text('No pets found'),
                         ),
-                      ...petPageProvider.pets!.map(
+                      ...petProvider.myPets!.map(
                         (pet) => Hero(
                           tag: "${PetDetailPage.routeName}-${pet.id}",
                           child: Card(

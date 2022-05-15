@@ -9,14 +9,14 @@ class PetProvider with ChangeNotifier {
   final MockProvider mockProvider;
 
   // data
-  List<Pet>? _myPets;
+  Set<Pet>? _myPets;
 
   PetProvider({
     required this.mockProvider,
   });
 
   List<Pet>? get myPets {
-    _myPets ??= [
+    _myPets ??= {
       Pet(
         name: 'Puppy',
         image: mockProvider.dogImages[0],
@@ -29,8 +29,17 @@ class PetProvider with ChangeNotifier {
         name: 'Rudloff',
         image: mockProvider.dogImages[2],
       ),
-    ];
-    return _myPets;
+    };
+    return _myPets!.toList();
+  }
+
+  void updatePet({
+    required Pet pet,
+  }) {
+    final isUpdate = _myPets?.remove(pet) ?? false;
+    _myPets?.add(pet);
+    //TODO update Backend
+    notifyListeners();
   }
 
   Pet get nextForeignPet {
