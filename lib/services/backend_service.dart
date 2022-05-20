@@ -23,10 +23,16 @@ class BackendService with ChangeNotifier {
   //   port: 8080,
   //   path: "/public/debug",
   // );
+  // static final baseUrl = Uri(
+  //   scheme: "https",
+  //   host: "api.pet-connect.karottenkameraden.de",
+  //   port: 443,
+  //   path: "",
+  // );
   static final baseUrl = Uri(
-    scheme: "https",
-    host: "api.pet-connect.karottenkameraden.de",
-    port: 443,
+    scheme: "http",
+    host: "petconnect-env.eba-mm7ehn6g.eu-central-1.elasticbeanstalk.com",
+    port: 80,
     path: "",
   );
 
@@ -36,7 +42,7 @@ class BackendService with ChangeNotifier {
     required this.firebaseAuthService,
   });
 
-  dynamic callBackend({
+  Future<dynamic> callBackend({
     required RequestType requestType,
     String? endpoint,
     Map<String, dynamic>? queryParameters,
@@ -66,17 +72,21 @@ class BackendService with ChangeNotifier {
     late http.Response response;
     switch (requestType) {
       case RequestType.POST:
+        print("posting to ${url.toString()}");
         response =
             await http.post(url, headers: headers, body: json.encode(body));
         break;
       case RequestType.PUT:
+        print("putting to ${url.toString()}");
         response =
             await http.put(url, headers: headers, body: json.encode(body));
         break;
       case RequestType.DELETE:
+        print("deleting from ${url.toString()}");
         response = await http.delete(url, headers: headers);
         break;
       default:
+        print("getting from ${url.toString()}");
         response = await http.get(url, headers: headers);
         break;
     }

@@ -19,6 +19,20 @@ class PetProvider with ChangeNotifier {
   });
 
   List<Pet>? get myPets {
+    // if (_myPets == null) {
+    //   (backendService.callBackend(
+    //     requestType: RequestType.GET,
+    //     endpoint: "mypets",
+    //   ) as Future<List<Map<String, dynamic>>>)
+    //       .then(
+    //         (jsonList) => jsonList.map((json) => Pet.fromJson(json)).toList(),
+    //       )
+    //       .then(
+    //         (pets) => _myPets = pets.toSet(),
+    //       )
+    //       .then((_) => notifyListeners());
+    // }
+
     _myPets ??= {
       Pet(
         name: 'Puppy',
@@ -45,8 +59,8 @@ class PetProvider with ChangeNotifier {
     // update Backend
     await backendService.callBackend(
       requestType: isUpdate ? RequestType.PUT : RequestType.POST,
-      endpoint: 'mypets${isUpdate ? '/${pet.id}' : ""}',
-      body: pet.toJson(),
+      endpoint: 'mypets${isUpdate ? '/${pet.petID}' : ""}',
+      body: pet.toJson,
     );
     // clear cache
     if (!isUpdate) _myPets = null;

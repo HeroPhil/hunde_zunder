@@ -40,7 +40,7 @@ class PetPage extends StatelessWidget {
                         ),
                       ...petProvider.myPets!.map(
                         (pet) => Hero(
-                          tag: "${PetDetailPage.routeName}-${pet.id}",
+                          tag: "${PetDetailPage.routeName}-${pet.petID}",
                           child: Card(
                             child: ListTile(
                               onTap: () => Navigator.pushNamed(

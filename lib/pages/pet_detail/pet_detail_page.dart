@@ -19,9 +19,9 @@ class PetDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<PetDetailPageProvider>(
         builder: (context, petPageProvider, _) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        petPageProvider.init();
-      });
+      // WidgetsBinding.instance.addPostFrameCallback((_) {
+      //   petPageProvider.init();
+      // });
       final pet = petPageProvider.pet;
       final defaultInputDecoration = InputDecoration();
       final inputDecoration = petPageProvider.editMode
@@ -36,7 +36,7 @@ class PetDetailPage extends StatelessWidget {
 
       return Center(
         child: Hero(
-          tag: "${PetDetailPage.routeName}-${pet.id}",
+          tag: "${PetDetailPage.routeName}-${pet.petID}",
           child: Card(
             child: SingleChildScrollView(
               child: Padding(

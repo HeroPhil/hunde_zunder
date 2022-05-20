@@ -24,9 +24,9 @@ class SwipePage extends StatelessWidget {
                       arguments: {"pet": pet},
                     ),
                     child: Dismissible(
-                      key: Key('swipe-card-${pet.id}'),
+                      key: Key('swipe-card-${pet.petID}'),
                       child: Hero(
-                        tag: "${PetDetailPage.routeName}-${pet.id}",
+                        tag: "${PetDetailPage.routeName}-${pet.petID}",
                         child: SwipeCard(
                           pet: pet,
                         ),

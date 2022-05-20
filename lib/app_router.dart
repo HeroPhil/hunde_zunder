@@ -40,7 +40,7 @@ abstract class AppRouter {
               create: (context) => PetDetailPageProvider(
                 petProvider: context.read<PetProvider>(),
                 pet: arguments['pet'],
-              ),
+              )..init(),
               child: PetDetailPage(),
             );
           },

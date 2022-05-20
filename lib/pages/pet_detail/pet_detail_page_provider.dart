@@ -51,8 +51,10 @@ class PetDetailPageProvider with ChangeNotifier {
 
   Future submit(BuildContext context) async {
     if (formKey?.currentState!.validate() ?? false) {
-      formKey?.currentState!.save();
       toggleEditMode();
+      print('form is valid');
+      formKey?.currentState!.save();
+      print('form is saved');
       await petProvider.updatePet(pet: pet);
       Navigator.pop(context);
     }

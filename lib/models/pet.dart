@@ -28,7 +28,7 @@ enum PetGender {
 @JsonSerializable()
 @CopyWith()
 class Pet {
-  final String id; // Mocked
+  final String petID; // Mocked
   final String name;
   @ImageConverter()
   final Uint8List image;
@@ -39,7 +39,7 @@ class Pet {
   final DateTime? birthday;
 
   Pet({
-    String? id,
+    String? petID,
     required this.name,
     required this.image,
     this.type = PetType.other,
@@ -47,7 +47,7 @@ class Pet {
     this.race,
     this.description,
     this.birthday,
-  }) : id = id ?? Uuid().v4();
+  }) : petID = petID ?? Uuid().v4();
 
   factory Pet.fromJson(Map<String, dynamic> json) => _$PetFromJson(json);
 
@@ -57,11 +57,11 @@ class Pet {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other is Pet) {
-      return id == other.id;
+      return petID == other.petID;
     }
     return false;
   }
 
   @override
-  int get hashCode => id.hashCode;
+  int get hashCode => petID.hashCode;
 }
