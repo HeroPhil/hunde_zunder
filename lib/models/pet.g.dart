@@ -126,7 +126,7 @@ extension $PetCopyWith on Pet {
 
 Pet _$PetFromJson(Map<String, dynamic> json) => Pet(
       name: json['name'] as String,
-      image: const ImageConverter().fromJson(json['image'] as List<int>),
+      image: const ImageConverter().fromJson(json['image'] as String),
       type:
           $enumDecodeNullable(_$PetTypeEnumMap, json['type']) ?? PetType.other,
       gender: $enumDecodeNullable(_$PetGenderEnumMap, json['gender']) ??
