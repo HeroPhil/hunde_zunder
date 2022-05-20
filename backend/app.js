@@ -1,6 +1,6 @@
 const { EnvironmentCredentials } = require('aws-sdk')
 const express = require('express')
-const user = require('./user')
+const user = require('./controller')
 
 const app = express()
 const PORT = process.env.PORT
