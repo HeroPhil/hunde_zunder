@@ -20,7 +20,7 @@ class App extends StatelessWidget {
       darkTheme: UiTheme.darkTheme,
       home: Builder(
         builder: (context) {
-          WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+          WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
             Navigator.pushReplacementNamed(
               context,
               context.read<User?>() != null

@@ -19,7 +19,7 @@ class PetDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<PetDetailPageProvider>(
         builder: (context, petPageProvider, _) {
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         petPageProvider.init();
       });
       final pet = petPageProvider.pet;
