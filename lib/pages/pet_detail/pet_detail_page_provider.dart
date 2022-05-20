@@ -49,11 +49,12 @@ class PetDetailPageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void submit() {
+  Future submit(BuildContext context) async {
     if (formKey?.currentState!.validate() ?? false) {
       formKey?.currentState!.save();
       toggleEditMode();
-      petProvider.updatePet(pet: pet);
+      await petProvider.updatePet(pet: pet);
+      Navigator.pop(context);
     }
   }
 

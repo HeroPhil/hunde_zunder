@@ -61,6 +61,7 @@ class Root extends StatelessWidget {
           ),
           builder: (context, app) {
             final _mockProvider = context.read<MockProvider>();
+            final _backendService = context.read<BackendService>();
             if (user != null) {
               // register Global Provider which are dependend on the currentUser here
 
@@ -69,6 +70,7 @@ class Root extends StatelessWidget {
                   ChangeNotifierProvider<PetProvider>(
                     create: (_) => PetProvider(
                       mockProvider: _mockProvider,
+                      backendService: _backendService,
                     ),
                   ),
                 ],
