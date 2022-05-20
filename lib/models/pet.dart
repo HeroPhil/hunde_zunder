@@ -39,6 +39,7 @@ class Pet {
   final DateTime? birthday;
 
   Pet({
+    String? id,
     required this.name,
     required this.image,
     this.type = PetType.other,
@@ -46,7 +47,7 @@ class Pet {
     this.race,
     this.description,
     this.birthday,
-  }) : id = Uuid().v4();
+  }) : id = id ?? Uuid().v4();
 
   factory Pet.fromJson(Map<String, dynamic> json) => _$PetFromJson(json);
 

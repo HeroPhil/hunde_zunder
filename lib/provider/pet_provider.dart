@@ -3,16 +3,19 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:hunde_zunder/models/pet.dart';
 import 'package:hunde_zunder/provider/mock_provider.dart';
+import 'package:hunde_zunder/services/backend_service.dart';
 
 class PetProvider with ChangeNotifier {
   //dependencies
   final MockProvider mockProvider;
+  final BackendService backendService;
 
   // data
   Set<Pet>? _myPets;
 
   PetProvider({
     required this.mockProvider,
+    required this.backendService,
   });
 
   List<Pet>? get myPets {
@@ -33,12 +36,20 @@ class PetProvider with ChangeNotifier {
     return _myPets!.toList();
   }
 
-  void updatePet({
+  Future updatePet({
     required Pet pet,
-  }) {
+  }) async {
     final isUpdate = _myPets?.remove(pet) ?? false;
+    // add to cache
     _myPets?.add(pet);
-    //TODO update Backend
+    // update Backend
+    await backendService.callBackend(
+      requestType: isUpdate ? RequestType.PUT : RequestType.POST,
+      endpoint: 'mypets${isUpdate ? '/${pet.id}' : ""}',
+      body: pet.toJson(),
+    );
+    // clear cache
+    if (!isUpdate) _myPets = null;
     notifyListeners();
   }
 

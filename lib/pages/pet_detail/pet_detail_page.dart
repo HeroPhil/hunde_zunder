@@ -228,7 +228,8 @@ class PetDetailPage extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               ElevatedButton.icon(
-                                onPressed: petPageProvider.submit,
+                                onPressed: () =>
+                                    petPageProvider.submit(context),
                                 icon: Icon(Icons.save_outlined),
                                 label: Text("Save"),
                               ),

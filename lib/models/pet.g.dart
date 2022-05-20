@@ -13,6 +13,8 @@ abstract class _$PetCWProxy {
 
   Pet gender(PetGender gender);
 
+  Pet id(String? id);
+
   Pet image(Uint8List image);
 
   Pet name(String name);
@@ -31,6 +33,7 @@ abstract class _$PetCWProxy {
     DateTime? birthday,
     String? description,
     PetGender? gender,
+    String? id,
     Uint8List? image,
     String? name,
     String? race,
@@ -52,6 +55,9 @@ class _$PetCWProxyImpl implements _$PetCWProxy {
 
   @override
   Pet gender(PetGender gender) => this(gender: gender);
+
+  @override
+  Pet id(String? id) => this(id: id);
 
   @override
   Pet image(Uint8List image) => this(image: image);
@@ -77,6 +83,7 @@ class _$PetCWProxyImpl implements _$PetCWProxy {
     Object? birthday = const $CopyWithPlaceholder(),
     Object? description = const $CopyWithPlaceholder(),
     Object? gender = const $CopyWithPlaceholder(),
+    Object? id = const $CopyWithPlaceholder(),
     Object? image = const $CopyWithPlaceholder(),
     Object? name = const $CopyWithPlaceholder(),
     Object? race = const $CopyWithPlaceholder(),
@@ -95,6 +102,10 @@ class _$PetCWProxyImpl implements _$PetCWProxy {
           ? _value.gender
           // ignore: cast_nullable_to_non_nullable
           : gender as PetGender,
+      id: id == const $CopyWithPlaceholder()
+          ? _value.id
+          // ignore: cast_nullable_to_non_nullable
+          : id as String?,
       image: image == const $CopyWithPlaceholder() || image == null
           ? _value.image
           // ignore: cast_nullable_to_non_nullable
@@ -125,8 +136,9 @@ extension $PetCopyWith on Pet {
 // **************************************************************************
 
 Pet _$PetFromJson(Map<String, dynamic> json) => Pet(
+      id: json['id'] as String?,
       name: json['name'] as String,
-      image: const ImageConverter().fromJson(json['image'] as List<int>),
+      image: const ImageConverter().fromJson(json['image'] as String),
       type:
           $enumDecodeNullable(_$PetTypeEnumMap, json['type']) ?? PetType.other,
       gender: $enumDecodeNullable(_$PetGenderEnumMap, json['gender']) ??
@@ -139,6 +151,7 @@ Pet _$PetFromJson(Map<String, dynamic> json) => Pet(
     );
 
 Map<String, dynamic> _$PetToJson(Pet instance) => <String, dynamic>{
+      'id': instance.id,
       'name': instance.name,
       'image': const ImageConverter().toJson(instance.image),
       'type': _$PetTypeEnumMap[instance.type],
