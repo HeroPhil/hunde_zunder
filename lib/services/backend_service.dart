@@ -65,36 +65,46 @@ class BackendService with ChangeNotifier {
     final headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'origin': '${window.location.origin}',
       if (token != null) 'Authorization': 'Bearer $token',
       if (headerParameters != null) ...headerParameters,
     };
 
     late http.Response response;
-    switch (requestType) {
-      case RequestType.POST:
-        print("posting to ${url.toString()}");
-        response =
-            await http.post(url, headers: headers, body: json.encode(body));
-        break;
-      case RequestType.PUT:
-        print("putting to ${url.toString()}");
-        response =
-            await http.put(url, headers: headers, body: json.encode(body));
-        break;
-      case RequestType.DELETE:
-        print("deleting from ${url.toString()}");
-        response = await http.delete(url, headers: headers);
-        break;
-      default:
-        print("getting from ${url.toString()}");
-        response = await http.get(url, headers: headers);
-        break;
+    try {
+      switch (requestType) {
+        case RequestType.POST:
+          print("posting to ${url.toString()}");
+          response =
+              await http.post(url, headers: headers, body: json.encode(body));
+          break;
+        case RequestType.PUT:
+          print("putting to ${url.toString()}");
+          response =
+              await http.put(url, headers: headers, body: json.encode(body));
+          break;
+        case RequestType.DELETE:
+          print("deleting from ${url.toString()}");
+          response = await http.delete(url, headers: headers);
+          break;
+        default:
+          print("getting from ${url.toString()}");
+          response = await http.get(url, headers: headers);
+          break;
+      }
+    } on http.ClientException catch (e) {
+      print("http Client Exception error: $e");
+      print(e);
+      return null;
     }
 
     print("response(${response.statusCode}): ${response.body}");
 
     if (response.statusCode == 200) {
       return const JsonDecoder().convert(response.body);
+    } else {
+      print("http request failed: ${response.statusCode}");
     }
   }
 }
