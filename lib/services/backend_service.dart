@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/services/firebase_auth_service.dart';
+import 'firebase_auth_service.dart';
 import 'package:http/http.dart' as http;
 
 import 'dart:html';

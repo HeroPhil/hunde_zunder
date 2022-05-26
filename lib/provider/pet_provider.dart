@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/models/pet.dart';
-import 'package:hunde_zunder/provider/mock_provider.dart';
-import 'package:hunde_zunder/services/backend_service.dart';
+import '../models/pet.dart';
+import 'mock_provider.dart';
+import '../services/backend_service.dart';
 
 class PetProvider with ChangeNotifier {
   //dependencies

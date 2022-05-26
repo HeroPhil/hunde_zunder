@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/constants/frontend/ui_assets.dart';
-import 'package:hunde_zunder/models/pet.dart';
-import 'package:hunde_zunder/provider/pet_provider.dart';
+import '../../constants/frontend/ui_assets.dart';
+import '../../models/pet.dart';
+import '../../provider/pet_provider.dart';
 
 class PetDetailPageProvider with ChangeNotifier {
 // dependencies

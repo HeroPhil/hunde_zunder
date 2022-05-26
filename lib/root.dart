@@ -1,13 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/app.dart';
-import 'package:hunde_zunder/provider/auth_provider.dart';
-import 'package:hunde_zunder/provider/match_provider.dart';
-import 'package:hunde_zunder/provider/pet_provider.dart';
-import 'package:hunde_zunder/screens/loading/loading_screen.dart';
-import 'package:hunde_zunder/services/authentication_service.dart';
-import 'package:hunde_zunder/services/backend_service.dart';
-import 'package:hunde_zunder/services/firebase_auth_service.dart';
+import 'app.dart';
+import 'provider/auth_provider.dart';
+import 'provider/match_provider.dart';
+import 'provider/pet_provider.dart';
+import 'screens/loading/loading_screen.dart';
+import 'services/backend_service.dart';
+import 'services/firebase_auth_service.dart';
 import 'package:provider/provider.dart';
 
 import 'constants/frontend/ui_assets.dart';

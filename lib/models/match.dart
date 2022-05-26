@@ -1,4 +1,4 @@
-import 'package:hunde_zunder/models/pet.dart';
+import 'pet.dart';
 
 class Match {
   Pet myPet;

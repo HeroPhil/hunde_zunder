@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/services.dart';
-import 'package:hunde_zunder/constants/frontend/ui_assets.dart';
+import '../constants/frontend/ui_assets.dart';
 
 class MockProvider with ChangeNotifier {
   final AssetBundle bundle;

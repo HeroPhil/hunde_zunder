@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hunde_zunder/models/pet.dart';
-import 'package:hunde_zunder/provider/mock_provider.dart';
-import 'package:hunde_zunder/provider/pet_provider.dart';
+import '../../../../models/pet.dart';
+import '../../../../provider/mock_provider.dart';
+import '../../../../provider/pet_provider.dart';
 
 class PetPageProvider with ChangeNotifier {
   final PetProvider petProvider;

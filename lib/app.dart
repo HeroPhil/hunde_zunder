@@ -1,11 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/app_router.dart';
-import 'package:hunde_zunder/constants/frontend/ui_theme.dart';
-import 'package:hunde_zunder/screens/auth/auth_screen.dart';
-import 'package:hunde_zunder/screens/home/home_screen.dart';
-import 'package:hunde_zunder/screens/loading/loading_screen.dart';
-import 'package:hunde_zunder/services/authentication_service.dart';
+import 'app_router.dart';
+import 'constants/frontend/ui_theme.dart';
+import 'screens/auth/auth_screen.dart';
+import 'screens/home/home_screen.dart';
+import 'screens/loading/loading_screen.dart';
 import 'package:provider/src/provider.dart';
 
 class App extends StatelessWidget {

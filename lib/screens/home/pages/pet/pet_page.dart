@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/pages/pet_detail/pet_detail_page.dart';
-import 'package:hunde_zunder/provider/pet_provider.dart';
+import '../../../../pages/pet_detail/pet_detail_page.dart';
+import '../../../../provider/pet_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:provider/src/provider.dart';
 

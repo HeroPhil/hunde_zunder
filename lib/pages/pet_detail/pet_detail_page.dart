@@ -2,13 +2,13 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/constants/frontend/ui_assets.dart';
-import 'package:hunde_zunder/pages/pet_detail/pet_detail_page_provider.dart';
+import '../../constants/frontend/ui_assets.dart';
+import 'pet_detail_page_provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:res_builder/responsive.dart';
-import 'package:hunde_zunder/models/pet.dart';
+import '../../models/pet.dart';
 
 class PetDetailPage extends StatelessWidget {
   static const routeName = "/petDetailPage";

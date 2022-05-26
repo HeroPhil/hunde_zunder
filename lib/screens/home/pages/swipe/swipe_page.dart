@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/pages/pet_detail/pet_detail_page.dart';
+import '../../../../pages/pet_detail/pet_detail_page.dart';
 
 import 'package:provider/src/provider.dart';
 

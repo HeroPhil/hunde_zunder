@@ -1,8 +1,6 @@
-import 'dart:math';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/models/pet.dart';
+
+import '../../../../../models/pet.dart';
 
 class SwipeCard extends StatelessWidget {
   final Pet pet;

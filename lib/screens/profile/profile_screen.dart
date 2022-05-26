@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutterfire_ui/auth.dart' as FireFlutter;
-import 'package:hunde_zunder/services/firebase_auth_service.dart';
+import '../../services/firebase_auth_service.dart';
 
 class ProfileScreen extends StatelessWidget {
   static const routeName = '/profile';

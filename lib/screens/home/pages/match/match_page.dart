@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/provider/pet_provider.dart';
-import 'package:hunde_zunder/screens/home/pages/match/match_page_provider.dart';
+import '../../../../provider/pet_provider.dart';
+import 'match_page_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 

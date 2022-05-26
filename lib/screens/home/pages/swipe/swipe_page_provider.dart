@@ -1,8 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/models/pet.dart';
-import 'package:hunde_zunder/provider/pet_provider.dart';
+import '../../../../models/pet.dart';
+import '../../../../provider/pet_provider.dart';
 
 enum SwipeResult {
   hate,

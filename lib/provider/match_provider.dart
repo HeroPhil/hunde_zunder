@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/models/pet.dart';
-import 'package:hunde_zunder/models/match.dart' as Model;
-import 'package:hunde_zunder/provider/pet_provider.dart';
+import '../models/pet.dart';
+import '../models/match.dart' as Model;
+import 'pet_provider.dart';
 
 import 'mock_provider.dart';
 

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:copy_with_extension/copy_with_extension.dart';
-import 'package:hunde_zunder/converter/image_converter.dart';
+import '../converter/image_converter.dart';
 import 'package:uuid/uuid.dart';
 
 import 'package:json_annotation/json_annotation.dart';

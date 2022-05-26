@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:hunde_zunder/services/authentication_service.dart';
-import 'package:hunde_zunder/services/firebase_auth_service.dart';
+import '../services/firebase_auth_service.dart';
 
 @deprecated
 class AuthProvider with ChangeNotifier {

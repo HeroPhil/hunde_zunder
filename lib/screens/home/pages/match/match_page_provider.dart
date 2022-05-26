@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/provider/match_provider.dart';
+import '../../../../provider/match_provider.dart';
 
-import 'package:hunde_zunder/models/match.dart' as Model;
+import '../../../../models/match.dart' as Model;
 
 class MatchPageProvider with ChangeNotifier {
   // Dependencies
