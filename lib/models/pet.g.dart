@@ -17,7 +17,7 @@ abstract class _$PetCWProxy {
 
   Pet name(String name);
 
-  Pet petID(String? petID);
+  Pet petID(int? petID);
 
   Pet race(String? race);
 
@@ -35,7 +35,7 @@ abstract class _$PetCWProxy {
     PetGender? gender,
     Uint8List? image,
     String? name,
-    String? petID,
+    int? petID,
     String? race,
     PetType? type,
   });
@@ -63,7 +63,7 @@ class _$PetCWProxyImpl implements _$PetCWProxy {
   Pet name(String name) => this(name: name);
 
   @override
-  Pet petID(String? petID) => this(petID: petID);
+  Pet petID(int? petID) => this(petID: petID);
 
   @override
   Pet race(String? race) => this(race: race);
@@ -113,7 +113,7 @@ class _$PetCWProxyImpl implements _$PetCWProxy {
       petID: petID == const $CopyWithPlaceholder()
           ? _value.petID
           // ignore: cast_nullable_to_non_nullable
-          : petID as String?,
+          : petID as int?,
       race: race == const $CopyWithPlaceholder()
           ? _value.race
           // ignore: cast_nullable_to_non_nullable
@@ -127,7 +127,7 @@ class _$PetCWProxyImpl implements _$PetCWProxy {
 }
 
 extension $PetCopyWith on Pet {
-  /// Returns a callable class that can be used as follows: `instanceOfclass Pet.name.copyWith(...)` or like so:`instanceOfclass Pet.name.copyWith.fieldName(...)`.
+  /// Returns a callable class that can be used as follows: `instanceOfPet.copyWith(...)` or like so:`instanceOfPet.copyWith.fieldName(...)`.
   _$PetCWProxy get copyWith => _$PetCWProxyImpl(this);
 }
 
@@ -136,7 +136,7 @@ extension $PetCopyWith on Pet {
 // **************************************************************************
 
 Pet _$PetFromJson(Map<String, dynamic> json) => Pet(
-      petID: json['petID'] as String?,
+      petID: json['petID'] as int?,
       name: json['name'] as String,
       image: const ImageConverter().fromJson(json['image'] as String),
       type:

@@ -19,35 +19,48 @@ class PetProvider with ChangeNotifier {
   });
 
   List<Pet>? get myPets {
-    // if (_myPets == null) {
-    //   (backendService.callBackend(
-    //     requestType: RequestType.GET,
-    //     endpoint: "mypets",
-    //   ) as Future<List<Map<String, dynamic>>>)
-    //       .then(
-    //         (jsonList) => jsonList.map((json) => Pet.fromJson(json)).toList(),
-    //       )
-    //       .then(
-    //         (pets) => _myPets = pets.toSet(),
-    //       )
-    //       .then((_) => notifyListeners());
-    // }
+    if (_myPets == null) {
+      (backendService.callBackend(
+        requestType: RequestType.GET,
+        endpoint: "mypets",
+      ))
+          .then((json) {
+            assert(json != null);
+            assert(json!["myPets"] != null);
+            return json!["myPets"] as List;
+          })
+          .then(
+            (jsonPets) => List<Pet>.generate(
+              jsonPets.length,
+              (index) => Pet.fromJson(jsonPets[index]),
+            ),
+          )
+          .then(
+            (pets) => _myPets = pets.toSet(),
+          )
+          .then((_) => notifyListeners())
+          .onError(
+            (error, stackTrace) => print(
+                "some error occurred trying to parse myPets from the backend:\n$error\n---$stackTrace\n==="),
+          );
+    }
 
-    _myPets ??= {
-      Pet(
-        name: 'Puppy',
-        image: mockProvider.dogImages[0],
-      ),
-      Pet(
-        name: 'Ralf',
-        image: mockProvider.dogImages[1],
-      ),
-      Pet(
-        name: 'Rudloff',
-        image: mockProvider.dogImages[2],
-      ),
-    };
-    return _myPets!.toList();
+    // _myPets ??= {
+    //   Pet(
+    //     name: 'Puppy',
+    //     image: mockProvider.dogImages[0],
+    //   ),
+    //   Pet(
+    //     name: 'Ralf',
+    //     image: mockProvider.dogImages[1],
+    //   ),
+    //   Pet(
+    //     name: 'Rudloff',
+    //     image: mockProvider.dogImages[2],
+    //   ),
+    // };
+
+    return _myPets?.toList();
   }
 
   Future updatePet({

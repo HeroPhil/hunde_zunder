@@ -28,7 +28,7 @@ enum PetGender {
 @JsonSerializable()
 @CopyWith()
 class Pet {
-  final String petID; // Mocked
+  final int petID; // Mocked // ! does this remain a String?
   final String name;
   @ImageConverter()
   final Uint8List image;
@@ -39,7 +39,7 @@ class Pet {
   final DateTime? birthday;
 
   Pet({
-    String? petID,
+    int? petID,
     required this.name,
     required this.image,
     this.type = PetType.other,
@@ -47,7 +47,7 @@ class Pet {
     this.race,
     this.description,
     this.birthday,
-  }) : petID = petID ?? Uuid().v4();
+  }) : petID = petID ?? Uuid().v4().hashCode;
 
   factory Pet.fromJson(Map<String, dynamic> json) => _$PetFromJson(json);
 

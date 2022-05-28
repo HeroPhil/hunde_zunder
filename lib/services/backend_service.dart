@@ -42,7 +42,7 @@ class BackendService with ChangeNotifier {
     required this.firebaseAuthService,
   });
 
-  Future<dynamic> callBackend({
+  Future<Map<String, dynamic>?> callBackend({
     required RequestType requestType,
     String? endpoint,
     Map<String, dynamic>? queryParameters,
@@ -102,7 +102,7 @@ class BackendService with ChangeNotifier {
     print("response(${response.statusCode}): ${response.body}");
 
     if (response.statusCode == 200) {
-      return const JsonDecoder().convert(response.body);
+      return {"myPets": jsonDecode(response.body)}; //as Map<String, dynamic>;
     } else {
       print("http request failed: ${response.statusCode}");
     }
