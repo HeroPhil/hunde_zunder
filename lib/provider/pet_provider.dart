@@ -20,28 +20,17 @@ class PetProvider with ChangeNotifier {
 
   List<Pet>? get myPets {
     if (_myPets == null) {
-      (backendService.callBackend(
-        requestType: RequestType.GET,
-        endpoint: "mypets",
-      ))
-          .then((json) {
-            assert(json != null);
-            assert(json!["myPets"] != null);
-            return json!["myPets"] as List;
-          })
-          .then(
-            (jsonPets) => List<Pet>.generate(
-              jsonPets.length,
-              (index) => Pet.fromJson(jsonPets[index]),
-            ),
+      backendService
+          .callBackend(
+            requestType: RequestType.GET,
+            endpoint: "mypets",
+            jsonParser: (json) => Pet.fromJson(json),
           )
-          .then(
-            (pets) => _myPets = pets.toSet(),
-          )
+          .then((pets) => _myPets = Set.from(pets))
           .then((_) => notifyListeners())
-          .onError(
+          .catchError(
             (error, stackTrace) => print(
-                "some error occurred trying to parse myPets from the backend:\n$error\n---$stackTrace\n==="),
+                "some error occurred trying to get myPets from the backend:\n$error\n---$stackTrace\n==="),
           );
     }
 

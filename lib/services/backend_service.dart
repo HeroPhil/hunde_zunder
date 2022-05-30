@@ -42,12 +42,13 @@ class BackendService with ChangeNotifier {
     required this.firebaseAuthService,
   });
 
-  Future<Map<String, dynamic>?> callBackend({
+  Future callBackend<T>({
     required RequestType requestType,
     String? endpoint,
     Map<String, dynamic>? queryParameters,
     Map<String, String>? headerParameters,
     Map<String, dynamic>? body,
+    T Function(dynamic)? jsonParser,
   }) async {
     final url = baseUrl.replace(
       path: endpoint != null ? "${baseUrl.path}/$endpoint" : baseUrl.path,
@@ -99,12 +100,23 @@ class BackendService with ChangeNotifier {
       return null;
     }
 
-    print("response(${response.statusCode}): ${response.body}");
-
-    if (response.statusCode == 200) {
-      return {"myPets": jsonDecode(response.body)}; //as Map<String, dynamic>;
-    } else {
+    // Check for request error
+    if (response.statusCode != 200) {
       print("http request failed: ${response.statusCode}");
     }
+    print("response(${response.statusCode}): ${response.body}");
+
+    // Parse response
+    final jsonResponse = jsonDecode(response.body);
+    if (jsonParser == null) {
+      return jsonResponse;
+    }
+    if (jsonResponse is List) {
+      return jsonResponse.map(jsonParser).toList();
+    }
+    if (jsonResponse is Map) {
+      return jsonParser(jsonResponse);
+    }
+    print("http response parsing failed: neither List nor Map received");
   }
 }
