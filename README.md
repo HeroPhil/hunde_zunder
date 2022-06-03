@@ -1,4 +1,4 @@
-# HundeZunder
+# Pet Connect (HundeZunder)
 Hunde (Treff | Sitter | Vermittlung | Trading)* Plattform nach Tinder
 
 ## Vorbilder
@@ -8,4 +8,5 @@ Hunde (Treff | Sitter | Vermittlung | Trading)* Plattform nach Tinder
 Firebase + Flutter = FireFlutter
 
 ## Challenges
-* matching --> algorithmusbasiert vs. ML / DL Classification ... 
+* matching --> algorithmusbasiert vs. ML / DL Classification ...
+* AWS Instance nicht zuverlässig am start
