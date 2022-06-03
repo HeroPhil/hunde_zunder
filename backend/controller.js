@@ -9,7 +9,7 @@ const router = Router()
 // DEBUG ENDPOINTS
 // =================
 
-router.get('/', (req,res)=> { 
+router.get('/', (req,res) => { 
     res.status(200).send('Hello Petty World')
 })
 
@@ -107,7 +107,7 @@ router.put('/match/:id', checkIfAuthenticated, async (req,res) => {
 
 // Support method realizing the priority of match selection for swiping
 // Used in: '/matches/:petId'
-const getNewMatches = (petId, ownerId) => {
+const getNewMatches = async (petId, ownerId) => {
     matches = await getOpenMatches(petId)
     if(matches.size <= 0) {
         matches = await getPotentialMatches(petId)
