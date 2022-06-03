@@ -31,30 +31,30 @@ class MatchPage extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: ListView(
                     children: [
-                      if (matches.isEmpty)
-                        const Center(
-                          child: Text('No pets found'),
-                        ),
-                      ...matchPageProvider.matches!.map(
-                        (match) => Card(
-                          child: ListTile(
-                            leading: CircleAvatar(
-                              foregroundImage:
-                                  Image.memory(match.foreignPet.image).image,
-                            ),
-                            title: Text(match.foreignPet.name),
-                            subtitle:
-                                (context.read<PetProvider>().myPets?.length ??
-                                            0) >
-                                        1
-                                    ? Text("with ${match.myPet.name}")
-                                    : null,
-                            trailing: Text(
-                              DateFormat.MMMd().format(match.matchDate),
-                            ),
-                          ),
-                        ),
+                      // if (matches.isEmpty)
+                      const Center(
+                        child: Text('No matches found'),
                       ),
+                      // ...matchPageProvider.matches!.map(
+                      //   (match) => Card(
+                      //     child: ListTile(
+                      //       leading: CircleAvatar(
+                      //         foregroundImage:
+                      //             Image.memory(match.foreignPet.image).image,
+                      //       ),
+                      //       title: Text(match.foreignPet.name),
+                      //       subtitle:
+                      //           (context.read<PetProvider>().myPets?.length ??
+                      //                       0) >
+                      //                   1
+                      //               ? Text("with ${match.myPet.name}")
+                      //               : null,
+                      //       trailing: Text(
+                      //         DateFormat.MMMd().format(match.matchDate),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
