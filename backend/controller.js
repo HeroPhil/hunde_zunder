@@ -82,7 +82,8 @@ router.get('/match/:id', checkIfAuthenticated, async(req, res) => {
 router.get('/matches/:petId', checkIfAuthenticated, async(req, res) => {
     const { petId } = req.params
     ownerId = req.authId
-    pet = getPetById(petId)
+    pet = await getPetById(petId)
+    console.log(pet)
     if (pet[0]["ownerID"] != ownerId) {
         res.status(403).send("Prohibited")
         return
@@ -109,14 +110,26 @@ router.put('/match/:id', checkIfAuthenticated, async(req, res) => {
 // Used in: '/matches/:petId'
 const getNewMatches = async(petId, ownerId) => {
     matches = await getOpenMatches(petId)
+    console.log("Open Matches")
+    console.log(matches);
+
+
+    // TODO size does not work correctly
     if (matches.size <= 0) {
         matches = await getPotentialMatches(petId)
+        console.log("pot Matches")
+        console.log(matches);
 
         if (matches.size <= 0) {
             pets = await getPotentialPets(ownerId, petId)
+            console.log("Pot Pets")
+            console.log(pets);
+
             if (pets.size <= 0) {
+                console.log("No Pets found");
                 return matches
             }
+            console.log("Creating Matches times: " + pets.size);
             await Promise.all(
                 pets.map((pet) => {
                     swipeeId = pet["petID"]
@@ -125,6 +138,8 @@ const getNewMatches = async(petId, ownerId) => {
             return getNewMatches(petId, ownerId)
         }
     }
+    console.log("returning matches");
+    console.log(matches);
     return matches
 }
 

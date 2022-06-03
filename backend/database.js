@@ -165,7 +165,7 @@ const createMatch = async (petId, swipeeID) => {
     return await dbQuery(sql)
 }
 
-const getMatchById = async (matchID) => {
+const getMatchById = async (matchId) => {
     sql = `
     SELECT * 
     FROM petConnect.match 
