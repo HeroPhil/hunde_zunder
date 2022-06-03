@@ -83,7 +83,7 @@ router.get('/matches/:petId', checkIfAuthenticated, async(req, res) => {
     const { petId } = req.params
     ownerId = req.authId
     pet = getPetById(petId)
-    if (pet["ownerID"] != ownerId) {
+    if (pet[0]["ownerID"] != ownerId) {
         res.status(403).send("Prohibited")
         return
     }
