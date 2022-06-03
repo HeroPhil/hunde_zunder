@@ -4,8 +4,8 @@ Bei dem Projekt Hunde Zunder handelt es sich um ein Dating App für Haustiere. H
 Die WebApp ist über unsere Domain erreichbar: [https://pet-connect.karottenkameraden.de](https://pet-connect.karottenkameraden.de/)
 
 ## TechStack
-Firebase + Flutter = FireFlutter
-AWS Elastic Beanstalk + AWS Relational Database Service (RDS) 
+* Firebase + Flutter = FireFlutter
+* AWS Elastic Beanstalk + AWS Relational Database Service (RDS) 
 
 # Dokumentation / Wiki
 * [Home](https://github.com/HeroPhil/hunde_zunder/wiki)
