@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:res_builder/responsive.dart';
 
 import '../../../../../models/pet.dart';
 
@@ -62,5 +63,35 @@ class SwipeCard extends StatelessWidget {
         ),
       );
     });
+  }
+
+  static Positioned getCardBackground({
+    required BuildContext context,
+    required Color color,
+    required IconData icon,
+  }) {
+    final theme = Theme.of(context);
+    return Positioned.fill(
+      child: Container(
+        color: theme.scaffoldBackgroundColor,
+        child: Container(
+          margin: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: color,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Center(
+            child: Icon(
+              icon,
+              size: Responsive.value<double>(
+                context: context,
+                onMobile: 60,
+                onDesktop: 100,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
