@@ -11,22 +11,56 @@ class PetProvider with ChangeNotifier {
   final BackendService backendService;
 
   // data
-  Set<Pet>? _myPets;
+  Set<int>? _myPetIDs;
+  Set<Pet>? _pets;
 
   PetProvider({
     required this.mockProvider,
     required this.backendService,
   });
 
+  void clearCache() {
+    _myPetIDs = null;
+    _pets = null;
+  }
+
+  Future<Pet?> getPetByID({
+    required int petID,
+  }) async {
+    Pet? result;
+    try {
+      result = _pets?.firstWhere((pet) => pet.petID == petID);
+    } on StateError catch (_) {}
+
+    return result ??
+        await backendService
+            .callBackend(
+          requestType: RequestType.GET,
+          endpoint: "pets/$petID",
+          jsonParser: (json) => Pet.fromJson(json),
+        )
+            .then((pet) {
+          (_pets ??= {}).add(pet);
+          return pet;
+        }).catchError(
+          (error, stackTrace) => print(
+              "some error occurred trying to get Pet $petID from the backend:\n$error\n---$stackTrace\n==="),
+        );
+  }
+
   List<Pet>? get myPets {
-    if (_myPets == null) {
+    if (_myPetIDs == null) {
       backendService
           .callBackend(
             requestType: RequestType.GET,
-            endpoint: "mypets",
+            endpoint: "pets",
             jsonParser: (json) => Pet.fromJson(json),
           )
-          .then((pets) => _myPets = Set.from(pets))
+          .then((pets) {
+            (_pets ??= {}).addAll(pets);
+            (_myPetIDs ??= {})
+                .addAll(pets.map<int>((Pet pet) => pet.petID).toList());
+          })
           .then((_) => notifyListeners())
           .catchError(
             (error, stackTrace) => print(
@@ -49,23 +83,29 @@ class PetProvider with ChangeNotifier {
     //   ),
     // };
 
-    return _myPets?.toList();
+    return _pets
+        ?.where((pet) => _myPetIDs?.contains(pet.petID) ?? false)
+        .toList();
   }
 
   Future updatePet({
     required Pet pet,
   }) async {
-    final isUpdate = _myPets?.remove(pet) ?? false;
+    final isUpdate = _pets?.remove(pet) ?? false;
+
     // add to cache
-    _myPets?.add(pet);
+    _pets?.add(pet);
+
     // update Backend
     await backendService.callBackend(
       requestType: isUpdate ? RequestType.PUT : RequestType.POST,
-      endpoint: 'mypets${isUpdate ? '/${pet.petID}' : ""}',
+      endpoint: 'pets${isUpdate ? '/${pet.petID}' : ""}',
       body: pet.toJson,
     );
+
     // clear cache
-    if (!isUpdate) _myPets = null;
+    if (!isUpdate) clearCache();
+
     notifyListeners();
   }
 
