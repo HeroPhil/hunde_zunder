@@ -170,12 +170,28 @@ const getMatchById = async (matchId) => {
     return await dbQuery(sql)
 }
 
-const updateMatch = async (ownerId, swiperID, swipeeID, matchID, request, answer, matchDate) => {
+const updateMatch = async (ownerId, matchID, swiperID, swipeeID, request, answer, matchDate) => {
     sql = `
     UPDATE petConnect.match 
     SET swiperID = '${swiperID}', swipeeID = '${swipeeID}', matchID = '${matchID}', request = '${request}', answer = '${answer}', matchDate = '${matchDate}' 
     WHERE swiperID = '${swiperID}' 
     AND swipeeID = '${swipeeID}' 
+    AND ${ownerId} IN 
+    (
+        SELECT ownerID
+        FROM petConnect.pet
+        WHERE petID = '${swiperID}'
+        OR petID = '${swipeeID}'
+    )
+    `
+    return await dbQuery(sql)
+}
+
+const updateMatchById = async (ownerId, matchID, swiperID, swipeeID, request, answer, matchDate) => {
+    sql = `
+    UPDATE petConnect.match 
+    SET swiperID = '${swiperID}', swipeeID = '${swipeeID}', request = '${request}', answer = '${answer}', matchDate = '${matchDate}' 
+    WHERE matchID = '${matchID}
     AND ${ownerId} IN 
     (
         SELECT ownerID
@@ -202,3 +218,4 @@ exports.createMatch = createMatch
 exports.getPetById = getPetById
 exports.getMatchById = getMatchById
 exports.updateMatch = updateMatch
+exports.updateMatchById = updateMatchById
