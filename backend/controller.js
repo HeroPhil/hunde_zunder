@@ -85,7 +85,7 @@ router.get('/matches/:petId', checkIfAuthenticated, async (req, res) => {
     pet = await getPetById(petId)
     console.log(pet)
     if (pet[0]["ownerID"] != ownerId) {
-        res.status(403).send("Prohibited")
+        res.status(403).send("Prohibited! You are not the owner of this pet.")
         return
     }
     matches = await getNewMatches(petId, ownerId)
