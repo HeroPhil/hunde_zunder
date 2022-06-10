@@ -106,26 +106,22 @@ const getPetById = async (petId) => {
 
 
 //####################
-// GET SWIPE POTENTIAL
+// GET SWIPE
 //####################
 const getOpenMatches = async (petId) => {
     sql = `
     SELECT * 
     FROM petConnect.match 
-    WHERE swiperID = '${petId}'
-    AND request IS NULL
-    AND answer IS NULL
-    `
-    return await dbQuery(sql)
-}
-
-const getPotentialMatches = async (petId) => {
-    sql = `
-    SELECT * 
-    FROM petConnect.match 
-    WHERE swipeeID = '${petId}'
-    AND answer IS NULL
-    AND request IS NOT NULL
+    WHERE 
+    (
+        swiperID = '${petId}' 
+        AND request IS NULL
+    ) 
+    OR 
+    (
+        swipeeID = '${petId}' 
+        AND answer IS NULL
+    ) 
     `
     return await dbQuery(sql)
 }
@@ -201,7 +197,6 @@ exports.createPet = createPet
 exports.updatePet = updatePet
 exports.deletePet = deletePet
 exports.getOpenMatches = getOpenMatches
-exports.getPotentialMatches = getPotentialMatches
 exports.getPotentialPets = getPotentialPets
 exports.createMatch = createMatch
 exports.getPetById = getPetById
