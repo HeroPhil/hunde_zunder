@@ -95,7 +95,7 @@ router.get('/matches/:petId', checkIfAuthenticated, async (req, res) => {
 // Updates the specified match as long as the requesting owner is the owner of one of the two pets
 router.put('/match/:id', checkIfAuthenticated, async (req, res) => {
     const { id } = req.params
-    match = await updateMatchById(id)
+    match = await updateMatchById(req.authId, id, req.body.swiperId, req.body.swipeeId, req.body.request, req.body.answer, req.body.matchDate)
     res.status(200).send(match)
 })
 
