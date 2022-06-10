@@ -13,6 +13,8 @@ class UiAssets with ChangeNotifier {
 
   static String get basePathImg => "${basePath != '' ? '$basePath/' : ''}img";
 
+  static String get baseLottieImg => "$basePathImg/lotties";
+
   static late final Uint8List defaultDogImage;
 
   static init(BuildContext context) async {
