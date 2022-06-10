@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hunde_zunder/services/backend_service.dart';
 import 'package:provider/provider.dart';
 
 import 'external/hero_dialog_route.dart';
@@ -58,6 +59,7 @@ abstract class AppRouter {
             return LoadingScreen();
         }
 
+        final _backendService = context.read<BackendService>();
         final _petProvider = context.read<PetProvider>();
         final _matchProvider = context.read<MatchProvider>();
 
@@ -75,6 +77,7 @@ abstract class AppRouter {
                 ),
                 ChangeNotifierProvider<SwipePageProvider>(
                   create: (context) => SwipePageProvider(
+                    backendService: _backendService,
                     petProvider: _petProvider,
                   ),
                 ),

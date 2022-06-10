@@ -11,7 +11,7 @@ class Match {
   final int swipeeID;
   final bool? request;
   final bool? answer;
-  final DateTime matchDate;
+  final DateTime? matchDate;
 
   Match({
     required this.matchID,

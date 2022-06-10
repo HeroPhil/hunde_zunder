@@ -54,7 +54,7 @@ const checkIfAuthenticated = (req, res, next) => {
         } catch (e) {
             return res
                 .status(401)
-                .send({ error: 'You are not authorized to make this request' });
+                .send({ error: 'You are not authorized to make this request. Please use a valid auth token!' });
         }
     });
 };

@@ -9,7 +9,7 @@ part of 'match.dart';
 abstract class _$MatchCWProxy {
   Match answer(bool? answer);
 
-  Match matchDate(DateTime matchDate);
+  Match matchDate(DateTime? matchDate);
 
   Match matchID(int matchID);
 
@@ -45,7 +45,7 @@ class _$MatchCWProxyImpl implements _$MatchCWProxy {
   Match answer(bool? answer) => this(answer: answer);
 
   @override
-  Match matchDate(DateTime matchDate) => this(matchDate: matchDate);
+  Match matchDate(DateTime? matchDate) => this(matchDate: matchDate);
 
   @override
   Match matchID(int matchID) => this(matchID: matchID);
@@ -80,10 +80,10 @@ class _$MatchCWProxyImpl implements _$MatchCWProxy {
           ? _value.answer
           // ignore: cast_nullable_to_non_nullable
           : answer as bool?,
-      matchDate: matchDate == const $CopyWithPlaceholder() || matchDate == null
+      matchDate: matchDate == const $CopyWithPlaceholder()
           ? _value.matchDate
           // ignore: cast_nullable_to_non_nullable
-          : matchDate as DateTime,
+          : matchDate as DateTime?,
       matchID: matchID == const $CopyWithPlaceholder() || matchID == null
           ? _value.matchID
           // ignore: cast_nullable_to_non_nullable
@@ -119,7 +119,9 @@ Match _$MatchFromJson(Map<String, dynamic> json) => Match(
       swipeeID: json['swipeeID'] as int,
       request: json['request'] as bool?,
       answer: json['answer'] as bool?,
-      matchDate: DateTime.parse(json['matchDate'] as String),
+      matchDate: json['matchDate'] == null
+          ? null
+          : DateTime.parse(json['matchDate'] as String),
     );
 
 Map<String, dynamic> _$MatchToJson(Match instance) => <String, dynamic>{
@@ -128,5 +130,5 @@ Map<String, dynamic> _$MatchToJson(Match instance) => <String, dynamic>{
       'swipeeID': instance.swipeeID,
       'request': instance.request,
       'answer': instance.answer,
-      'matchDate': instance.matchDate.toIso8601String(),
+      'matchDate': instance.matchDate?.toIso8601String(),
     };
