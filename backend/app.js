@@ -11,7 +11,15 @@ const PORT = process.env.PORT
 const swaggerAutogen = require("swagger-autogen")(); 
 const outputFile = "./swagger-output.json"; 
 const endpointsFiles = ["./controller.js"]; 
-const config = {};
+const config = {
+    securityDefinitions: {
+        bearerAuth: {
+            type: 'http',
+            scheme: 'bearer',
+            bearerFormat: 'JWT'
+        }
+    }
+};
 swaggerAutogen(outputFile, endpointsFiles, config).then(
     async () => { await import('./app.js'); 
 });

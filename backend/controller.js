@@ -11,16 +11,49 @@ const router = Router()
 
 router.get('/', (req, res) => {
     res.status(200).send('Hello Petty World')
+    /* 
+    ### Swagger Documentation
+    #swagger.tags = ["test"] 
+    #swagger.description = 'Endpoint to test the connection.'
+    #swagger.responses[200] = { 
+        description: "Connected successfully to the api.", 
+    } 
+    */
 })
 
 router.get('/me', checkIfAuthenticated, (req, res) => {
     res.status(200).send(`You are authenticated with authID = ${req.authId}`)
+    /* 
+    ### Swagger Documentation
+    #swagger.tags = ["test"] 
+    #swagger.description = 'Endpoint to check what your authentication id is.'
+    #swagger.security = [{
+               "bearerAuth": []
+        }]
+    #swagger.responses[200] = { 
+        description: "You are authenticated and your authId is displayed.", 
+    } 
+    */
 })
 
 router.get('/db2/:id', async (req, res) => {
     const { id } = req.params
     x = await sampleQuery2(id)
     res.status(200).send(x)
+
+    /* 
+    ### Swagger Documentation
+    #swagger.tags = ["test"] 
+    #swagger.description = 'This is a test endpoint to receive sample entries from our test database.'
+    #swagger.parameters['name'] = { 
+        in: 'body', 
+        type: 'int', 
+        description: 'The id of the requested sample entry.' 
+    }
+    #swagger.responses[200] = { 
+        description: "The sample with this entry id was found. The whole entry is displayed to you.", 
+    } 
+    */
 })
 
 
@@ -33,6 +66,18 @@ router.get('/pets', checkIfAuthenticated, async (req, res) => {
     ownerId = req.authId
     pets = await getMyPets(ownerId)
     res.status(200).send(pets)
+
+    /* 
+    ### Swagger Documentation
+    #swagger.tags = ["pets"] 
+    #swagger.description = 'Endpoint to get a list of all the pets you registered in the database.'
+    #swagger.security = [{
+            "bearerAuth": []
+        }]
+    #swagger.responses[200] = { 
+        description: "Your pets were found in the database and are displayed to you.", 
+    } 
+    */
 })
 
 // Returns the requested pet
