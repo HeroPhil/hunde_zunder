@@ -218,3 +218,4 @@ exports.createMatch = createMatch
 exports.getPetById = getPetById
 exports.getMatchById = getMatchById
 exports.updateMatch = updateMatch
+exports.updateMatchById = updateMatchById
