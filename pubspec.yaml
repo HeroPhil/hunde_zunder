@@ -44,6 +44,7 @@ dependencies:
   image_picker: ^0.8.5+3
   json_annotation: ^4.4.0
   copy_with_extension: ^4.0.0
+  image: ^3.2.0
 
 dev_dependencies:
   flutter_test:
