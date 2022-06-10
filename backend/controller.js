@@ -115,17 +115,17 @@ const getNewMatches = async(petId, ownerId) => {
 
 
     // TODO size does not work correctly
-    if (matches.size <= 0) {
+    if (matches.length <= 0) {
         matches = await getPotentialMatches(petId)
         console.log("pot Matches")
         console.log(matches);
 
-        if (matches.size <= 0) {
+        if (matches.length <= 0) {
             pets = await getPotentialPets(ownerId, petId)
             console.log("Pot Pets")
             console.log(pets);
 
-            if (pets.size <= 0) {
+            if (pets.length <= 0) {
                 console.log("No Pets found");
                 return matches
             }

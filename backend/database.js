@@ -112,7 +112,7 @@ const getOpenMatches = async (petId) => {
     sql = `
     SELECT * 
     FROM petConnect.match 
-    WHERE swiperID = ${petId}
+    WHERE swiperID = '${petId}'
     AND request IS NULL
     AND answer IS NULL
     `
@@ -123,7 +123,7 @@ const getPotentialMatches = async (petId) => {
     sql = `
     SELECT * 
     FROM petConnect.match 
-    WHERE swipeeID = ${petId}
+    WHERE swipeeID = '${petId}'
     AND answer IS NULL
     AND request IS NOT NULL
     `
@@ -134,18 +134,18 @@ const getPotentialPets = async (ownerId, petId) => {
     sql = `
     SELECT petID 
     FROM petConnect.pet 
-    WHERE ownerID <> ${ownerId}
+    WHERE ownerID <> '${ownerId}'
     AND petID NOT IN 
     (
         SELECT swiperID 
         FROM petConnect.match 
-        WHERE swipeeID = ${petId}
+        WHERE swipeeID = '${petId}'
     )
     AND petID NOT IN 
     (
         SELECT swipeeID 
         FROM petConnect.match 
-        WHERE swiperID = ${petId}
+        WHERE swiperID = '${petId}'
     )
     LIMIT 5
     `
