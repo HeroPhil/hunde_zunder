@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:hunde_zunder/services/backend_service.dart';
 import '../../../../models/pet.dart';
+import '../../../../models/match.dart';
 import '../../../../provider/pet_provider.dart';
 
 enum SwipeResult {
@@ -12,14 +14,67 @@ enum SwipeResult {
 class SwipePageProvider with ChangeNotifier {
   // dependencies
   final PetProvider petProvider;
+  late final List<void Function()> petProviderListener;
+  final BackendService backendService;
 
-  List<Pet> loadedPets = [];
+  List<Match>? _matches;
 
-  SwipePageProvider({required this.petProvider}) {
-    while (loadedPets.length < 3) {
-      loadedPets.add(petProvider.nextForeignPet);
-      print(loadedPets.map((e) => e.name).toList());
+  SwipePageProvider({
+    required this.petProvider,
+    required this.backendService,
+  }) {
+    petProviderListener = [
+      () {
+        _matches = null;
+        notifyListeners();
+      },
+    ];
+
+    petProviderListener.forEach((listener) {
+      petProvider.addListener(listener);
+    });
+  }
+
+  @override
+  void dispose() {
+    petProviderListener.forEach((listener) {
+      petProvider.removeListener(listener);
+    });
+    super.dispose();
+  }
+
+  List<Match>? get matches {
+    if (_matches == null) {
+      if (petProvider.currentPet == null) {
+        print("ERR: no pet selected");
+        return [];
+      }
+
+      backendService
+          .callBackend<Match>(
+        requestType: RequestType.GET,
+        endpoint: 'matches/${petProvider.currentPet!.petID}',
+        jsonParser: (json) => Match.fromJson(json),
+      )
+          .then((matches) {
+        (_matches ??= []).addAll(matches);
+      }).then((_) => notifyListeners());
     }
+
+    return _matches;
+  }
+
+  Future<Pet?> get candidate async {
+    if (matches?.isEmpty ?? true) {
+      return null;
+    }
+
+    final foreignPetID =
+        matches!.first.swipeeID == petProvider.currentPet?.petID
+            ? matches!.first.swiperID
+            : matches!.first.swipeeID;
+
+    return petProvider.getPetByID(petID: foreignPetID);
   }
 
   void swipeCard(SwipeResult result) {
@@ -32,12 +87,12 @@ class SwipePageProvider with ChangeNotifier {
     }
 
     // either Way, remove from stack
-    loadedPets.removeAt(0);
+    _matches!.removeAt(0);
 
-    // load new pet
-    loadedPets.add(petProvider.nextForeignPet);
-
-    print(loadedPets.map((e) => e.name).toList());
+    // if all candidates are gone, get new ones
+    if (_matches!.isEmpty) {
+      _matches = null;
+    }
 
     notifyListeners();
   }

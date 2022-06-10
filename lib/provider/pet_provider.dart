@@ -14,6 +14,9 @@ class PetProvider with ChangeNotifier {
   Set<int>? _myPetIDs;
   Set<Pet>? _pets;
 
+  // state
+  Pet? currentPet;
+
   PetProvider({
     required this.mockProvider,
     required this.backendService,
@@ -35,10 +38,11 @@ class PetProvider with ChangeNotifier {
     return result ??
         await backendService
             .callBackend(
-          requestType: RequestType.GET,
-          endpoint: "pets/$petID",
-          jsonParser: (json) => Pet.fromJson(json),
-        )
+              requestType: RequestType.GET,
+              endpoint: "pets/$petID",
+              jsonParser: (json) => Pet.fromJson(json),
+            )
+            .then((resultList) => resultList.first)
             .then((pet) {
           (_pets ??= {}).add(pet);
           return pet;
@@ -60,6 +64,7 @@ class PetProvider with ChangeNotifier {
             (_pets ??= {}).addAll(pets);
             (_myPetIDs ??= {})
                 .addAll(pets.map<int>((Pet pet) => pet.petID).toList());
+            currentPet ??= pets.first;
           })
           .then((_) => notifyListeners())
           .catchError(
