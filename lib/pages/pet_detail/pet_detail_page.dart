@@ -58,13 +58,16 @@ class PetDetailPage extends StatelessWidget {
                           initialValue: petPageProvider.pet.image,
                           builder: (formFieldState) => GestureDetector(
                             onTap: petPageProvider.editMode
-                                ? () async => (await ImagePicker()
-                                        .pickImage(source: ImageSource.gallery))
-                                    ?.readAsBytes()
-                                    .then(
-                                      (value) =>
-                                          formFieldState.didChange(value),
-                                    )
+                                ? () async => (await ImagePicker().pickImage(
+                                      source: ImageSource.gallery,
+                                      maxWidth: 1024,
+                                      maxHeight: 768,
+                                    ))
+                                        ?.readAsBytes()
+                                        .then(
+                                          (value) =>
+                                              formFieldState.didChange(value),
+                                        )
                                 : null,
                             child: Column(
                               children: [
