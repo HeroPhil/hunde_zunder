@@ -30,6 +30,9 @@ app.use(express.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000
 
 app.use(cors({credentials: true, origin: true}))
 
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger-output.json');
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use('/', user)
 
