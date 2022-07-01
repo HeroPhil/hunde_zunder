@@ -1,6 +1,6 @@
 var admin = require("firebase-admin");
 
-var serviceAccount = require("./hunde-zunder-firebase-adminsdk-2efer-3e936af3e3.json");
+var serviceAccount = require("../hunde-zunder-firebase-adminsdk-2efer-3e936af3e3.json");
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
@@ -8,7 +8,7 @@ admin.initializeApp({
 
 
 // Modul "auth.js"
-const createUser = async (req, res) => {
+const createUser = async(req, res) => {
     const {
         email,
         phoneNumber,
@@ -43,7 +43,7 @@ const getAuthToken = (req, res, next) => {
 
 
 const checkIfAuthenticated = (req, res, next) => {
-    getAuthToken(req, res, async () => {
+    getAuthToken(req, res, async() => {
         try {
             const { authToken } = req;
             const userInfo = await admin
