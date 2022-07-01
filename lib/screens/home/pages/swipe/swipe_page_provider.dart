@@ -18,6 +18,7 @@ class SwipePageProvider with ChangeNotifier {
   final BackendService backendService;
 
   List<Match>? _matches;
+  Pet? _candidate;
 
   SwipePageProvider({
     required this.petProvider,
@@ -64,17 +65,23 @@ class SwipePageProvider with ChangeNotifier {
     return _matches;
   }
 
-  Future<Pet?> get candidate async {
-    if (matches?.isEmpty ?? true) {
-      return null;
+  Pet? get candidate {
+    if (_candidate == null) {
+      if (matches?.isEmpty ?? true) {
+        return null;
+      }
+
+      final foreignPetID =
+          matches!.first.swipeeID == petProvider.currentPet?.petID
+              ? matches!.first.swiperID
+              : matches!.first.swipeeID;
+      petProvider
+          .getPetByID(petID: foreignPetID)
+          .then((pet) => _candidate = pet)
+          .then((value) => notifyListeners());
     }
 
-    final foreignPetID =
-        matches!.first.swipeeID == petProvider.currentPet?.petID
-            ? matches!.first.swiperID
-            : matches!.first.swipeeID;
-
-    return petProvider.getPetByID(petID: foreignPetID);
+    return _candidate;
   }
 
   void swipeCard(SwipeResult result) {
@@ -88,6 +95,8 @@ class SwipePageProvider with ChangeNotifier {
 
     // either Way, remove from stack
     _matches!.removeAt(0);
+    // and reset candidate
+    _candidate = null;
 
     // if all candidates are gone, get new ones
     if (_matches!.isEmpty) {
