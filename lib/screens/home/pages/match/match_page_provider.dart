@@ -7,11 +7,34 @@ class MatchPageProvider with ChangeNotifier {
   // Dependencies
   MatchProvider matchProvider;
 
+  // cache
+  List<Model.Match>? _matches;
+
   MatchPageProvider({
     required this.matchProvider,
-  });
+  }) {
+    matchProvider.addListener(clearCache);
+  }
+
+  @override
+  void dispose() {
+    matchProvider.removeListener(clearCache);
+    super.dispose();
+  }
 
   List<Model.Match>? get matches {
-    return matchProvider.matches;
+    _matches ??= matchProvider.matches
+      // TODO more comprehensive sort and filter
+      ?..sort(
+        (a, b) =>
+            (b.matchDate?.millisecondsSinceEpoch ?? 0) -
+            (a.matchDate?.millisecondsSinceEpoch ?? 0),
+      );
+    return _matches;
+  }
+
+  clearCache() {
+    _matches = null;
+    notifyListeners();
   }
 }

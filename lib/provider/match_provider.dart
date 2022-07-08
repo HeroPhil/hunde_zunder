@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:hunde_zunder/constants/backend/api_endpoints.dart';
+import 'package:hunde_zunder/services/backend_service.dart';
+import 'package:provider/provider.dart';
 import '../models/pet.dart';
 import '../models/match.dart' as Model;
 import 'pet_provider.dart';
@@ -7,46 +10,60 @@ import 'mock_provider.dart';
 
 class MatchProvider with ChangeNotifier {
   //dependencies
+  final BackendService backendService;
   final PetProvider petProvider;
+  late final List<void Function()> petProviderListener;
 
   // data
   List<Model.Match>? _matches;
 
   MatchProvider({
+    required this.backendService,
     required this.petProvider,
-  });
+  }) {
+    petProviderListener = [
+      clearCache,
+    ];
+
+    petProviderListener.forEach((listener) {
+      petProvider.addListener(listener);
+    });
+  }
+
+  @override
+  void dispose() {
+    petProviderListener.forEach((listener) {
+      petProvider.removeListener(listener);
+    });
+    super.dispose();
+  }
 
   List<Model.Match>? get matches {
-    // DB Mock
-    // _matches ??= [
-    //   Model.Match(
-    //     myPet: petProvider.myPets!.first,
-    //     foreignPet: petProvider.nextForeignPet,
-    //     matchDate: DateTime.now(),
-    //   ),
-    //   Model.Match(
-    //     myPet: petProvider.myPets![1],
-    //     foreignPet: petProvider.nextForeignPet,
-    //     matchDate: DateTime.now().subtract(Duration(days: 1)),
-    //   ),
-    //   Model.Match(
-    //     myPet: petProvider.myPets!.first,
-    //     foreignPet: petProvider.nextForeignPet,
-    //     matchDate: DateTime.now().subtract(Duration(days: 3)),
-    //   ),
-    //   Model.Match(
-    //     myPet: petProvider.myPets![2],
-    //     foreignPet: petProvider.nextForeignPet,
-    //     matchDate: DateTime.now().subtract(Duration(days: 2)),
-    //   ),
-    //   Model.Match(
-    //     myPet: petProvider.myPets![2],
-    //     foreignPet: petProvider.nextForeignPet,
-    //     matchDate: DateTime.now()..subtract(Duration(minutes: 40)),
-    //   ),
-    // ]..sort((a, b) => b.matchDate.compareTo(a.matchDate));
+    if (_matches == null) {
+      final myPetIds =
+          petProvider.myPets?.map((pet) => pet.petID.toString()).toList() ?? [];
 
-    // return _matches;
-    return [];
+      final backendFutures = myPetIds.map(
+        (petId) => backendService
+            .callBackend(
+          requestType: RequestType.GET,
+          endpoint: ApiEndpoints.allMatchesForPet(petId),
+          jsonParser: (json) => Model.Match.fromJson(json),
+        )
+            .then(
+          (matches) {
+            (_matches ??= []).addAll(matches);
+          },
+        ),
+      );
+
+      Future.wait(backendFutures).then((value) => notifyListeners());
+    }
+    return _matches;
+  }
+
+  void clearCache() {
+    _matches = null;
+    notifyListeners();
   }
 }

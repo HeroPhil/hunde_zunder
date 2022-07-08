@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hunde_zunder/screens/home/pages/match/widgets/chat_card.dart';
 import '../../../../provider/pet_provider.dart';
 import 'match_page_provider.dart';
 import 'package:intl/intl.dart';
@@ -11,66 +12,43 @@ class MatchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Consumer<MatchPageProvider>(
-        builder: (context, matchPageProvider, _) {
-          final matches = matchPageProvider.matches;
-          if (matches == null) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+      child: Column(
+        children: [
+          Text(
+            'My Matches',
+            style: Theme.of(context).textTheme.headline3,
+          ),
+          Consumer<MatchPageProvider>(
+            builder: (context, matchPageProvider, _) {
+              final matches = matchPageProvider.matches;
+              if (matches == null) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (matches.isEmpty) {
+                const Center(
+                  child: Text('No matches found'), // TODO add lottie
+                );
+              }
 
-          return Column(
-            children: [
-              Text(
-                'My Matches',
-                style: Theme.of(context).textTheme.headline3,
-              ),
-              Expanded(
+              return Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8.0),
                   child: ListView(
                     children: [
-                      // if (matches.isEmpty)
-                      const Center(
-                        child: Text('No matches found'),
+                      ...matchPageProvider.matches!.map(
+                        (match) => ChatCard(
+                          match: match,
+                        ),
                       ),
-                      // ...matchPageProvider.matches!.map(
-                      //   (match) => Card(
-                      //     child: ListTile(
-                      //       leading: CircleAvatar(
-                      //         foregroundImage:
-                      //             Image.memory(match.foreignPet.image).image,
-                      //       ),
-                      //       title: Text(match.foreignPet.name),
-                      //       subtitle:
-                      //           (context.read<PetProvider>().myPets?.length ??
-                      //                       0) >
-                      //                   1
-                      //               ? Text("with ${match.myPet.name}")
-                      //               : null,
-                      //       trailing: Text(
-                      //         DateFormat.MMMd().format(match.matchDate),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
-              ),
-              // ElevatedButton(
-              //   child: const Padding(
-              //     padding: EdgeInsets.all(8.0),
-              //     child: Text('Add Pet'),
-              //   ),
-              //   onPressed: () {
-              //     // context.read<PetProvider>().addPet();
-              //   },
-              // ),
-            ],
-          );
-        },
+              );
+            },
+          ),
+        ],
       ),
     );
   }

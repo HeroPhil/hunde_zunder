@@ -7,5 +7,8 @@ class ApiEndpoints {
   static String newMatchForId(String id) => '$match/new/$id';
 
   static const String chat = 'chat';
+  static String allMatchesForPet(String id) =>
+      '$chat/all/$id'; // TODO change to match root point (backend change required)
+
   static const String debug = 'debug';
 }

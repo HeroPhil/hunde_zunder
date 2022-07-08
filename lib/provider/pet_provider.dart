@@ -131,4 +131,8 @@ class PetProvider with ChangeNotifier {
           .dogImages[Random().nextInt(mockProvider.dogImages.length)],
     );
   }
+
+  bool? isMyPet(int petId) {
+    return _myPetIDs?.contains(petId);
+  }
 }

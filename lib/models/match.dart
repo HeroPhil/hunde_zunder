@@ -1,4 +1,5 @@
 import 'package:copy_with_extension/copy_with_extension.dart';
+import 'package:hunde_zunder/converter/bool_converter.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'match.g.dart';
@@ -9,7 +10,9 @@ class Match {
   final int matchID;
   final int swiperID;
   final int swipeeID;
+  @JsonKey(fromJson: BoolConverter.boolFromInt, toJson: BoolConverter.boolToInt)
   final bool? request;
+  @JsonKey(fromJson: BoolConverter.boolFromInt, toJson: BoolConverter.boolToInt)
   final bool? answer;
   final DateTime? matchDate;
 

@@ -117,8 +117,8 @@ Match _$MatchFromJson(Map<String, dynamic> json) => Match(
       matchID: json['matchID'] as int,
       swiperID: json['swiperID'] as int,
       swipeeID: json['swipeeID'] as int,
-      request: json['request'] as bool?,
-      answer: json['answer'] as bool?,
+      request: BoolConverter.boolFromInt(json['request'] as int?),
+      answer: BoolConverter.boolFromInt(json['answer'] as int?),
       matchDate: json['matchDate'] == null
           ? null
           : DateTime.parse(json['matchDate'] as String),
@@ -128,7 +128,7 @@ Map<String, dynamic> _$MatchToJson(Match instance) => <String, dynamic>{
       'matchID': instance.matchID,
       'swiperID': instance.swiperID,
       'swipeeID': instance.swipeeID,
-      'request': instance.request,
-      'answer': instance.answer,
+      'request': BoolConverter.boolToInt(instance.request),
+      'answer': BoolConverter.boolToInt(instance.answer),
       'matchDate': instance.matchDate?.toIso8601String(),
     };

@@ -77,6 +77,7 @@ class Root extends StatelessWidget {
                   providers: [
                     ChangeNotifierProvider<MatchProvider>(
                       create: (_) => MatchProvider(
+                        backendService: _backendService,
                         petProvider: context.read<PetProvider>(),
                       ),
                     ),
