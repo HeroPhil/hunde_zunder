@@ -15,7 +15,7 @@ class PetProvider with ChangeNotifier {
   Set<Pet>? _pets;
 
   // state
-  Pet? currentPet;
+  Pet? _currentPet;
 
   PetProvider({
     required this.mockProvider,
@@ -91,6 +91,13 @@ class PetProvider with ChangeNotifier {
     return _pets
         ?.where((pet) => _myPetIDs?.contains(pet.petID) ?? false)
         .toList();
+  }
+
+  Pet? get currentPet => _currentPet;
+
+  set currentPet(Pet? currentPet) {
+    _currentPet = currentPet;
+    notifyListeners();
   }
 
   Future updatePet({
