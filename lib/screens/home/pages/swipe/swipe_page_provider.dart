@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/constants/backend/endpoints.dart';
+import 'package:hunde_zunder/constants/backend/api_endpoints.dart';
 import 'package:hunde_zunder/services/backend_service.dart';
 import '../../../../models/pet.dart';
 import '../../../../models/match.dart';
@@ -55,7 +55,7 @@ class SwipePageProvider with ChangeNotifier {
       backendService
           .callBackend<Match>(
         requestType: RequestType.GET,
-        endpoint: BackendEndpoints.matchById(
+        endpoint: ApiEndpoints.matchById(
           petProvider.currentPet!.petID.toString(),
         ),
         jsonParser: (json) => Match.fromJson(json),

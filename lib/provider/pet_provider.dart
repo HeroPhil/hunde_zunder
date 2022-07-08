@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/constants/backend/endpoints.dart';
+import 'package:hunde_zunder/constants/backend/api_endpoints.dart';
 import '../models/pet.dart';
 import 'mock_provider.dart';
 import '../services/backend_service.dart';
@@ -40,7 +40,7 @@ class PetProvider with ChangeNotifier {
         await backendService
             .callBackend(
               requestType: RequestType.GET,
-              endpoint: BackendEndpoints.petById("$petID"),
+              endpoint: ApiEndpoints.petById("$petID"),
               jsonParser: (json) => Pet.fromJson(json),
             )
             .then((resultList) => resultList.first)
@@ -58,7 +58,7 @@ class PetProvider with ChangeNotifier {
       backendService
           .callBackend(
             requestType: RequestType.GET,
-            endpoint: BackendEndpoints.pets,
+            endpoint: ApiEndpoints.pets,
             jsonParser: (json) => Pet.fromJson(json),
           )
           .then((pets) {
@@ -113,8 +113,8 @@ class PetProvider with ChangeNotifier {
     await backendService.callBackend(
       requestType: isUpdate ? RequestType.PUT : RequestType.POST,
       endpoint: isUpdate
-          ? BackendEndpoints.petById(pet.petID.toString())
-          : BackendEndpoints.pets,
+          ? ApiEndpoints.petById(pet.petID.toString())
+          : ApiEndpoints.pets,
       body: pet.toJson,
     );
 

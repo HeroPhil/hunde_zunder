@@ -1,4 +1,4 @@
-class BackendEndpoints {
+class ApiEndpoints {
   static const String pets = 'pets';
   static String petById(String id) => '$pets/$id';
 
