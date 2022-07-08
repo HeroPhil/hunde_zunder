@@ -4,6 +4,7 @@ class ApiEndpoints {
 
   static const String match = 'match';
   static String matchById(String id) => '$match/$id';
+  static String newMatchForId(String id) => '$match/new/$id';
 
   static const String chat = 'chat';
   static const String debug = 'debug';

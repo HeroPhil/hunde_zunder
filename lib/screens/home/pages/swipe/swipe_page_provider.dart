@@ -18,6 +18,7 @@ class SwipePageProvider with ChangeNotifier {
   late final List<void Function()> petProviderListener;
   final BackendService backendService;
 
+  // cache
   List<Match>? _matches;
   Pet? _candidate;
 
@@ -26,10 +27,7 @@ class SwipePageProvider with ChangeNotifier {
     required this.backendService,
   }) {
     petProviderListener = [
-      () {
-        _matches = null;
-        notifyListeners();
-      },
+      clearCache,
     ];
 
     petProviderListener.forEach((listener) {
@@ -55,7 +53,7 @@ class SwipePageProvider with ChangeNotifier {
       backendService
           .callBackend<Match>(
         requestType: RequestType.GET,
-        endpoint: ApiEndpoints.matchById(
+        endpoint: ApiEndpoints.newMatchForId(
           petProvider.currentPet!.petID.toString(),
         ),
         jsonParser: (json) => Match.fromJson(json),
@@ -87,7 +85,7 @@ class SwipePageProvider with ChangeNotifier {
     return _candidate;
   }
 
-  void swipeCard(SwipeResult result) {
+  void swipeCard(SwipeResult result) async {
     if (result == SwipeResult.love) {
       // make love
       print("making love");
@@ -95,6 +93,16 @@ class SwipePageProvider with ChangeNotifier {
       // kick in ass
       print("kicking in ass");
     }
+
+    // ? wait for backend to respond before clearing cache
+    // ! yes because otherwise race condition might return the same match again
+    // ? maybe if their are more cached?
+    // ! doen't matter just await the shit
+    // TODO maybe their needs to be a page wide loading control?
+    await backendService.callBackend(
+      requestType: RequestType.PUT,
+      endpoint: ApiEndpoints.matchById(matches!.first.matchID.toString()),
+    );
 
     // either Way, remove from stack
     _matches!.removeAt(0);
@@ -106,6 +114,12 @@ class SwipePageProvider with ChangeNotifier {
       _matches = null;
     }
 
+    notifyListeners();
+  }
+
+  void clearCache() {
+    _matches = null;
+    _candidate = null;
     notifyListeners();
   }
 }
