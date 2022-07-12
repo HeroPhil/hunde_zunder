@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hunde_zunder/screens/home/pages/chat/chat_page_provider.dart';
 import 'package:hunde_zunder/services/backend_service.dart';
 import 'package:provider/provider.dart';
 
@@ -85,6 +86,11 @@ abstract class AppRouter {
                   create: (context) => MatchPageProvider(
                     matchProvider: _matchProvider,
                   ),
+                ),
+                ChangeNotifierProvider<ChatPageProvider>(
+                  create: (context) => ChatPageProvider(
+                      // matchProvider: _matchProvider,
+                      ),
                 ),
               ],
               builder: (context, _) {
