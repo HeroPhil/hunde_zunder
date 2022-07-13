@@ -189,19 +189,14 @@ const updateMatch = async (ownerId, matchID, swiperID, swipeeID, request, answer
 const updateMatchById = async (ownerId, matchID, swiperID, swipeeID, request, answer, matchDate) => {
     sql = `
     UPDATE petConnect.match
-    SET`
-        +
-        request != null ?
-        `
-     request = '${request}'
-    `
-        :
-        `
-     answer = '${answer}'
     `
         +
+        (request != null ?
+            `SET request = '${request}, matchDate = '${matchDate}'`
+            :
+            `SET answer = '${answer}, matchDate = '${matchDate}'`)
+        +
         `
-    , matchDate = '${matchDate}'
     WHERE matchID = '${matchID}'
     AND '${ownerId}' IN 
     (
