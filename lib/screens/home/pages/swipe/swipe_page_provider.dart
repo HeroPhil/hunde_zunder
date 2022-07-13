@@ -95,6 +95,7 @@ class SwipePageProvider with ChangeNotifier {
     Model.Match updatedMatch = currentMatch!.copyWith(
       answer: isSwipee ? boolResult : currentMatch!.answer,
       request: isSwipee ? currentMatch!.request : boolResult,
+      matchDate: DateTime.now(),
     );
 
     // ? wait for backend to respond before clearing cache
