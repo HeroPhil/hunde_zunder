@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:hunde_zunder/screens/home/pages/match/match_page_provider.dart';
 import 'package:hunde_zunder/screens/home/pages/swipe/widgets/pet_selector.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';

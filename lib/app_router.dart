@@ -80,6 +80,7 @@ abstract class AppRouter {
                   create: (context) => SwipePageProvider(
                     backendService: _backendService,
                     petProvider: _petProvider,
+                    matchProvider: _matchProvider,
                   ),
                 ),
                 ChangeNotifierProvider<MatchPageProvider>(

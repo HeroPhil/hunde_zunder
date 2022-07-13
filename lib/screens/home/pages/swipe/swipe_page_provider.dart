@@ -2,10 +2,12 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hunde_zunder/constants/backend/api_endpoints.dart';
+import 'package:hunde_zunder/screens/home/pages/match/match_page_provider.dart';
 import 'package:hunde_zunder/services/backend_service.dart';
 import 'package:mutex/mutex.dart';
 import '../../../../models/pet.dart';
 import '../../../../models/match.dart' as Model;
+import '../../../../provider/match_provider.dart';
 import '../../../../provider/pet_provider.dart';
 
 enum SwipeResult {
@@ -20,6 +22,7 @@ class SwipePageProvider with ChangeNotifier {
   final PetProvider petProvider;
   late final List<void Function()> petProviderListener;
   final BackendService backendService;
+  final MatchProvider matchProvider;
 
   // cache
   List<Model.Match>? _matches;
@@ -28,6 +31,7 @@ class SwipePageProvider with ChangeNotifier {
   SwipePageProvider({
     required this.petProvider,
     required this.backendService,
+    required this.matchProvider,
   }) {
     petProviderListener = [
       clearCache,
@@ -129,6 +133,9 @@ class SwipePageProvider with ChangeNotifier {
       print("new matches are needed");
       _matches = null;
     }
+
+    // update match list
+    matchProvider.clearCache();
 
     notifyListeners();
   }
