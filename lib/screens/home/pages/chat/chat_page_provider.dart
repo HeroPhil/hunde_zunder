@@ -1,15 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hunde_zunder/constants/backend/api_endpoints.dart';
 import 'package:hunde_zunder/models/chat_message.dart';
 
 import 'package:hunde_zunder/models/match.dart' as Model;
 import 'package:hunde_zunder/provider/pet_provider.dart';
+import 'package:hunde_zunder/services/backend_service.dart';
+import 'package:mutex/mutex.dart';
 
 import '../../../../models/pet.dart';
 
 class ChatPageProvider with ChangeNotifier {
+  static final _mutex = Mutex();
+
   // dependencies
   PetProvider petProvider;
+  BackendService backendService;
 
   // state
   late bool? _isSwipeeMyPet;
@@ -25,6 +31,7 @@ class ChatPageProvider with ChangeNotifier {
 
   ChatPageProvider({
     required this.petProvider,
+    required this.backendService,
   }) {
     petProvider.addListener(setIsSwipeeMyPet);
   }
@@ -48,252 +55,267 @@ class ChatPageProvider with ChangeNotifier {
   }
 
   List<ChatMessage>? get messages {
-    _messages ??= [
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "Hi",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message: "Hi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "Hi",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message: "Hi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "Hi",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message: "Hi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "HiHiHiHiHiHiHiHi HiHiHiHiHiHiHiHiHiHiHiHiHi HiHiHiHiHiHi",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message: "Hi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "HiHiHiHiHiHi HiHiHiHiHiHiHi ",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message:
-            "Hi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "Hi",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message: "Hi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "Hi",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message: "Hi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "Hi",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message: "Hi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "HiHiHiHiHiHiHiHi HiHiHiHiHiHiHiHiHiHiHiHiHi HiHiHiHiHiHi",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message: "Hi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "HiHiHiHiHiHi HiHiHiHiHiHiHi ",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message:
-            "Hi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "Hi",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message: "Hi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "Hi",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message: "Hi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "Hi",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message: "Hi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "HiHiHiHiHiHiHiHi HiHiHiHiHiHiHiHiHiHiHiHiHi HiHiHiHiHiHi",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message: "Hi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "HiHiHiHiHiHi HiHiHiHiHiHiHi ",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message:
-            "Hi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "Hi",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message: "Hi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "Hi",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message: "Hi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "Hi",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message: "Hi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "HiHiHiHiHiHiHiHi HiHiHiHiHiHiHiHiHiHiHiHiHi HiHiHiHiHiHi",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message: "Hi you too",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 1,
-        message: "HiHiHiHiHiHi HiHiHiHiHiHiHi ",
-        timestamp: DateTime.now(),
-      ),
-      ChatMessage(
-        matchID: 1,
-        senderID: 2,
-        message:
-            "Hi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you too",
-        timestamp: DateTime.now(),
-      ),
-    ]; // TODO backend
+    // _messages ??= [
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "Hi",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message: "Hi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "Hi",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message: "Hi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "Hi",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message: "Hi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "HiHiHiHiHiHiHiHi HiHiHiHiHiHiHiHiHiHiHiHiHi HiHiHiHiHiHi",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message: "Hi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "HiHiHiHiHiHi HiHiHiHiHiHiHi ",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message:
+    //         "Hi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "Hi",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message: "Hi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "Hi",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message: "Hi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "Hi",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message: "Hi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "HiHiHiHiHiHiHiHi HiHiHiHiHiHiHiHiHiHiHiHiHi HiHiHiHiHiHi",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message: "Hi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "HiHiHiHiHiHi HiHiHiHiHiHiHi ",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message:
+    //         "Hi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "Hi",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message: "Hi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "Hi",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message: "Hi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "Hi",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message: "Hi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "HiHiHiHiHiHiHiHi HiHiHiHiHiHiHiHiHiHiHiHiHi HiHiHiHiHiHi",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message: "Hi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "HiHiHiHiHiHi HiHiHiHiHiHiHi ",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message:
+    //         "Hi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "Hi",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message: "Hi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "Hi",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message: "Hi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "Hi",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message: "Hi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "HiHiHiHiHiHiHiHi HiHiHiHiHiHiHiHiHiHiHiHiHi HiHiHiHiHiHi",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message: "Hi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 1,
+    //     message: "HiHiHiHiHiHi HiHiHiHiHiHiHi ",
+    //     timestamp: DateTime.now(),
+    //   ),
+    //   ChatMessage(
+    //     matchID: 1,
+    //     senderID: 2,
+    //     message:
+    //         "Hi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you too",
+    //     timestamp: DateTime.now(),
+    //   ),
+    // ]; // TODO backend
+
+    if (!_mutex.isLocked && _messages == null) {
+      _mutex.protect(() {
+        return backendService
+            .callBackend<ChatMessage>(
+              requestType: RequestType.GET,
+              endpoint: ApiEndpoints.allMessagesForMatch(
+                match.matchID.toString(),
+              ),
+              jsonParser: (json) => ChatMessage.fromJson(json),
+            )
+            .then((messages) => _messages = messages)
+            .then((_) => notifyListeners());
+      });
+    }
 
     return _messages;
   }

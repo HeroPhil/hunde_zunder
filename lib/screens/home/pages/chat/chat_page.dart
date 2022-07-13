@@ -65,7 +65,8 @@ class ChatPage extends StatelessWidget {
               }
 
               if (messages.isEmpty) {
-                const Center(
+                print("NOTHING TO SHOW");
+                return const Center(
                   child: Text('No messages found'), // TODO add lottie
                 );
               }
