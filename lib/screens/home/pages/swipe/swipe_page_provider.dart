@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:hunde_zunder/constants/backend/api_endpoints.dart';
 import 'package:hunde_zunder/services/backend_service.dart';
+import 'package:mutex/mutex.dart';
 import '../../../../models/pet.dart';
 import '../../../../models/match.dart' as Model;
 import '../../../../provider/pet_provider.dart';
@@ -13,6 +14,8 @@ enum SwipeResult {
 }
 
 class SwipePageProvider with ChangeNotifier {
+  static final _mutex = Mutex();
+
   // dependencies
   final PetProvider petProvider;
   late final List<void Function()> petProviderListener;
@@ -44,23 +47,27 @@ class SwipePageProvider with ChangeNotifier {
   }
 
   List<Model.Match>? get matches {
-    if (_matches == null) {
+    if (!_mutex.isLocked && _matches == null) {
       if (petProvider.currentPet == null) {
         print("ERR: no pet selected");
         return [];
       }
 
-      backendService
-          .callBackend<Model.Match>(
-        requestType: RequestType.GET,
-        endpoint: ApiEndpoints.newMatchForId(
-          petProvider.currentPet!.petID.toString(),
-        ),
-        jsonParser: (json) => Model.Match.fromJson(json),
-      )
-          .then((matches) {
-        (_matches ??= []).addAll(matches);
-      }).then((_) => notifyListeners());
+      _mutex.protect(
+        () {
+          return backendService
+              .callBackend<Model.Match>(
+            requestType: RequestType.GET,
+            endpoint: ApiEndpoints.newMatchForId(
+              petProvider.currentPet!.petID.toString(),
+            ),
+            jsonParser: (json) => Model.Match.fromJson(json),
+          )
+              .then((matches) {
+            (_matches ??= []).addAll(matches);
+          }).then((_) => notifyListeners());
+        },
+      );
     }
 
     return _matches;
@@ -87,7 +94,7 @@ class SwipePageProvider with ChangeNotifier {
 
   Model.Match? get currentMatch => matches?.first;
 
-  void swipeCard(SwipeResult result) async {
+  Future swipeCard(SwipeResult result) async {
     final boolResult = result == SwipeResult.love;
 
     final isSwipee = currentMatch!.swipeeID == petProvider.currentPet!.petID;
@@ -117,7 +124,9 @@ class SwipePageProvider with ChangeNotifier {
     _candidate = null;
 
     // if all candidates are gone, get new ones
+    print("matches remaining: ${matches?.length}");
     if (_matches!.isEmpty) {
+      print("new matches are needed");
       _matches = null;
     }
 

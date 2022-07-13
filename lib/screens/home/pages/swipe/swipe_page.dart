@@ -27,86 +27,86 @@ class SwipePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           PetSelector(),
-          Selector<SwipePageProvider, Pet?>(
-              selector: (context, provider) => provider.candidate,
-              builder: (context, pet, _) {
-                //! on error / loading
-                if (pet == null) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Builder(
-                        builder: (context) {
-                          late final String lottiePath;
-                          late final String text;
-                          if (context.read<SwipePageProvider>().matches ==
-                              null) {
-                            lottiePath =
-                                "${UiAssets.baseLottieImg}/loading_matches.json";
-                            text =
-                                "Looking for someone to meet with ${context.watch<PetProvider>().currentPet?.name ?? 'your Pet'}.";
-                          } else {
-                            lottiePath =
-                                "${UiAssets.baseLottieImg}/loading_matches.json";
-                            text =
-                                "Looking for someone to meet with ${context.watch<PetProvider>().currentPet?.name ?? 'your Pet'}.";
-                          }
-                          return Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              LottieBuilder.asset(
-                                lottiePath,
-                              ),
-                              Text(
-                                text,
-                                style: theme.textTheme.headline5,
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ),
-                  );
-                }
-                //! real content
-                return GestureDetector(
-                  onDoubleTap: () => Navigator.pushNamed(
-                    context,
-                    PetDetailPage.routeName,
-                    arguments: {"pet": pet},
-                  ),
-                  child: Dismissible(
-                    key: Key('swipe-card-${pet.petID}'),
-                    secondaryBackground: SwipeCard.getCardBackground(
-                      context: context,
-                      color: Colors.red,
-                      icon: Icons.close_rounded,
-                    ),
-                    background: SwipeCard.getCardBackground(
-                      context: context,
-                      color: Colors.blue,
-                      icon: Icons.favorite_rounded,
-                    ),
-                    onDismissed: (DismissDirection direction) {
-                      context
-                          .read<SwipePageProvider>()
-                          .swipeCard(SwipeResult.values[direction.index - 2]);
-                    },
-                    crossAxisEndOffset: -1 / 7,
-                    resizeDuration: Duration(milliseconds: 500),
-                    movementDuration: Duration(milliseconds: 300),
-                    child: Hero(
-                      tag: "${PetDetailPage.routeName}-${pet.petID}",
-                      child: SwipeCard(
-                        pet: pet,
-                      ),
+          Consumer<SwipePageProvider>(
+            builder: (context, swipePageProvider, _) {
+              final pet = swipePageProvider.candidate;
+              //! on error / loading
+              if (pet == null) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: Builder(
+                      builder: (context) {
+                        late final String lottiePath;
+                        late final String text;
+                        if (context.read<SwipePageProvider>().matches == null) {
+                          lottiePath =
+                              "${UiAssets.baseLottieImg}/loading_matches.json";
+                          text =
+                              "Looking for someone to meet with ${context.watch<PetProvider>().currentPet?.name ?? 'your Pet'}.";
+                        } else {
+                          lottiePath =
+                              "${UiAssets.baseLottieImg}/loading_matches.json";
+                          text =
+                              "Looking for someone to meet with ${context.watch<PetProvider>().currentPet?.name ?? 'your Pet'}.";
+                        }
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            LottieBuilder.asset(
+                              lottiePath,
+                            ),
+                            Text(
+                              text,
+                              style: theme.textTheme.headline5,
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ),
                 );
-              }),
+              }
+              //! real content
+              return GestureDetector(
+                onDoubleTap: () => Navigator.pushNamed(
+                  context,
+                  PetDetailPage.routeName,
+                  arguments: {"pet": pet},
+                ),
+                child: Dismissible(
+                  key: Key('swipe-card-${pet.petID}'),
+                  secondaryBackground: SwipeCard.getCardBackground(
+                    context: context,
+                    color: Colors.red,
+                    icon: Icons.close_rounded,
+                  ),
+                  background: SwipeCard.getCardBackground(
+                    context: context,
+                    color: Colors.blue,
+                    icon: Icons.favorite_rounded,
+                  ),
+                  onDismissed: (DismissDirection direction) async {
+                    await context
+                        .read<SwipePageProvider>()
+                        .swipeCard(SwipeResult.values[direction.index - 2]);
+                  },
+                  crossAxisEndOffset: -1 / 7,
+                  resizeDuration: Duration(milliseconds: 500),
+                  movementDuration: Duration(milliseconds: 300),
+                  child: Hero(
+                    tag: "${PetDetailPage.routeName}-${pet.petID}",
+                    child: SwipeCard(
+                      pet: pet,
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );
