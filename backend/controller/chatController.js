@@ -8,7 +8,7 @@ const chatRouter = Router()
 // CHAT ENDPOINTS
 // =================
 
-chatRouter.get('/all/:petId', checkIfAuthenticated, async(req, res) => {
+chatRouter.get('/all/:petId', checkIfAuthenticated, async (req, res) => {
     const { petId } = req.params
 
     // START VALIDATION - Only allow to get chats if the requester is the owner of the pet
@@ -27,7 +27,7 @@ chatRouter.get('/all/:petId', checkIfAuthenticated, async(req, res) => {
 
 
 
-chatRouter.get('/:matchId', checkIfAuthenticated, async(req, res) => {
+chatRouter.get('/:matchId', checkIfAuthenticated, async (req, res) => {
     const { matchId } = req.params
 
     // START VALIDATION - Only allow to get messages if the requester is the owner of one of the pets
@@ -47,7 +47,7 @@ chatRouter.get('/:matchId', checkIfAuthenticated, async(req, res) => {
 
 
 
-chatRouter.post('/:matchId', checkIfAuthenticated, async(req, res) => {
+chatRouter.post('/:matchId', checkIfAuthenticated, async (req, res) => {
     const { matchId } = req.params
 
     // START VALIDATION - Only allow to post a message if the requester is the owner of one of the pets 
@@ -62,7 +62,7 @@ chatRouter.post('/:matchId', checkIfAuthenticated, async(req, res) => {
     // END VALIDATION
 
     timestamp = new Date().toISOString().slice(0, 19).replace('T', ' ')
-    answer = await postMessages(matchId, req.body.senderId, req.body.message, timestamp)
+    answer = await postMessages(matchId, req.body.senderID, req.body.message, timestamp)
     res.status(200).send(answer)
 })
 
