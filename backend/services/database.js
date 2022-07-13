@@ -11,7 +11,7 @@ var connection = mysql.createConnection({
     port: process.env.RDS_PORT
 });
 
-connection.connect(function(err) {
+connection.connect(function (err) {
     if (err) {
         console.error('Database connection failed: ' + err.stack);
         return;
@@ -26,7 +26,7 @@ connection.connect(function(err) {
 //####################
 const dbQuery = (sqlQuery) => {
     return new Promise((resolve, reject) => {
-        connection.query(sqlQuery, function(err, rows) {
+        connection.query(sqlQuery, function (err, rows) {
             if (err) {
                 return reject(err);
             } else {
@@ -41,7 +41,7 @@ const dbQuery = (sqlQuery) => {
 //####################
 // DEBUG QUERIES
 //####################
-const sampleQuery2 = async(id) => {
+const sampleQuery2 = async (id) => {
 
     sql = `SELECT * FROM test.samples WHERE idsamples >= ${id}`
     try {
@@ -57,7 +57,7 @@ const sampleQuery2 = async(id) => {
 // PET ENDPOINTS
 //####################
 
-const getMyPets = async(ownerId) => {
+const getMyPets = async (ownerId) => {
     sql = `
     SELECT * 
     FROM petConnect.pet 
@@ -66,7 +66,7 @@ const getMyPets = async(ownerId) => {
     return await dbQuery(sql)
 }
 
-const createPet = async(name, image, type, gender, race, description, birthday, ownerId) => {
+const createPet = async (name, image, type, gender, race, description, birthday, ownerId) => {
     sql = `
     INSERT INTO petConnect.pet (name, image, type, gender, race, description, birthday, ownerID) 
     VALUES ('${name}', '${image}', '${type}', '${gender}', '${race}', '${description}', '${birthday}', '${ownerId}')
@@ -74,7 +74,7 @@ const createPet = async(name, image, type, gender, race, description, birthday, 
     return await dbQuery(sql)
 }
 
-const updatePet = async(petId, name, image, type, gender, race, description, birthday, ownerId) => {
+const updatePet = async (petId, name, image, type, gender, race, description, birthday, ownerId) => {
     sql = `
     UPDATE petConnect.pet 
     SET name = '${name}', image = '${image}', type = '${type}', gender = '${gender}', race = '${race}', description = '${description}', birthday = '${birthday}' 
@@ -84,7 +84,7 @@ const updatePet = async(petId, name, image, type, gender, race, description, bir
     return await dbQuery(sql)
 }
 
-const deletePet = async(petId, ownerId) => {
+const deletePet = async (petId, ownerId) => {
     sql = `
     DELETE 
     FROM petConnect.pet 
@@ -94,7 +94,7 @@ const deletePet = async(petId, ownerId) => {
     return await dbQuery(sql)
 }
 
-const getPetById = async(petId) => {
+const getPetById = async (petId) => {
     sql = `
     SELECT * 
     FROM petConnect.pet 
@@ -107,7 +107,7 @@ const getPetById = async(petId) => {
 //####################
 // GET SWIPE
 //####################
-const getOpenMatches = async(petId) => {
+const getOpenMatches = async (petId) => {
     sql = `
     SELECT * 
     FROM petConnect.match 
@@ -125,7 +125,7 @@ const getOpenMatches = async(petId) => {
     return await dbQuery(sql)
 }
 
-const getPotentialPets = async(ownerId, petId) => {
+const getPotentialPets = async (ownerId, petId) => {
     sql = `
     SELECT petID 
     FROM petConnect.pet 
@@ -152,7 +152,7 @@ const getPotentialPets = async(ownerId, petId) => {
 // MATCHES ENDPOINTS
 //####################
 
-const createMatch = async(petId, swipeeID) => {
+const createMatch = async (petId, swipeeID) => {
     sql = `
     INSERT INTO petConnect.match (swiperID, swipeeID) 
     VALUES ('${petId}', '${swipeeID}')
@@ -160,7 +160,7 @@ const createMatch = async(petId, swipeeID) => {
     return await dbQuery(sql)
 }
 
-const getMatchById = async(matchId) => {
+const getMatchById = async (matchId) => {
     sql = `
     SELECT * 
     FROM petConnect.match 
@@ -169,7 +169,7 @@ const getMatchById = async(matchId) => {
     return await dbQuery(sql)
 }
 
-const updateMatch = async(ownerId, matchID, swiperID, swipeeID, request, answer, matchDate) => {
+const updateMatch = async (ownerId, matchID, swiperID, swipeeID, request, answer, matchDate) => {
     sql = `
     UPDATE petConnect.match 
     SET swiperID = '${swiperID}', swipeeID = '${swipeeID}', matchID = '${matchID}', request = '${request}', answer = '${answer}', matchDate = '${matchDate}' 
@@ -186,13 +186,16 @@ const updateMatch = async(ownerId, matchID, swiperID, swipeeID, request, answer,
     return await dbQuery(sql)
 }
 
-const updateMatchById = async(ownerId, matchID, swiperID, swipeeID, request, answer, matchDate) => {
+const updateMatchById = async (ownerId, matchID, swiperID, swipeeID, request, answer, matchDate) => {
     sql = `
     UPDATE petConnect.match
-    ` +
+    `
+        +
         (request != null ?
-            `SET request = '${request}', matchDate = '${matchDate}'` :
-            `SET answer = '${answer}', matchDate = '${matchDate}'`) +
+            `SET request = '${request}, matchDate = '${matchDate}'`
+            :
+            `SET answer = '${answer}, matchDate = '${matchDate}'`)
+        +
         `
     WHERE matchID = '${matchID}'
     AND '${ownerId}' IN 
@@ -211,7 +214,7 @@ const updateMatchById = async(ownerId, matchID, swiperID, swipeeID, request, ans
 // CHAT ENDPOINTS
 //####################
 
-const getSuccessfullMatches = async(petId) => {
+const getSuccessfullMatches = async (petId) => {
     sql = `
     SELECT *
     FROM petConnect.match
@@ -221,7 +224,7 @@ const getSuccessfullMatches = async(petId) => {
     return await dbQuery(sql)
 }
 
-const getChatMessages = async(matchId) => {
+const getChatMessages = async (matchId) => {
     sql = `
     SELECT *
     FROM petConnect.messages
@@ -231,7 +234,7 @@ const getChatMessages = async(matchId) => {
     return await dbQuery(sql)
 }
 
-const postMessages = async(matchId, senderId, message, timestamp) => {
+const postMessages = async (matchId, senderId, message, timestamp) => {
     sql = `
     INSERT INTO petConnect.messages (matchID, senderID, message, timestamp) 
     VALUES ('${matchId}', '${senderId}', '${message}', '${timestamp}')
