@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hunde_zunder/screens/home/pages/match/widgets/chat_card.dart';
+import 'package:hunde_zunder/screens/home/pages/match/widgets/match_card.dart';
 import '../../../../provider/pet_provider.dart';
 import 'match_page_provider.dart';
 import 'package:intl/intl.dart';
@@ -38,7 +38,7 @@ class MatchPage extends StatelessWidget {
                   child: ListView(
                     children: [
                       ...matchPageProvider.matches!.map(
-                        (match) => ChatCard(
+                        (match) => MatchCard(
                           match: match,
                         ),
                       ),

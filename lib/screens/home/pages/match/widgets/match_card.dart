@@ -9,10 +9,10 @@ import 'package:provider/provider.dart';
 
 import '../../../../../models/pet.dart';
 
-class ChatCard extends StatelessWidget {
+class MatchCard extends StatelessWidget {
   final Model.Match match;
 
-  const ChatCard({
+  const MatchCard({
     Key? key,
     required this.match,
   }) : super(key: key);
