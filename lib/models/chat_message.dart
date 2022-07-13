@@ -3,6 +3,11 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'chat_message.g.dart';
 
+enum ChatMessageSender {
+  me,
+  other,
+}
+
 @JsonSerializable()
 @CopyWith()
 class ChatMessage {

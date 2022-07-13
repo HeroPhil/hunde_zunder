@@ -89,8 +89,9 @@ abstract class AppRouter {
                 ),
                 ChangeNotifierProvider<ChatPageProvider>(
                   create: (context) => ChatPageProvider(
-                      // matchProvider: _matchProvider,
-                      ),
+                    petProvider: _petProvider,
+                    // matchProvider: _matchProvider,
+                  ),
                 ),
               ],
               builder: (context, _) {

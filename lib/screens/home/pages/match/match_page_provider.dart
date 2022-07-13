@@ -10,9 +10,15 @@ class MatchPageProvider with ChangeNotifier {
   // cache
   List<Model.Match>? _matches;
 
+  // state
+  late PageController _pageController;
+
   MatchPageProvider({
     required this.matchProvider,
   }) {
+    _pageController = PageController(
+      initialPage: 0,
+    );
     matchProvider.addListener(clearCache);
   }
 
@@ -20,6 +26,16 @@ class MatchPageProvider with ChangeNotifier {
   void dispose() {
     matchProvider.removeListener(clearCache);
     super.dispose();
+  }
+
+  PageController get pageController => _pageController;
+
+  set page(int page) {
+    _pageController.animateToPage(
+      page,
+      duration: Duration(milliseconds: 400),
+      curve: Curves.easeInOut,
+    );
   }
 
   List<Model.Match>? get matches {

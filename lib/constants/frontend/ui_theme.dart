@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class UiTheme {
   static final primaryColor = Colors.orange;
   static final secondaryColor = Colors.orangeAccent;
+  static final tertiaryColor = Colors.orange[100];
   static final primaryColorScheme =
       ColorScheme.fromSwatch(primarySwatch: primaryColor);
 
@@ -12,6 +13,9 @@ class UiTheme {
       secondary: secondaryColor,
     ),
   ).copyWith(
+    scrollbarTheme: ScrollbarThemeData().copyWith(
+      thumbColor: MaterialStateProperty.all(primaryColor),
+    ),
     cardTheme: CardTheme(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
@@ -25,6 +29,9 @@ class UiTheme {
       secondary: secondaryColor,
     ),
   ).copyWith(
+    scrollbarTheme: ScrollbarThemeData().copyWith(
+      thumbColor: MaterialStateProperty.all(primaryColor),
+    ),
     cardTheme: CardTheme(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
