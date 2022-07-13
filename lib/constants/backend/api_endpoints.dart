@@ -9,6 +9,7 @@ class ApiEndpoints {
   static const String chat = 'chat';
   static String allMatchesForPet(String id) => '$chat/all/$id';
   static String allMessagesForMatch(String id) => "$chat/$id";
+  static String sendMessage(String id) => "$chat/$id";
 
   static const String debug = 'debug';
 }

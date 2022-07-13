@@ -19,20 +19,19 @@ class MessageFieldCard extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextField(
+                    controller: chatPageProvider.textEditingController,
                     decoration: InputDecoration(
                       hintText: 'Type a message',
                     ),
                     onSubmitted: (message) {
-                      // chatPageProvider.sendMessage(message);
+                      chatPageProvider.sendMessage();
                     },
                   ),
                 ),
                 IconButton(
                   icon: Icon(Icons.send),
                   onPressed: () {
-                    // chatPageProvider.sendMessage(
-                    //   chatPageProvider.messageController.text,
-                    // );
+                    chatPageProvider.sendMessage();
                   },
                 ),
               ],

@@ -25,110 +25,121 @@ class ChatPage extends StatelessWidget {
       context.read<ChatPageProvider>().initialScrolled = true;
     }
 
-    return Column(
-      children: [
-        // HEADER
-        Consumer<ChatPageProvider>(
-          builder: (context, chatPageProvider, _) {
-            return FutureBuilder<Pet?>(
-              future: chatPageProvider.otherPet,
-              builder: (context, petSnapshot) {
-                if (!petSnapshot.hasData || petSnapshot.data == null) {
-                  return const Center(
-                    child: LinearProgressIndicator(),
-                  );
-                }
+    return Consumer<ChatPageProvider>(
+      builder: (context, chatPageProvider, _) {
+        return Column(
+          children: [
+            // HEADER
+            Builder(
+              builder: (context) {
+                return FutureBuilder<Pet?>(
+                  future: chatPageProvider.otherPet,
+                  builder: (context, petSnapshot) {
+                    if (!petSnapshot.hasData || petSnapshot.data == null) {
+                      return const Center(
+                        child: LinearProgressIndicator(),
+                      );
+                    }
 
-                final otherPet = petSnapshot.data!;
+                    final otherPet = petSnapshot.data!;
 
-                print("otherPet: $otherPet");
-
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: PetInfoCard(
-                    pet: otherPet,
-                  ),
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: PetInfoCard(
+                        pet: otherPet,
+                      ),
+                    );
+                  },
                 );
               },
-            );
-          },
-        ),
-        // BODY
-        Expanded(
-          child: Selector<ChatPageProvider, List<ChatMessage>?>(
-            selector: (context, chatPageProvider) => chatPageProvider.messages,
-            builder: (context, messages, _) {
-              if (messages == null) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
+            ),
+            // BODY
+            Expanded(
+              child: FutureBuilder<Pet?>(
+                future: chatPageProvider.otherPet,
+                builder: (context, petSnapshot) {
+                  if (!petSnapshot.hasData || petSnapshot.data == null) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
 
-              if (messages.isEmpty) {
-                print("NOTHING TO SHOW");
-                return const Center(
-                  child: Text('No messages found'), // TODO add lottie
-                );
-              }
+                  final myPet = petSnapshot.data!;
 
-              return Column(
-                children: [
-                  Expanded(
-                    child: ListView(
-                      controller:
-                          context.read<ChatPageProvider>().scrollController,
-                      children: [
-                        ...messages.map(
-                          (message) {
-                            ChatMessageSender sender = message.senderID == 1
-                                ? ChatMessageSender.me
-                                : ChatMessageSender.other; // TODO
-                            return Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: LayoutBuilder(
-                                  builder: (context, constraints) {
-                                print(constraints.maxWidth);
-                                return Row(
-                                  children: [
-                                    if (sender == ChatMessageSender.me)
-                                      Expanded(child: Container()),
-                                    // Expanded(
-                                    //   flex: 2,
-                                    //   child:
-                                    Container(
-                                      constraints: BoxConstraints(
-                                        maxWidth: constraints.maxWidth * 0.66,
-                                      ),
-                                      child: MessageCard(
-                                        message: message,
-                                        sender: sender,
-                                      ),
-                                    ),
+                  final messages = chatPageProvider.messages;
 
-                                    // ),
-                                    if (sender == ChatMessageSender.other)
-                                      Expanded(child: Container()),
-                                  ],
+                  if (messages == null) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (messages.isEmpty) {
+                    return const Center(
+                      child: Text('No messages found'), // TODO add lottie
+                    );
+                  }
+
+                  return Column(
+                    children: [
+                      Expanded(
+                        child: ListView(
+                          controller:
+                              context.read<ChatPageProvider>().scrollController,
+                          children: [
+                            ...messages.map(
+                              (message) {
+                                ChatMessageSender sender =
+                                    message.senderID == myPet.petID
+                                        ? ChatMessageSender.me
+                                        : ChatMessageSender.other; // TODO
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20),
+                                  child: LayoutBuilder(
+                                      builder: (context, constraints) {
+                                    print(constraints.maxWidth);
+                                    return Row(
+                                      children: [
+                                        if (sender == ChatMessageSender.me)
+                                          Expanded(child: Container()),
+
+                                        Container(
+                                          constraints: BoxConstraints(
+                                            maxWidth:
+                                                constraints.maxWidth * 0.66,
+                                          ),
+                                          child: MessageCard(
+                                            message: message,
+                                            sender: sender,
+                                          ),
+                                        ),
+
+                                        // ),
+                                        if (sender == ChatMessageSender.other)
+                                          Expanded(child: Container()),
+                                      ],
+                                    );
+                                  }),
                                 );
-                              }),
-                            );
-                          },
+                              },
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  )
-                ],
-              );
-            },
-          ),
-        ),
-        // FOOTER
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: MessageFieldCard(),
-        )
-      ],
+                      )
+                    ],
+                  );
+                },
+              ),
+            ),
+            // FOOTER
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: MessageFieldCard(),
+            )
+          ],
+        );
+      },
     );
   }
 }

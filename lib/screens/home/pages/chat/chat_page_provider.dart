@@ -21,6 +21,7 @@ class ChatPageProvider with ChangeNotifier {
   late bool? _isSwipeeMyPet;
   late ScrollController scrollController;
   late bool initialScrolled;
+  late TextEditingController textEditingController;
 
   // init param
   late Model.Match match;
@@ -45,6 +46,7 @@ class ChatPageProvider with ChangeNotifier {
     this.popBehavior = popBehavior;
     scrollController = ScrollController();
     initialScrolled = false;
+    textEditingController = TextEditingController();
     setIsSwipeeMyPet();
   }
 
@@ -55,253 +57,6 @@ class ChatPageProvider with ChangeNotifier {
   }
 
   List<ChatMessage>? get messages {
-    // _messages ??= [
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "Hi",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message: "Hi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "Hi",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message: "Hi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "Hi",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message: "Hi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "HiHiHiHiHiHiHiHi HiHiHiHiHiHiHiHiHiHiHiHiHi HiHiHiHiHiHi",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message: "Hi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "HiHiHiHiHiHi HiHiHiHiHiHiHi ",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message:
-    //         "Hi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "Hi",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message: "Hi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "Hi",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message: "Hi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "Hi",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message: "Hi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "HiHiHiHiHiHiHiHi HiHiHiHiHiHiHiHiHiHiHiHiHi HiHiHiHiHiHi",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message: "Hi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "HiHiHiHiHiHi HiHiHiHiHiHiHi ",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message:
-    //         "Hi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "Hi",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message: "Hi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "Hi",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message: "Hi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "Hi",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message: "Hi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "HiHiHiHiHiHiHiHi HiHiHiHiHiHiHiHiHiHiHiHiHi HiHiHiHiHiHi",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message: "Hi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "HiHiHiHiHiHi HiHiHiHiHiHiHi ",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message:
-    //         "Hi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "Hi",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message: "Hi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "Hi",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message: "Hi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "Hi",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message: "Hi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "HiHiHiHiHiHiHiHi HiHiHiHiHiHiHiHiHiHiHiHiHi HiHiHiHiHiHi",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message: "Hi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 1,
-    //     message: "HiHiHiHiHiHi HiHiHiHiHiHiHi ",
-    //     timestamp: DateTime.now(),
-    //   ),
-    //   ChatMessage(
-    //     matchID: 1,
-    //     senderID: 2,
-    //     message:
-    //         "Hi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you tooHi you too",
-    //     timestamp: DateTime.now(),
-    //   ),
-    // ]; // TODO backend
-
     if (!_mutex.isLocked && _messages == null) {
       _mutex.protect(() {
         return backendService
@@ -346,10 +101,41 @@ class ChatPageProvider with ChangeNotifier {
 
   void scrollToBottom() {
     scrollController.animateTo(
-      scrollController.position.maxScrollExtent * 1.2,
+      scrollController.position.maxScrollExtent * 1.2 + 100,
       duration: Duration(milliseconds: 400),
       curve: Curves.easeInOut,
     );
+  }
+
+  Future sendMessage() async {
+    // Great Message
+    final message = ChatMessage(
+      matchID: match.matchID,
+      message: textEditingController.text,
+      senderID: (await myPet)!.petID,
+      timestamp: DateTime.now(),
+    );
+
+    // optimistic update
+    _messages?.add(message);
+
+    // send to backend
+    await backendService.callBackend<ChatMessage>(
+      requestType: RequestType.POST,
+      endpoint: ApiEndpoints.sendMessage(
+        message.matchID.toString(),
+      ),
+      body: message.toJson,
+    );
+
+    // reset text field
+    textEditingController.clear();
+
+    // notify listeners
+    notifyListeners();
+
+    // scroll to bottom
+    scrollToBottom();
   }
 
   void clearCache() {
