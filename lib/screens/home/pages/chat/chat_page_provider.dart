@@ -100,6 +100,7 @@ class ChatPageProvider with ChangeNotifier {
   }
 
   void scrollToBottom() {
+    print("IAM TRYING TO SCROLL TO BOTTOM");
     scrollController.animateTo(
       scrollController.position.maxScrollExtent * 1.2 + 100,
       duration: Duration(milliseconds: 400),

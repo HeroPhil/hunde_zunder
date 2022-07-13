@@ -56,7 +56,7 @@ class ChatPage extends StatelessWidget {
             // BODY
             Expanded(
               child: FutureBuilder<Pet?>(
-                future: chatPageProvider.otherPet,
+                future: chatPageProvider.myPet,
                 builder: (context, petSnapshot) {
                   if (!petSnapshot.hasData || petSnapshot.data == null) {
                     return const Center(
@@ -84,8 +84,7 @@ class ChatPage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: ListView(
-                          controller:
-                              context.read<ChatPageProvider>().scrollController,
+                          controller: chatPageProvider.scrollController,
                           children: [
                             ...messages.map(
                               (message) {
