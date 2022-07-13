@@ -1,6 +1,6 @@
 const { checkIfAuthenticated } = require('../services/auth')
 const { Router } = require('express')
-const { getOpenMatches, getPotentialPets, createMatch, getPetById, getMatchById } = require('../services/database')
+const { getOpenMatches, getPotentialPets, createMatch, getPetById, getMatchById, updateMatchById } = require('../services/database')
 
 const matchRouter = Router()
 
@@ -9,7 +9,7 @@ const matchRouter = Router()
 // =================
 
 // Returns the requested match
-matchRouter.get('/:id', checkIfAuthenticated, async(req, res) => {
+matchRouter.get('/:id', checkIfAuthenticated, async (req, res) => {
     const { id } = req.params
     match = await getMatchById(id)
     res.status(200).send(match)
@@ -35,7 +35,7 @@ matchRouter.get('/:id', checkIfAuthenticated, async(req, res) => {
 // Returns matches for swiping
 // Priority: started but not completed matches -> matches were the pet has been swiped -> new matches
 // New matches -> up to five new matches are created
-matchRouter.get('/new/:petId', checkIfAuthenticated, async(req, res) => {
+matchRouter.get('/new/:petId', checkIfAuthenticated, async (req, res) => {
     const { petId } = req.params
 
     // START VALIDATION - Only allow to get new matches if the requester is the owner of the pets
@@ -72,7 +72,7 @@ matchRouter.get('/new/:petId', checkIfAuthenticated, async(req, res) => {
 
 
 // Updates the specified match as long as the requesting owner is the owner of one of the two pets
-matchRouter.put('/:id', checkIfAuthenticated, async(req, res) => {
+matchRouter.put('/:id', checkIfAuthenticated, async (req, res) => {
     const { id } = req.params
     match = await updateMatchById(req.authId, id, req.body.swiperId, req.body.swipeeId, req.body.request, req.body.answer, req.body.matchDate)
     res.status(200).send(match)
@@ -132,7 +132,7 @@ matchRouter.put('/:id', checkIfAuthenticated, async(req, res) => {
 
 // Support method realizing the priority of match selection for swiping
 // Used in: '/matches/:petId'
-const getNewMatches = async(petId, ownerId) => {
+const getNewMatches = async (petId, ownerId) => {
     matches = await getOpenMatches(petId)
     console.log("Open Matches")
     console.log(matches);
