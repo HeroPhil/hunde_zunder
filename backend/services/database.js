@@ -190,8 +190,8 @@ const updateMatchById = async(ownerId, matchID, swiperID, swipeeID, request, ans
     sql = `
     UPDATE petConnect.match 
     SET swiperID = '${swiperID}', swipeeID = '${swipeeID}', request = '${request}', answer = '${answer}', matchDate = '${matchDate}' 
-    WHERE matchID = '${matchID}
-    AND ${ownerId} IN 
+    WHERE matchID = '${matchID}'
+    AND '${ownerId}' IN 
     (
         SELECT ownerID
         FROM petConnect.pet
