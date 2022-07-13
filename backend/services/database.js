@@ -187,25 +187,31 @@ const updateMatch = async (ownerId, matchID, swiperID, swipeeID, request, answer
 }
 
 const updateMatchById = async (ownerId, matchID, swiperID, swipeeID, request, answer, matchDate) => {
-    sql = `
-    UPDATE petConnect.match
-    `
-        +
-        (request != null ?
-            `SET request = '${request}, matchDate = '${matchDate}'`
-            :
-            `SET answer = '${answer}, matchDate = '${matchDate}'`)
-        +
-        `
+
+    preSql = 'UPDATE petConnect.match SET '
+
+    requestSQL = request != null ?
+        `request = '${request}', `
+        : ``
+
+    answerSQL = answer != null ?
+        `answer = '${answer}', ` : ``
+
+    matchDateSql = `matchDate = '${matchDate}'`
+
+    postSql = `
     WHERE matchID = '${matchID}'
-    AND '${ownerId}' IN 
-    (
-        SELECT ownerID
+    AND '${ownerId}' IN
+        (
+            SELECT ownerID
         FROM petConnect.pet
         WHERE petID = '${swiperID}'
         OR petID = '${swipeeID}'
-    )
-    `
+        )
+        `
+
+    sql = preSql + requestSQL + answerSQL + matchDateSql + postSql
+
     return await dbQuery(sql)
 }
 
@@ -217,28 +223,28 @@ const updateMatchById = async (ownerId, matchID, swiperID, swipeeID, request, an
 const getSuccessfullMatches = async (petId) => {
     sql = `
     SELECT *
-    FROM petConnect.match
-    WHERE (swiperID = '${petId}' OR swipeeID = '${petId}') 
-    AND (request IS TRUE AND answer IS TRUE)
-    `
+        FROM petConnect.match
+    WHERE(swiperID = '${petId}' OR swipeeID = '${petId}')
+    AND(request IS TRUE AND answer IS TRUE)
+        `
     return await dbQuery(sql)
 }
 
 const getChatMessages = async (matchId) => {
     sql = `
     SELECT *
-    FROM petConnect.messages
+        FROM petConnect.messages
     WHERE matchID = '${matchId}' 
     ORDER BY timestamp ASC
-    `
+        `
     return await dbQuery(sql)
 }
 
 const postMessages = async (matchId, senderId, message, timestamp) => {
     sql = `
-    INSERT INTO petConnect.messages (matchID, senderID, message, timestamp) 
-    VALUES ('${matchId}', '${senderId}', '${message}', '${timestamp}')
-    `
+    INSERT INTO petConnect.messages(matchID, senderID, message, timestamp)
+    VALUES('${matchId}', '${senderId}', '${message}', '${timestamp}')
+        `
     return await dbQuery(sql)
 }
 
