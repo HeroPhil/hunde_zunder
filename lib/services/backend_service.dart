@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'firebase_auth_service.dart';
 import 'package:http/http.dart' as http;
 
-import 'dart:html';
+import 'dart:html' as html;
 
 enum RequestType {
   GET,
@@ -30,7 +31,7 @@ class BackendService with ChangeNotifier {
   //   path: "",
   // );
   static final baseUrl = Uri(
-    scheme: "http",
+    scheme: html.window.location.protocol.replaceAll(':', ''),
     host: "petconnect-env.eba-mm7ehn6g.eu-central-1.elasticbeanstalk.com",
     port: 80,
     path: "",

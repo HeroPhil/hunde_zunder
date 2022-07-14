@@ -9,7 +9,8 @@ class UiAssets with ChangeNotifier {
   static bool initialized = false;
 
   static String get basePath =>
-      window.location.hostname == 'localhost' ? "" : "assets";
+      // window.location.hostname == 'localhost' ? "" : "assets";
+      "";
 
   static String get basePathImg => "${basePath != '' ? '$basePath/' : ''}img";
 
