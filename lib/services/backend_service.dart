@@ -32,8 +32,9 @@ class BackendService with ChangeNotifier {
   // );
   static final baseUrl = Uri(
     scheme: html.window.location.protocol.replaceAll(':', ''),
-    host: "petconnect-env.eba-mm7ehn6g.eu-central-1.elasticbeanstalk.com",
-    port: 80,
+    // host: "petconnect-env.eba-mm7ehn6g.eu-central-1.elasticbeanstalk.com",
+    host: "api.pet-connect.karottenkameraden.de",
+    port: html.window.location.protocol.contains('s') ? 443 : 80,
     path: "",
   );
 
