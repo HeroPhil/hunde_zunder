@@ -10,9 +10,10 @@ class PetDetailPageProvider with ChangeNotifier {
   PetProvider petProvider;
 
 // state
-  bool initalized = false;
+  bool initialized = false;
   Pet pet;
   bool _editMode;
+  bool _editablePet = false;
   GlobalKey<FormState>? formKey;
 
   PetDetailPageProvider({
@@ -23,21 +24,35 @@ class PetDetailPageProvider with ChangeNotifier {
               name: 'New Pet',
               image: UiAssets.defaultDogImage,
             ),
-        _editMode = (pet == null) {}
+        _editMode = (pet == null),
+        _editablePet = (pet == null) {
+    if (pet != null) {
+      _checkForPetOwnership();
+      petProvider.addListener(_checkForPetOwnership);
+    }
+  }
 
   void init() {
-    if (initalized) return;
+    if (initialized) return;
     formKey = GlobalKey<FormState>(debugLabel: "petDetailForm");
-    initalized = true;
+    initialized = true;
   }
 
   @override
   void dispose() {
     super.dispose();
     formKey?.currentState?.dispose();
+    petProvider.removeListener(_checkForPetOwnership);
   }
 
-  bool get editMode => _editMode;
+  bool get editMode => _editablePet && _editMode;
+
+  bool get editablePet => _editablePet;
+
+  void _checkForPetOwnership() {
+    _editablePet = petProvider.isMyPet(pet.petID) ?? false;
+    notifyListeners();
+  }
 
   void toggleEditMode() {
     _editMode = !_editMode;

@@ -91,7 +91,8 @@ class PetDetailPage extends StatelessWidget {
                             (p0) => p0.copyWith.image(value!),
                           ),
                         ),
-                        if (!petPageProvider.editMode)
+                        if (petPageProvider.editablePet &&
+                            !petPageProvider.editMode)
                           IconButton(
                             icon: Icon(Icons.edit),
                             onPressed: petPageProvider.toggleEditMode,
