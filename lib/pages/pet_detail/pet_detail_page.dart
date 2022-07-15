@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -197,36 +198,79 @@ class PetDetailPage extends StatelessWidget {
                             (p0) => p0.copyWith.description(value!),
                           ),
                         ),
-                        if (pet.birthday != null)
-                          TextFormField(
-                            initialValue:
-                                "${pet.birthday!.difference(DateTime.now()).inDays / 30}",
-                            enabled: petPageProvider.editMode,
-                            // TODO add validation
-                            validator: (value) {
-                              // month value should be a non null positiv integer which is not bigger than 200
-                              if (value == null ||
-                                  value.isEmpty ||
-                                  int.tryParse(value) == null ||
-                                  int.parse(value) <= 0 ||
-                                  int.parse(value) > 200) {
-                                return "Please enter a valid month value";
-                              }
-                            },
-                            decoration: inputDecoration.copyWith(
-                              icon: Icon(Icons.cake),
-                              label: Text("Pet Birthday"),
-                            ),
-                            onSaved: (value) => petPageProvider.updatePetData(
-                              (p0) => p0.copyWith.birthday(
-                                DateTime.now().subtract(
-                                  Duration(
-                                    days: int.parse(value!),
+                        // if (pet.birthday != null)
+                        //   TextFormField(
+                        //     initialValue:
+                        //         "${pet.birthday!.difference(DateTime.now()).inDays / 30}",
+                        //     enabled: petPageProvider.editMode,
+                        //     validator: (value) {
+                        //       // month value should be a non null positiv integer which is not bigger than 200
+                        //       if (value == null ||
+                        //           value.isEmpty ||
+                        //           int.tryParse(value) == null ||
+                        //           int.parse(value) <= 0 ||
+                        //           int.parse(value) > 200) {
+                        //         return "Please enter a valid month value";
+                        //       }
+                        //     },
+                        //     decoration: inputDecoration.copyWith(
+                        //       icon: Icon(Icons.cake),
+                        //       label: Text("Pet Birthday"),
+                        //     ),
+                        //     onSaved: (value) => petPageProvider.updatePetData(
+                        //       (p0) => p0.copyWith.birthday(
+                        //         DateTime.now().subtract(
+                        //           Duration(
+                        //             days: int.parse(value!),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        FormField<DateTime?>(
+                          initialValue: pet.birthday,
+                          validator: (value) {
+                            // pet should not be older than 50 years, but might be null
+                            if (value != null &&
+                                value.isBefore(
+                                  DateTime.now().subtract(
+                                    Duration(
+                                      days: 365 * 50,
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ),
+                                )) {
+                              return "Pet is too old";
+                            }
+                          },
+                          onSaved: (value) => petPageProvider.updatePetData(
+                            (p0) => p0.copyWith.birthday(value),
                           ),
+                          builder: (state) {
+                            final controller = TextEditingController(
+                              text: state.value != null
+                                  ? DateFormat.yMd().format(state.value!)
+                                  : "Pick a date",
+                            );
+                            return TextField(
+                              controller: controller,
+                              onTap: () => showDatePicker(
+                                context: state.context,
+                                initialDate: DateTime
+                                    .now(), // TODO set to current value if database would not be fucked up
+                                firstDate: DateTime.now().subtract(
+                                  Duration(days: 365 * 100),
+                                ),
+                                lastDate: DateTime.now(),
+                              ).then(
+                                (value) => state.didChange(value),
+                              ),
+                              decoration: inputDecoration.copyWith(
+                                icon: Icon(Icons.cake),
+                                label: Text("Pet Birthday"),
+                              ),
+                            );
+                          },
+                        ),
                         if (petPageProvider.editMode)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
