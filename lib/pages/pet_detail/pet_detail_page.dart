@@ -18,6 +18,7 @@ class PetDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Consumer<PetDetailPageProvider>(
         builder: (context, petPageProvider, _) {
       // WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -35,7 +36,7 @@ class PetDetailPage extends StatelessWidget {
               border: InputBorder.none,
             );
 
-      return Center(
+      final content = Center(
         child: Hero(
           tag: "${PetDetailPage.routeName}-${pet.petID}",
           child: Card(
@@ -43,13 +44,15 @@ class PetDetailPage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  width: MediaQuery.of(context).size.width /
-                      Responsive.value(
-                        context: context,
-                        onMobile: 1.3,
-                        onTablet: 2,
-                        onDesktop: 3,
-                      ),
+                  width: !Responsive.isMobile(context)
+                      ? MediaQuery.of(context).size.width /
+                          Responsive.value(
+                            context: context,
+                            onMobile: 1.3,
+                            onTablet: 2,
+                            onDesktop: 3,
+                          )
+                      : null,
                   child: Form(
                     onWillPop: () async => !petPageProvider.editMode,
                     key: petPageProvider.formKey,
@@ -72,8 +75,14 @@ class PetDetailPage extends StatelessWidget {
                                 : null,
                             child: Column(
                               children: [
-                                Image.memory(formFieldState.value ??
-                                    UiAssets.defaultDogImage),
+                                Image.memory(
+                                  formFieldState.value ??
+                                      UiAssets.defaultDogImage,
+                                  // ? be smart about image size?
+                                  // height: Responsive.isMobile(context)
+                                  //     ? MediaQuery.of(context).size.height / 2
+                                  //     : null,
+                                ),
                                 if (formFieldState.hasError)
                                   Text(
                                     formFieldState.errorText ?? "no error",
@@ -321,6 +330,22 @@ class PetDetailPage extends StatelessWidget {
           ),
         ),
       );
+      if (Responsive.isMobile(context)) {
+        return Scaffold(
+          appBar: !petPageProvider.editMode
+              ? AppBar(
+                  backgroundColor: Colors.transparent,
+                  leading: BackButton(
+                    color: theme.primaryColor,
+                  ),
+                )
+              : null,
+          body: content,
+          backgroundColor: Colors.transparent,
+        );
+      } else {
+        return content;
+      }
     });
   }
 }

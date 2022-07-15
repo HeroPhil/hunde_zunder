@@ -35,7 +35,6 @@ abstract class AppRouter {
       case PetDetailPage.routeName:
         return HeroDialogRoute(
           settings: routeSettings,
-          // fullscreenDialog: Responsive.isMobile(routeSettings.c),  // TODO fullscreen option
           builder: (context) {
             return ChangeNotifierProvider<PetDetailPageProvider>(
               create: (context) => PetDetailPageProvider(
