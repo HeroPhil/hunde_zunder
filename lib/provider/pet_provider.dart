@@ -65,7 +65,7 @@ class PetProvider with ChangeNotifier {
             (_pets ??= {}).addAll(pets);
             (_myPetIDs ??= {})
                 .addAll(pets.map<int>((Pet pet) => pet.petID).toList());
-            currentPet ??= pets.first;
+            if (pets.isNotEmpty) currentPet ??= pets.first;
           })
           .then((_) => notifyListeners())
           .catchError(

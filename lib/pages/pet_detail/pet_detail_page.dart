@@ -281,34 +281,35 @@ class PetDetailPage extends StatelessWidget {
                                 icon: Icon(Icons.save_outlined),
                                 label: Text("Save"),
                               ),
-                              OutlinedButton.icon(
-                                onPressed: () => showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: Text(
-                                      "Are you sure you want to discard your changes?",
+                              if (!petPageProvider.forced)
+                                OutlinedButton.icon(
+                                  onPressed: () => showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: Text(
+                                        "Are you sure you want to discard your changes?",
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          child: Text("Continue"),
+                                          onPressed: () =>
+                                              Navigator.pop(context, false),
+                                        ),
+                                        TextButton(
+                                          child: Text("Exit"),
+                                          onPressed: () =>
+                                              Navigator.pop(context, true),
+                                        ),
+                                      ],
                                     ),
-                                    actions: [
-                                      TextButton(
-                                        child: Text("Continue"),
-                                        onPressed: () =>
-                                            Navigator.pop(context, false),
-                                      ),
-                                      TextButton(
-                                        child: Text("Exit"),
-                                        onPressed: () =>
-                                            Navigator.pop(context, true),
-                                      ),
-                                    ],
+                                  ).then(
+                                    (discard) {
+                                      if (discard) Navigator.pop(context);
+                                    },
                                   ),
-                                ).then(
-                                  (discard) {
-                                    if (discard) Navigator.pop(context);
-                                  },
+                                  icon: Icon(Icons.cancel_outlined),
+                                  label: Text("Discard"),
                                 ),
-                                icon: Icon(Icons.cancel_outlined),
-                                label: Text("Discard"),
-                              ),
                             ],
                           ),
                       ],

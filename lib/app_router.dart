@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hunde_zunder/app_wrapper.dart';
 import 'package:hunde_zunder/screens/home/pages/chat/chat_page_provider.dart';
 import 'package:hunde_zunder/services/backend_service.dart';
 import 'package:provider/provider.dart';
+import 'package:res_builder/responsive.dart';
 
 import 'external/hero_dialog_route.dart';
 import 'pages/pet_detail/pet_detail_page.dart';
@@ -33,11 +35,13 @@ abstract class AppRouter {
       case PetDetailPage.routeName:
         return HeroDialogRoute(
           settings: routeSettings,
+          // fullscreenDialog: Responsive.isMobile(routeSettings.c),  // TODO fullscreen option
           builder: (context) {
             return ChangeNotifierProvider<PetDetailPageProvider>(
               create: (context) => PetDetailPageProvider(
                 petProvider: context.read<PetProvider>(),
                 pet: arguments['pet'],
+                forced: arguments['forced'] ?? false,
               )..init(),
               child: PetDetailPage(),
             );
@@ -65,6 +69,8 @@ abstract class AppRouter {
         final _matchProvider = context.read<MatchProvider>();
 
         switch (routeSettings.name) {
+          case AppWrapper.routeName:
+            return AppWrapper();
           case HomeScreen.routeName:
             return MultiProvider(
               providers: [

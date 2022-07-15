@@ -1,10 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hunde_zunder/screens/loading/loading_screen.dart';
 import 'app_router.dart';
+import 'app_wrapper.dart';
 import 'constants/frontend/ui_theme.dart';
 import 'screens/auth/auth_screen.dart';
 import 'screens/home/home_screen.dart';
-import 'screens/loading/loading_screen.dart';
 import 'package:provider/src/provider.dart';
 
 class App extends StatelessWidget {
@@ -23,7 +24,7 @@ class App extends StatelessWidget {
             Navigator.pushReplacementNamed(
               context,
               context.read<User?>() != null
-                  ? HomeScreen.routeName
+                  ? AppWrapper.routeName
                   : AuthScreen.routeName,
             );
           });

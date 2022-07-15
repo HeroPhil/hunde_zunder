@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import '../../app_wrapper.dart';
 import '../../constants/frontend/ui_assets.dart';
 import '../../models/pet.dart';
 import '../../provider/pet_provider.dart';
@@ -14,11 +15,13 @@ class PetDetailPageProvider with ChangeNotifier {
   Pet pet;
   bool _editMode;
   bool _editablePet = false;
+  bool forced;
   GlobalKey<FormState>? formKey;
 
   PetDetailPageProvider({
     Pet? pet,
     required this.petProvider,
+    this.forced = false,
   })  : this.pet = pet ??
             Pet(
               name: 'New Pet',
@@ -71,7 +74,12 @@ class PetDetailPageProvider with ChangeNotifier {
       formKey?.currentState!.save();
       print('form is saved');
       await petProvider.updatePet(pet: pet);
-      Navigator.pop(context);
+      // if top route go back to wrapper to check
+      if (Navigator.of(context).canPop()) {
+        Navigator.of(context).pop();
+      } else {
+        Navigator.of(context).pushReplacementNamed(AppWrapper.routeName);
+      }
     }
   }
 
