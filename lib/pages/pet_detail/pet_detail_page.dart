@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterfire_ui/auth.dart';
 import '../../constants/frontend/ui_assets.dart';
 import 'pet_detail_page_provider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -280,10 +281,17 @@ class PetDetailPage extends StatelessWidget {
                             );
                           },
                         ),
+                        SizedBox(
+                          height: 8,
+                        ),
                         if (petPageProvider.editMode)
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
+                              if (petPageProvider.forced)
+                                SignOutButton(
+                                  variant: ButtonVariant.outlined,
+                                ),
                               ElevatedButton.icon(
                                 onPressed: () =>
                                     petPageProvider.submit(context),
