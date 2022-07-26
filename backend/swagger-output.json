@@ -1,0 +1,55 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "REST API",
+    "description": ""
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "bearerAuth": {
+      "type": "http",
+      "scheme": "bearer",
+      "bearerFormat": "JWT"
+    }
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "test"
+        ],
+        "description": "Endpoint to test the connection.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Connected successfully to the api."
+          }
+        }
+      }
+    },
+    "/authStatus": {
+      "get": {
+        "tags": [
+          "test"
+        ],
+        "description": "Endpoint to check what your authentication id is.",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "You are authenticated and your authId is displayed."
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  }
+}
