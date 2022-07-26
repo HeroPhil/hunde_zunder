@@ -85,8 +85,9 @@ class ChatPage extends StatelessWidget {
                       Expanded(
                         child: ListView(
                           controller: chatPageProvider.scrollController,
+                          reverse: true,
                           children: [
-                            ...messages.map(
+                            ...messages.reversed.map(
                               (message) {
                                 ChatMessageSender sender =
                                     message.senderID == myPet.petID
